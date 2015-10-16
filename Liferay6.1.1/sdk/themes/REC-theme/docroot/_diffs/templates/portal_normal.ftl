@@ -27,21 +27,30 @@
 	<div class="container">
 		<#if selectable>
 				${theme.include(content_include)}
+				
 		<#else>
 				${portletDisplay.recycle()}
 				${portletDisplay.setTitle(the_title)}
 				${theme.wrapPortlet("portlet.ftl", content_include)}		
-		</#if>
-		<hr>
+		</#if>		
+		<hr>	
 	</div>
+	
+	<div class = "login_session">
+		${theme.runtime("complemento_WAR_Complementoportlet")}
+	</div>
+	
 		<footer class="footer">		
+			
 			<div class="row">
 		        <div class="col-lg-12">
 		            <p>Portal de Reclutamiento Global Hitss 2015</p>
 		        </div>
 		    </div>
+		   
 		</footer>
 
+	
 	${theme.include(body_bottom_include)}
 	<script src="${javascript_folder}/general.js"></script>
 </body>

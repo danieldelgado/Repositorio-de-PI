@@ -21,7 +21,7 @@ String emailAddress = ParamUtil.getString(request, "emailAddress");
 
 boolean anonymousAccount = ParamUtil.getBoolean(request, "anonymousUser");
 %>
-
+antes hay algo
 <c:if test="<%= anonymousAccount && company.isStrangers() %>">
 	<div class="aui-helper-hidden lfr-message-response" id="<portlet:namespace />login-status-messages"></div>
 
@@ -66,7 +66,7 @@ boolean anonymousAccount = ParamUtil.getBoolean(request, "anonymousUser");
 						failure: function(event, id, obj) {
 							message = Liferay.Language.get('your-request-failed-to-complete');
 
-							<portlet:namespace />showStatusMessage('error', message);
+<!-- 							<portlet:namespace />showStatusMessage('error', message); -->
 
 							A.one('.anonymous-account').hide();
 						},
@@ -126,7 +126,7 @@ boolean anonymousAccount = ParamUtil.getBoolean(request, "anonymousUser");
 		window,
 		'<portlet:namespace />showStatusMessage',
 		function(type, message) {
-			var A = AUI();
+			/*var A = AUI();
 
 			var messageContainer = A.one('#<portlet:namespace />login-status-messages');
 
@@ -137,7 +137,7 @@ boolean anonymousAccount = ParamUtil.getBoolean(request, "anonymousUser");
 
 			messageContainer.html(message);
 
-			messageContainer.show();
+			messageContainer.show();*/
 		},
 		['aui-base']
 	);

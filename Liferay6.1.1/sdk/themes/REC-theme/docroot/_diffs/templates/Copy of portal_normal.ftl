@@ -81,6 +81,8 @@ ${theme.include(body_top_include)}
 			<@liferay.language key="powered-by" /> <a href="http://www.liferay.com" rel="external">Liferay</a>
 		</p>
 	</footer>
+	
+
 </div>
 
 ${theme.include(body_bottom_include)}
@@ -90,3 +92,12 @@ ${theme.include(body_bottom_include)}
 ${theme.include(bottom_include)}
 
 </html>
+
+#set ($VOID = $velocityPortletPreferences.setValue('display-style', '1')) 
+	#set ($VOID = $velocityPortletPreferences.setValue('portletSetupShowBorders', 'false')) 
+	$theme.runtime("p_complemento_WAR_Complementoportlet", '', $velocityPortletPreferences.toString()) 
+	#set ($VOID = $velocityPortletPreferences.reset()) 
+
+ <div style="">
+				${theme.runtime("58")}
+			</div>

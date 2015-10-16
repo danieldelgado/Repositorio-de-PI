@@ -1,8 +1,6 @@
 
 <nav class="navbar navbar-inverse" role="navigation">
-
-
- <div class="container">
+<div class="container">
             
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">

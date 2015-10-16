@@ -2065,4 +2065,12 @@ body > .lfr-menu-list, body > .lfr-menu-list ul, .lfr-actions, .aui-dialog-conte
   box-sizing: border-box; }
 
 /* This file allows you to override default styles in one central location for easier upgrade and maintenance. */
+.cbody {
+  padding-top: 5px; }
+
+.cbodyalt {
+  padding-top: 40px; }
+
+.footer {
+  border-top: 0px; }
 

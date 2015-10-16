@@ -1,5 +1,5 @@
 
-<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+<nav class="navbar navbar-inverse" role="navigation">
 
 
  <div class="container">
@@ -11,7 +11,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">${site_name}</a>
+                <a class="navbar-brand" href="${site_default_url}" title="<@liferay.language key="go-to" /> ${site_name}" >${site_name}</a>
             </div>
            
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -28,6 +28,9 @@
 						</li>
 					</#list>	
               	</ul>
+              	
+	       		<button class="btn btn-default navbar-btn navbar-right btnLogin" type="button">Login</button>
 	        </div>
+	        
 </div>
 </nav>

@@ -1,10 +1,11 @@
-/*.cbody {
-    padding-top: 70px;
+.cbody {
+	padding-top: 5px;
 }
 
 .cbodyalt {
-    padding-top: 102px;
+	padding-top: 40px;
 }
 
-.modal-footer {   border-top: 0px; }
-*/
+.footer {
+	border-top: 0px;
+}

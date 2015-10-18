@@ -1,0 +1,47 @@
+<div class="container" >
+	<div class="navbar-header " style="height: 80px; ">
+          <a href="$site_default_url" class="navbar-brand hidden-xs">$site_name</a>
+		  <div class="row">
+    		  <span class="visible-xs-block col-xs-9  ">
+                <h6><a href="$site_default_url" class="navbar-brand">$site_name</a></h6>
+              </span>
+              <button class="navbar-toggle col-xs-offset-1 " type="button" data-toggle="collapse" data-target="#navbar-main2">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+          </div>
+    </div>
+     <div class="navbar-collapse collapse" id="navbar-main2"
+		 <div class="navbar-collapse collapse" id="navbar-main">
+	          <ul class="nav navbar-nav">
+				#foreach ($nav_item in $nav_items)
+					#if ($nav_item.isSelected())
+						<li class="active">
+					#else
+						<li>
+					#end
+						<a href="$nav_item.getURL()" $nav_item.getTarget()><span>$nav_item.icon() $nav_item.getName()</span></a>					
+					</li>
+				#end
+				#if (!$is_signed_in)	
+					<li class="visible-xs-block hidden-md hidden-sm hidden-lg">
+						<a  id="loginUser2" href="javascript:;" class="ico_user button">Iniciar Sesi&oacute;n</a>
+					</li>
+				#else					
+					<li class="visible-xs-block hidden-md hidden-sm hidden-lg">
+						<a  id="" href="/c/portal/logout" class="ico_user button">Cerrar Sesi&oacute;n</a>
+					</li>
+				#end
+			</ul>
+	    </div>
+    </div>
+</div>
+#if ($is_signed_in)
+    <div class="hidden-xs hidden-md hidden-sm hidden-lg ">		
+        #set ($VOID = $velocityPortletPreferences.setValue("portlet-setup-show-borders", "false"))
+        #set ($customParams = "viewType=type_f1")
+        #set ($VOID = $theme.runtime("ListaSitios_WAR_ListaSitiosportlet", $customParams, $velocityPortletPreferences.toString()))    ## MODIFIED THIS LINE
+        $velocityPortletPreferences.reset()	
+    </div>
+#end

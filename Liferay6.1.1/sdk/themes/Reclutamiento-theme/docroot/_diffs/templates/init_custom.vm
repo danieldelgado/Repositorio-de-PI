@@ -1,0 +1,9 @@
+#*
+This file allows you to override and define new Velocity variables.
+*#
+
+
+#set ($myaccurl = $theme_display.getURLMyAccount().toString() + "&controlPanelCategory=my")
+#set ($state = $paramUtil.get($request, "p_p_state",""))
+#set ($struts_action = $paramUtil.get($request, "_58_struts_action",""))
+#set ($friendlyURL = $layout.getFriendlyURL())

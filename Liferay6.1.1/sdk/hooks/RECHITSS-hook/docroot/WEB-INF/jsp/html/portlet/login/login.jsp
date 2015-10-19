@@ -105,11 +105,8 @@
 				<div class="form-group">
 					<div class="container-fluid">	
 						<div class="row">
-							<div class="col-md-8">
-								<a href="<%=forgotPasswordURL%>">&iquest;Olvidaste tu
-									contrase&nacute;a?</a><br>
-							</div>
-							<div class="col-md-4">
+						
+							<div class="col-md-6">
 								<c:if
 									test="<%=company.isAutoLogin() && !PropsValues.SESSION_DISABLED%>">
 									<c:choose>
@@ -123,14 +120,21 @@
 									<label for="">Recordarme</label>						
 								</c:if>
 							</div>
-							
+						
+							<div class="col-md-6">
+								<a href="<%=forgotPasswordURL%>">&iquest;Olvidaste tu
+									contrase&nacute;a?</a><br>
+							</div>
 						</div>
 					</div>
 				</div>
-
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary btn-lg btn-block" value="<liferay-ui:message key="sign-in" />" />
-				</div>
+				</div>			
+				<div class="form-group">
+					<a class="btn btn-success btn-lg btn-block" href="/registro"><liferay-ui:message
+								key="login.registro.nuevo.usuario" /></a>
+				</div>					
 			</aui:fieldset>
 		</aui:form>
 

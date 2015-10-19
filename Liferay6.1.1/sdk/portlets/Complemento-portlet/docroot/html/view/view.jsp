@@ -8,6 +8,7 @@
 <!-- SLIDER REVOLUTION 4.x CSS SETTINGS -->
 <%-- <link rel="stylesheet" type="text/css" href="<c:url value='/css/bootstrap.css'/>" media="screen" /> --%>
 <link rel="stylesheet" type="text/css" href="<c:url value='/css/bootstrap.cerulean.min.css'/>" media="screen" />
+<link rel="stylesheet" type="text/css" href="<c:url value='/css/datepicker.css'/>" media="screen" />
 
 
 <!-- Custom Fonts 
@@ -26,3 +27,5 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>-->
 <script src="<c:url value='/js/jquery.js'/>" type="text/javascript"></script>
 <script src="<c:url value='/js/bootstrap.js'/>" type="text/javascript"></script>
+<script src="<c:url value='/js/bootstrap-datepicker.js'/>" type="text/javascript"></script>
+

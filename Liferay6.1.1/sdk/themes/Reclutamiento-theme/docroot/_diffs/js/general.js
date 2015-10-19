@@ -4,6 +4,9 @@ $(document).ready(function() {
 });
 
 function init() {
+	
+	addlinksdockbar();
+	
 	$("#loginUser,#loginUser2").click(function(e) {
 		
 		$("#loginModal").show();
@@ -22,7 +25,7 @@ function init() {
 		$("#loginUser,#loginUser2").trigger('click');
 	}
 	
-	addlinksdockbar();
+	
 	
 }
 

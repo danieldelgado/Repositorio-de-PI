@@ -41,7 +41,7 @@
 					<label for="nombre" class="col-lg-2 control-label"><%=PortletProps.get("form.nombre")%></label>
 					<div class="col-lg-10">
 						<input type="text" class="form-control" id="<portlet:namespace/>nombre" name="<portlet:namespace/>nombre"
-							placeholder="<%=PortletProps.get("form.nombre")%>">
+							placeholder="<%=PortletProps.get("form.nombre")%>"  value="Danielle" >
 					</div>
 				</div>
 				<div class="form-group">
@@ -49,7 +49,7 @@
 					<div class="col-lg-10">
 						<input type="text" class="form-control" id="<portlet:namespace/>apellidos"
 							name="<portlet:namespace/>apellidos"
-							placeholder="<%=PortletProps.get("form.apellidos")%>">
+							placeholder="<%=PortletProps.get("form.apellidos")%>" value="Delgado"  >
 					</div>
 				</div>
 
@@ -57,22 +57,22 @@
 					<label for="correo" class="col-lg-2 control-label"><%=PortletProps.get("form.correo")%></label>
 					<div class="col-lg-10">
 						<input type="text" class="form-control" id="<portlet:namespace/>correo" name="<portlet:namespace/>correo"
-							placeholder="<%=PortletProps.get("form.correo")%>">
+							placeholder="<%=PortletProps.get("form.correo")%>" value="daniel1234_14@hotmail.com"  >
 					</div>
 				</div>
 				<div class="form-group">
 					<label class="col-lg-2 control-label"><%=PortletProps.get("form.genero")%></label>
 					<div class="col-lg-10">
 						<div class="radio">
-							<label> <input type="radio" name="<portlet:namespace/>optionsRadios"
+							<label> <input type="radio" name="<portlet:namespace/>genero"
 								id="<portlet:namespace/>optionsRadios1"
-								value="<%=PortletProps.get("form.genero.femenino")%>" /> <%=PortletProps.get("form.genero.femenino")%>
+								value="<%=PortletProps.get("form.genero.femenino.value")%>" /> <%=PortletProps.get("form.genero.femenino")%>
 							</label>
 						</div>
 						<div class="radio">
-							<label> <input type="radio" name="<portlet:namespace/>optionsRadios"
+							<label> <input type="radio" name="<portlet:namespace/>genero"
 								id="<portlet:namespace/>optionsRadios2"
-								value="<%=PortletProps.get("form.genero.masculino")%>">
+								value="<%=PortletProps.get("form.genero.masculino.value")%>"  checked="checked" >
 								<%=PortletProps.get("form.genero.masculino")%>
 							</label>
 						</div>
@@ -82,7 +82,7 @@
 					<label for="dni" class="col-lg-2 control-label"><%=PortletProps.get("form.dni")%></label>
 					<div class="col-lg-10">
 						<input type="text" class="form-control" id="<portlet:namespace/>dni" name="<portlet:namespace/>dni"
-							placeholder="<%=PortletProps.get("form.dni")%>">
+							placeholder="<%=PortletProps.get("form.dni")%>" value="98765432" >
 					</div>
 				</div>
 				<div class="form-group">
@@ -142,11 +142,11 @@
 					<div class="col-lg-10">
 						<input type="password" class="form-control" id="<portlet:namespace/>password"
 							name="<portlet:namespace/>password"
-							placeholder="<%=PortletProps.get("form.password")%>">
+							placeholder="<%=PortletProps.get("form.password")%>" value="1234" >
 					</div>
 				</div>
 				<div class="form-group modal-footer">
-					<div class="col-lg-10 col-lg-offset-2">
+					<div class="col-xs-12 col-lg-10 col-lg-offset-2">
 						<button type="submit" class="btn btn-primary"><%=PortletProps.get("form.label.inscribir")%></button>
 					</div>
 				</div>

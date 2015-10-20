@@ -1,0 +1,39 @@
+https://www.liferay.com/es/web/meera.success/blog/-/blogs/liferay-portal-ssl-configuration
+https://www.liferay.com/es/community/forums/-/message_boards/message/25174346
+
+
+	<Resource
+	name="mail/MailSession"
+	auth="Container"
+	type="javax.mail.Session"
+	mail.imap.host="localhost"
+	mail.pop.host="localhost"
+	mail.store.protocol="imap"
+	mail.transport.protocol="smtp"
+	mail.smtp.host="smtp.gmail.com"
+	mail.smtp.port="465"
+	mail.smtp.auth="true"
+	mail.smtp.starttls.enable="true"
+	mail.smtp.user="danieldelgado20g@gmail.com"
+	password="DanielDelgado1234"
+	mail.smtp.socketFactory.class="javax.net.ssl.SSLSocketFactory"
+	/>
+	
+	
+#mail.session.jndi.name=mail/MailSession
+
+mail.session.mail.pop3.host=pop.gmail.com
+mail.session.mail.pop3.password=DanielDelgado1234
+mail.session.mail.pop3.port=110
+mail.session.mail.pop3.user=danieldelgado20g@gmail.com
+mail.session.mail.imap.host=imap.gmail.com
+mail.session.mail.imap.port=993
+mail.session.mail.store.protocol=imap
+mail.session.mail.transport.protocol=smtp
+mail.session.mail.smtp.host=smtp.gmail.com
+mail.session.mail.smtp.password=DanielDelgado1234
+mail.session.mail.smtp.user=danieldelgado20g@gmail.com
+mail.session.mail.smtp.port=465
+mail.session.mail.smtp.auth=true
+mail.session.mail.smtp.starttls.enable=true
+mail.session.mail.smtp.socketFactory.class=javax.net.ssl.SSLSocketFactory

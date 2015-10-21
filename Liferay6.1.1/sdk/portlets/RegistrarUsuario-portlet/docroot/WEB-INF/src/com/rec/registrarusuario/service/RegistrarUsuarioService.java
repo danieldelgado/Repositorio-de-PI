@@ -1,16 +1,28 @@
 package com.rec.registrarusuario.service;
 
-import java.util.Date;
 import java.util.Locale;
+import java.util.Map;
 
+import com.liferay.portal.DuplicateUserEmailAddressException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
+import com.rec.registrarusuario.util.DuplicateUserDNIException;
 
 public interface RegistrarUsuarioService {
 
-	User registrarUsuarioPostulante(long companyId, long groupId, int prefixId, int suffixId, String strNombre, String strApep, String strEmail, String strGenero, String nroDocumento,
-			Date dtFechaNacimiento, String strPassword,Locale locale, ServiceContext serviceContext ) throws SystemException, PortalException;
+	User registrarUsuarioPostulante(long creatorUserId, long companyId, boolean autoPassword,
+			String password1, String password2, boolean autoScreenName,
+			String screenName, String emailAddress, long facebookId,
+			String openId, Locale locale, String firstName, String middleName,
+			String lastName, int prefixId, int suffixId, boolean male,
+			int birthdayMonth, int birthdayDay, int birthdayYear,
+			String jobTitle, long[] groupIds, long[] organizationIds,
+			long[] roleIds, long[] userGroupIds, boolean sendEmail, Map<String, String> camposExtra,
+			ServiceContext serviceContext)throws DuplicateUserEmailAddressException,
+			DuplicateUserDNIException, SystemException, PortalException;
+
+
 
 }

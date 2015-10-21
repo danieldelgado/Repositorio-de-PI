@@ -1,7 +1,9 @@
 package com.rec.registrarusuario.controller;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -21,10 +23,15 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.model.Role;
+import com.liferay.portal.model.RoleConstants;
+import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.rec.registrarusuario.service.RegistrarUsuarioService;
+import com.rec.registrarusuario.util.ConstantesUtil;
+import com.rec.registrarusuario.util.DuplicateUserDNIException;
 
 @Controller
 @RequestMapping("VIEW")
@@ -47,42 +54,68 @@ public class RegistrarUsuarioController {
 		LOG.debug("registrarUsuario");
 
 		ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
-		long companyId = themeDisplay.getCompanyId();
-		long groupId = themeDisplay.getLayout().getGroupId();
-		Locale locale = themeDisplay.getLocale();
-	
-
-		int prefixId = 0;
-		int suffixId = 0;
-		
-		String strNombre = ParamUtil.getString(request, "nombre");
-		String strApep = ParamUtil.getString(request, "apellidos");
-		String strEmail = ParamUtil.getString(request, "correo");
-		String strGenero = ParamUtil.getString(request, "optionsRadios");
-		String nroDocumento = ParamUtil.getString(request, "dni");
-		String strFechaNacimiento = ParamUtil.getString(request, "fechanacimiento");
-		String strPassword = ParamUtil.getString(request, "password");
-		
-
-		
-		
-		
-		LOG.debug("strNombre:" + strNombre);
-		LOG.debug("strApep:" + strApep);
-		LOG.debug("strEmail:" + strEmail);
-		LOG.debug("strGenero:" + strGenero);
-		LOG.debug("nroDocumento:" + nroDocumento);
-		LOG.debug("strFechaNacimiento:" + strFechaNacimiento);
-		LOG.debug("strPassword:" + strPassword);
-		
+			
 		try {
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(request);
-			registrarUsuarioService.registrarUsuarioPostulante(companyId, groupId, prefixId, suffixId, strNombre, strApep, strEmail, strGenero, nroDocumento, new Date(), strPassword, locale, serviceContext);
+			
+			long creatorUserId = ConstantesUtil.CERO;
+			long companyId = themeDisplay.getCompanyId();
 
-		} catch (SystemException e) {
+			Role rol = RoleLocalServiceUtil.getRole(companyId, "POSTULANTE");
+			
+			long groupId = themeDisplay.getLayout().getGroupId();
+			long[] groupIds =  {groupId};
+			long[] organizationIds = null;
+			long[] roleIds = {rol.getRoleId()};
+			long[] userGroupIds = null;
+			
+			int prefixId = 0;
+			int suffixId = 0;
+
+			Locale locale = themeDisplay.getLocale();
+			String strNombre = ParamUtil.getString(request, "nombre");
+			String strApep = ParamUtil.getString(request, "apellidos");
+			String strEmail = ParamUtil.getString(request, "correo");
+			String strGenero = ParamUtil.getString(request, "optionsRadios");
+			String nroDocumento = ParamUtil.getString(request, "dni");
+			String strFechaNacimiento = ParamUtil.getString(request, "fechanacimiento");
+			boolean male = (strGenero.trim().equals(ConstantesUtil.GENERO_FEMENINO_LETRA) ? false : true);
+			String strPassword = ParamUtil.getString(request, "password");
+			
+			int birthdayMonth = (new Date()).getMonth();
+			int birthdayDay = (new Date()).getDay();
+			int birthdayYear = (new Date()).getYear();
+			String nombre_usuario = strNombre + strApep;
+			long facebookId = 0;
+			String openId = "";			
+			boolean autoPassword = false;			
+			boolean autoScreenName = false;
+			String jobTitle = "Postulante";
+			boolean sendEmail = false;
+			
+			Map<String, String> camposExtras = new HashMap<String, String>();
+			camposExtras.put(ConstantesUtil.CAMPO_PERSONALIZADO_DNI, nroDocumento);
+			
+
+			LOG.debug("strNombre:" + strNombre);
+			LOG.debug("strApep:" + strApep);
+			LOG.debug("strEmail:" + strEmail);
+			LOG.debug("strGenero:" + strGenero);
+			LOG.debug("nroDocumento:" + nroDocumento);
+			LOG.debug("strFechaNacimiento:" + strFechaNacimiento);
+			LOG.debug("strPassword:" + strPassword);
+					
+			registrarUsuarioService.registrarUsuarioPostulante(creatorUserId, companyId, autoPassword , strPassword, strPassword, autoScreenName, 
+					nombre_usuario, strEmail, facebookId, openId, locale, strNombre,  " " , strApep, prefixId, suffixId, 
+					male, birthdayMonth, birthdayDay, birthdayYear, jobTitle, groupIds, organizationIds, roleIds, userGroupIds, 
+					sendEmail, camposExtras, serviceContext);
+
+		} catch (DuplicateUserDNIException e) {
 			LOG.error("Error al registrar al nuevo usuario ", e);
 		} catch (PortalException e) {
-			LOG.error("Error del contexto del portlet ", e);
+			
+		} catch (SystemException e) {
+			
 		}
 
 	}

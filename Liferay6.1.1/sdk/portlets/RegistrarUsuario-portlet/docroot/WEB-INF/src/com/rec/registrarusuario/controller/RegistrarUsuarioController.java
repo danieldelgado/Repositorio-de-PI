@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Role;
-import com.liferay.portal.model.RoleConstants;
+import com.liferay.portal.model.User;
 import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
@@ -61,12 +61,11 @@ public class RegistrarUsuarioController {
 			long creatorUserId = ConstantesUtil.CERO;
 			long companyId = themeDisplay.getCompanyId();
 
-			Role rol = RoleLocalServiceUtil.getRole(companyId, "POSTULANTE");
 			
 			long groupId = themeDisplay.getLayout().getGroupId();
 			long[] groupIds =  {groupId};
 			long[] organizationIds = null;
-			long[] roleIds = {rol.getRoleId()};
+			long[] roleIds = null;
 			long[] userGroupIds = null;
 			
 			int prefixId = 0;
@@ -105,13 +104,13 @@ public class RegistrarUsuarioController {
 			LOG.debug("strFechaNacimiento:" + strFechaNacimiento);
 			LOG.debug("strPassword:" + strPassword);
 					
-			registrarUsuarioService.registrarUsuarioPostulante(creatorUserId, companyId, autoPassword , strPassword, strPassword, autoScreenName, 
+			User nuevoPostulante = registrarUsuarioService.registrarUsuarioPostulante(creatorUserId, companyId, autoPassword , strPassword, strPassword, autoScreenName, 
 					nombre_usuario, strEmail, facebookId, openId, locale, strNombre,  " " , strApep, prefixId, suffixId, 
 					male, birthdayMonth, birthdayDay, birthdayYear, jobTitle, groupIds, organizationIds, roleIds, userGroupIds, 
 					sendEmail, camposExtras, serviceContext);
 
 		} catch (DuplicateUserDNIException e) {
-			LOG.error("Error al registrar al nuevo usuario ", e);
+			LOG.error("Duplicado de DNI",e);
 		} catch (PortalException e) {
 			
 		} catch (SystemException e) {

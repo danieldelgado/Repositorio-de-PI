@@ -1,45 +1,35 @@
-$(document).ready(function() {
-	$("#loginModal").hide();
-	init();
-});
+var reclutamiento_theme;
+reclutamiento_theme = {};
 
-function init() {
-	
-	addlinksdockbar();
-	
+reclutamiento_theme.inicializarComponentes = function() {
+
 	$("#loginUser,#loginUser2").click(function(e) {
-		
 		$("#loginModal").show();
-		
 	});
-	
+
 	$(".close").click(function(e) {
 		$("#loginModal").hide();
 	});
-	
+
 	var action, porletId;
 	porletId = locationVar("p_p_id");
-	action = locationVar("_"+porletId+"_"+"struts_action");
-	
-	if(porletId == "58" && action == "%2Flogin%2Flogin"){
+	action = locationVar("_" + porletId + "_" + "struts_action");
+
+	if (porletId == "58" && action == "%2Flogin%2Flogin") {
 		$("#loginUser,#loginUser2").trigger('click');
 	}
-	
-	
-	
-}
 
+};
 
-
-function addlinksdockbar(){	
+reclutamiento_theme.addlinksdockbar = function() {
 	var p_p_id_ListaSitios_WAR_ListaSitiosportlet_ = $("#p_p_id_ListaSitios_WAR_ListaSitiosportlet_");
-	var portlet_body = $(p_p_id_ListaSitios_WAR_ListaSitiosportlet_).children(".portlet-body");
+	var portlet_body = $(p_p_id_ListaSitios_WAR_ListaSitiosportlet_).children(
+			".portlet-body");
 	portlet_body = $(portlet_body).children();
-	portlet_body = $(portlet_body).children();	
+	portlet_body = $(portlet_body).children();
 	var listaopciones = portlet_body.children("ul");
-	$("#navbar-main2 ul ").append($(listaopciones).html());	
-} 
-
+	$("#navbar-main2 ul ").append($(listaopciones).html());
+};
 
 function locationVar(vr) {
 	var src, vrs, paramVal;
@@ -53,7 +43,6 @@ function locationVar(vr) {
 				if (c - 1 == x && paramVal.indexOf('#') != '-1') {
 					paramVal = paramVal.substring(0, paramVal.length - 1);
 				}
-
 				return decodeURI(paramVal);
 				break;
 			}
@@ -61,3 +50,20 @@ function locationVar(vr) {
 		return false;
 	}
 }
+
+$.fn.serializeAllArray = function() {
+	var obj = {};
+
+	$('input', this).each(function() {
+		obj[this.name] = $(this).val();
+	});
+	return $.param(obj);
+};
+
+reclutamiento_theme.init = function() {
+	$("#loginModal").hide();
+	reclutamiento_theme.inicializarComponentes();
+	reclutamiento_theme.addlinksdockbar();
+};
+
+$(document).on('ready', reclutamiento_theme.init());

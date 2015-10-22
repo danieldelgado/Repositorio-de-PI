@@ -4,6 +4,7 @@ import java.util.Locale;
 import java.util.Map;
 
 import com.liferay.portal.DuplicateUserEmailAddressException;
+import com.liferay.portal.DuplicateUserScreenNameException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.User;
@@ -20,9 +21,12 @@ public interface RegistrarUsuarioService {
 			int birthdayMonth, int birthdayDay, int birthdayYear,
 			String jobTitle, long[] groupIds, long[] organizationIds,
 			long[] roleIds, long[] userGroupIds, boolean sendEmail, Map<String, String> camposExtra,
-			ServiceContext serviceContext)throws DuplicateUserEmailAddressException,
+			ServiceContext serviceContext) throws DuplicateUserEmailAddressException,
 			DuplicateUserDNIException, SystemException, PortalException;
 
+	int validarUsuarioNuevoPostulante(String usuario_postulante) throws SystemException ;
+
+	
 
 
 }

@@ -16,7 +16,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
-import com.liferay.portal.model.Role;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.service.RoleLocalServiceUtil;
@@ -45,7 +45,7 @@ public class RegistrarUsuarioServiceImpl implements RegistrarUsuarioService {
 
 		LOG.debug("registrarUsuarioPostulante");
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(User.class, PortalClassLoaderUtil.getClassLoader());
-		dynamicQuery.add(PropertyFactoryUtil.forName("emailAddress").eq(emailAddress));
+		dynamicQuery.add(PropertyFactoryUtil.forName(ConstantesUtil.EMAILADDRESS).eq(emailAddress));
 		long userexists = UserLocalServiceUtil.dynamicQueryCount(dynamicQuery);
 		LOG.debug("Existe correo : " + userexists);
 		if (userexists > ConstantesUtil.CERO) {
@@ -68,29 +68,41 @@ public class RegistrarUsuarioServiceImpl implements RegistrarUsuarioService {
 		dynamicQuery = DynamicQueryFactoryUtil.forClass(User.class, PortalClassLoaderUtil.getClassLoader());
 		dynamicQuery.add(PropertyFactoryUtil.forName(ConstantesUtil.SCREENNAME).eq(screenName));
 		userexists = UserLocalServiceUtil.dynamicQueryCount(dynamicQuery);
-		LOG.debug("Existe Screenname : " + dniExists);
+		LOG.debug("Existe Screenname : " + userexists);
 		if (dniExists > ConstantesUtil.CERO) {
 			LOG.error("Screenname Duplicado");
 			throw new DuplicateUserScreenNameException();
 		}
 
 		User nuevoPostulante = UserLocalServiceUtil.addUser(creatorUserId, companyId, autoPassword, password1, password2, autoScreenName, screenName, emailAddress, facebookId,
-				openId, locale, firstName, middleName, lastName, prefixId, suffixId, male, birthdayMonth, birthdayDay, birthdayYear, jobTitle, groupIds, organizationIds, roleIds,
+				openId, locale, firstName, middleName, lastName, prefixId, suffixId, male, birthdayMonth, birthdayDay, birthdayYear, jobTitle, groupIds, organizationIds, null,
 				userGroupIds, sendEmail, serviceContext);
 
 		ExpandoValueLocalServiceUtil.addValue(User.class.getName(), ExpandoTableConstants.DEFAULT_TABLE_NAME, ConstantesUtil.DNI, nuevoPostulante.getUserId(),
 				camposExtra.get(ConstantesUtil.DNI));
 
-		System.err.println(nuevoPostulante.getRoles());
+		LOG.debug("Postulante registrado al rol:" + roleIds);
 
-		Role rol = RoleLocalServiceUtil.getRole(companyId, "POSTULANTE");
-
-		long[] a = {rol.getRoleId()};
+		RoleLocalServiceUtil.setUserRoles(nuevoPostulante.getUserId(), roleIds);
 		
-		RoleLocalServiceUtil.setUserRoles(nuevoPostulante.getUserId(), a);
+		nuevoPostulante.setStatus(WorkflowConstants.STATUS_APPROVED);
+		
 		UserLocalServiceUtil.updateUser(nuevoPostulante);
+
 		LOG.debug("Nuevo usuario postulante registrado");
+
 		return nuevoPostulante;
 
 	}
+
+	@Override
+	public int validarUsuarioNuevoPostulante(String usuario_postulante) throws SystemException {		
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(User.class, PortalClassLoaderUtil.getClassLoader());
+		dynamicQuery.add(PropertyFactoryUtil.forName(ConstantesUtil.SCREENNAME).eq(usuario_postulante));
+		long userexists = UserLocalServiceUtil.dynamicQueryCount(dynamicQuery);
+		LOG.debug("Existe Screenname : " + userexists);		
+		return Long.valueOf(userexists).intValue();
+	}
+
+	
 }

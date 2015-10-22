@@ -22,34 +22,51 @@
 
 <portlet:defineObjects />
 
-<portlet:actionURL var="registrarUsuario" name="registrarUsuario">
-	<portlet:param name="" value=""></portlet:param>
-</portlet:actionURL>
+<input id="registrar_usuario_portlet" name="" type="hidden" value="<portlet:namespace/>" />
 
-<input id="" name="" type="hidden" value="<portlet:namespace/>" />
+<portlet:resourceURL var="registrarUsuario" id="registrarUsuario">
+	<portlet:param name="" value=""></portlet:param>
+</portlet:resourceURL>
+
+<portlet:resourceURL var="validarUsuarioPostulante" id="validarUsuarioPostulante" >
+	<portlet:param name="" value=""></portlet:param>
+</portlet:resourceURL>
+
+<input id="<portlet:namespace/>validarUsuarioPostulante" name="<portlet:namespace/>validarUsuarioPostulante" type="hidden" value="${validarUsuarioPostulante}" />
+<input id="<portlet:namespace/>registrarUsuario" name="<portlet:namespace/>registrarUsuario" type="hidden" value="${registrarUsuario}" />
 
 <div class="">
 	<div class="well bs-component">
-		<form id="<portlet:namespace/>FromregistrarUsuario"
-			name="<portlet:namespace/>FromregistrarUsuario"
+		<form id="<portlet:namespace/>fromregistrarUsuario"
+			name="<portlet:namespace/>fromregistrarUsuario"
 			class="form-horizontal" method="post" action="${registrarUsuario}">
 			<fieldset>
 				<legend>
 					<%=PortletProps.get("titulo.registrar.usuario")%>
 				</legend>
+								
+				<div class="form-group">
+					<label for="nombre" class="col-lg-2 control-label"><%=PortletProps.get("form.nombre.usuario")%></label>
+					<div class="col-lg-10">
+						<input type="text" class="form-control" id="<portlet:namespace/>nombre_usuario" name="<portlet:namespace/>nombre_usuario"
+							placeholder="<%=PortletProps.get("form.nombre.usuario")%>"  value="" disabled="disabled" >
+					</div>
+				</div>
+								
 				<div class="form-group">
 					<label for="nombre" class="col-lg-2 control-label"><%=PortletProps.get("form.nombre")%></label>
 					<div class="col-lg-10">
 						<input type="text" class="form-control" id="<portlet:namespace/>nombre" name="<portlet:namespace/>nombre"
-							placeholder="<%=PortletProps.get("form.nombre")%>"  value="Danielle" >
+							placeholder="<%=PortletProps.get("form.nombre")%>"  value="" >
 					</div>
 				</div>
+				
 				<div class="form-group">
 					<label for="apellidos" class="col-lg-2 control-label"><%=PortletProps.get("form.apellidos")%></label>
 					<div class="col-lg-10">
 						<input type="text" class="form-control" id="<portlet:namespace/>apellidos"
 							name="<portlet:namespace/>apellidos"
-							placeholder="<%=PortletProps.get("form.apellidos")%>" value="Delgado"  >
+							placeholder="<%=PortletProps.get("form.apellidos")%>" value=""  >
 					</div>
 				</div>
 
@@ -60,6 +77,15 @@
 							placeholder="<%=PortletProps.get("form.correo")%>" value="daniel1234_14@hotmail.com"  >
 					</div>
 				</div>
+
+				<div class="form-group">
+					<label for="correo" class="col-lg-2 control-label"><%=PortletProps.get("form.puesto.actual")%></label>
+					<div class="col-lg-10">
+						<input type="text" class="form-control" id="<portlet:namespace/>puestoactual" name="<portlet:namespace/>puestoactual"
+							placeholder="<%=PortletProps.get("form.puesto.actual")%>" value="Desarrollador web"  >
+					</div>
+				</div>
+				
 				<div class="form-group">
 					<label class="col-lg-2 control-label"><%=PortletProps.get("form.genero")%></label>
 					<div class="col-lg-10">
@@ -145,9 +171,17 @@
 							placeholder="<%=PortletProps.get("form.password")%>" value="1234" >
 					</div>
 				</div>
+				<div class="form-group">
+					<label for="password2" class="col-lg-2 control-label"><%=PortletProps.get("form.password.res")%></label>
+					<div class="col-lg-10">
+						<input type="password" class="form-control" id="<portlet:namespace/>password2"
+							name="<portlet:namespace/>password2"
+							placeholder="<%=PortletProps.get("form.password.res")%>" value="1234" >
+					</div>
+				</div>
 				<div class="form-group modal-footer">
 					<div class="col-xs-12 col-lg-10 col-lg-offset-2">
-						<button type="submit" class="btn btn-primary"><%=PortletProps.get("form.label.inscribir")%></button>
+						<button id="<portlet:namespace/>btnGuardar" type="button" class="btn btn-primary"><%=PortletProps.get("form.label.inscribir")%></button>
 					</div>
 				</div>
 			</fieldset>

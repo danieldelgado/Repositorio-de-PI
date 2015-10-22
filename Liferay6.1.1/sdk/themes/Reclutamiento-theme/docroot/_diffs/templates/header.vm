@@ -23,21 +23,44 @@
     </div>
 </header>
 
-#if($state.trim() !="maximized" && $struts_action.trim() !="/login/forgot_password")    		
+<input type="hidden" value=" 1= $state.trim() | 2= $struts_action.trim() "/>
+
+#set ($val1 = ( $state.trim() != "maximized") )
+<input type="hidden" value=" $val1 "/>
+
+#set ($val1 = ( $state.trim() == "" ) )
+<input type="hidden" value=" $val1 "/>
+
+
+#set ($val1 = ( ($state.trim() != "maximized" || $state.trim() == "" )) )
+<input type="hidden" value=" $val1 "/>
+
+#set ($val1 = ( $struts_action.trim() != "/login/forgot_password" ) )
+<input type="hidden" value=" $val1 "/>
+
+#set ($val1 = ( $struts_action.trim() == "" ) )
+<input type="hidden" value=" $val1 "/>
+
+#set ($val1 = ($struts_action.trim() != "/login/forgot_password"  || $struts_action.trim() == "") )
+<input type="hidden" value=" $val1 "/>
+
+#set ($val1 = ($state.trim() != "maximized" || $state.trim() == "" ) && ($struts_action.trim() != "/login/forgot_password"  || $struts_action.trim() == "") )
+<input type="hidden" value=" $val1 "/>
+
+
+#if(($state.trim() != "maximized" || $state.trim() == "" ) && ($struts_action.trim() != "/login/forgot_password"  || $struts_action.trim() == ""))    		
     <div id="loginModal" class="modal" tabindex="-1" role="dialog" aria-hidden="true">
     	<div class="modal-dialog">
     		<div class="modal-content">
     		  <div class="modal-header">
-    			  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    			  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
     			  <h1 class="text-center">Login</h1>
     		  </div>
-    		  <div class="modal-body">            		
-					#set ($loginPortletId = "58")
-        			#set ($queryString = "")
-        			$velocityPortletPreferences.setValue("portlet-setup-show-borders", "false")
-        			#set($restoreRenderingPortletContent = $theme.runtime($loginPortletId, $queryString , $velocityPortletPreferences.toString()))
-        			$restoreRenderingPortletContent
-        			$velocityPortletPreferences.reset()
+    		  <div class="modal-body">            	        			
+        			#set ($VOID = $velocityPortletPreferences.setValue("portlet-setup-show-borders", "false"))
+					#set ($customParams = "viewType=type_f1")
+					#set ($VOID = $theme.runtime("58", $customParams, $velocityPortletPreferences.toString()))   
+					$velocityPortletPreferences.reset()        			
     		  </div> 
 			  <div class="modal-footer">
                   <div class="col-md-12">

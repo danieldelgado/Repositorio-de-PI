@@ -4,12 +4,11 @@ import java.util.Locale;
 import java.util.Map;
 
 import com.liferay.portal.DuplicateUserEmailAddressException;
-import com.liferay.portal.DuplicateUserScreenNameException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
-import com.rec.registrarusuario.util.DuplicateUserDNIException;
+import com.rec.hitss.service.util.DuplicateUserDNIException;
 
 public interface RegistrarUsuarioService {
 

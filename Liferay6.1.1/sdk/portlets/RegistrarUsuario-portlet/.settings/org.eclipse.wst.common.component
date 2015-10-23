@@ -5,6 +5,9 @@
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/docroot/WEB-INF/src"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/docroot/WEB-INF/resource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/docroot/WEB-INF/test"/>
+        <dependent-module archiveName="RECHITSS-portlet-service.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/lib/RECHITSS-portlet/docroot/WEB-INF/lib/RECHITSS-portlet-service.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
         <property name="context-root" value="RegistrarUsuario-portlet"/>
         <property name="java-output-path" value="/RegistrarUsuario-portlet/docroot/WEB-INF/classes"/>
     </wb-module>

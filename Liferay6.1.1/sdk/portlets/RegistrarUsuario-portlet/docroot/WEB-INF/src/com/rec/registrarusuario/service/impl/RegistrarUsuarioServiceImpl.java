@@ -27,9 +27,10 @@ import com.liferay.portlet.expando.model.ExpandoTableConstants;
 import com.liferay.portlet.expando.model.ExpandoValue;
 import com.liferay.portlet.expando.service.ExpandoColumnLocalServiceUtil;
 import com.liferay.portlet.expando.service.ExpandoValueLocalServiceUtil;
+import com.rec.hitss.service.util.ConstantesPortalUtil;
+import com.rec.hitss.service.util.DuplicateUserDNIException;
 import com.rec.registrarusuario.service.RegistrarUsuarioService;
 import com.rec.registrarusuario.util.ConstantesUtil;
-import com.rec.registrarusuario.util.DuplicateUserDNIException;
 
 @Service("RegistrarUsuarioService")
 public class RegistrarUsuarioServiceImpl implements RegistrarUsuarioService {
@@ -48,7 +49,7 @@ public class RegistrarUsuarioServiceImpl implements RegistrarUsuarioService {
 		dynamicQuery.add(PropertyFactoryUtil.forName(ConstantesUtil.EMAILADDRESS).eq(emailAddress));
 		long userexists = UserLocalServiceUtil.dynamicQueryCount(dynamicQuery);
 		LOG.debug("Existe correo : " + userexists);
-		if (userexists > ConstantesUtil.CERO) {
+		if (userexists > ConstantesPortalUtil.CERO) {
 			LOG.error("Email Duplicado");
 			throw new DuplicateUserEmailAddressException();
 		}
@@ -56,11 +57,11 @@ public class RegistrarUsuarioServiceImpl implements RegistrarUsuarioService {
 		ExpandoColumn column = ExpandoColumnLocalServiceUtil.getDefaultTableColumn(companyId, User.class.getName(), ConstantesUtil.DNI);
 		dynamicQuery = DynamicQueryFactoryUtil.forClass(ExpandoValue.class, PortalClassLoaderUtil.getClassLoader())
 				.add(PropertyFactoryUtil.forName(ConstantesUtil.COLUMNID).eq(GetterUtil.getLong(column.getColumnId())))
-				.add(PropertyFactoryUtil.forName(ConstantesUtil.DATA).eq(camposExtra.get(ConstantesUtil.DNI)))
+				.add(PropertyFactoryUtil.forName(ConstantesPortalUtil.DATA).eq(camposExtra.get(ConstantesUtil.DNI)))
 				.add(PropertyFactoryUtil.forName(ConstantesUtil.CLASSNAMEID).eq(GetterUtil.getLong(ClassNameLocalServiceUtil.getClassNameId(User.class.getName()))));
 		long dniExists = ExpandoValueLocalServiceUtil.dynamicQueryCount(dynamicQuery);
 		LOG.debug("Existe DNI : " + dniExists);
-		if (dniExists > ConstantesUtil.CERO) {
+		if (dniExists > ConstantesPortalUtil.CERO) {
 			LOG.error("DNI Duplicado");
 			throw new DuplicateUserDNIException();
 		}
@@ -69,7 +70,7 @@ public class RegistrarUsuarioServiceImpl implements RegistrarUsuarioService {
 		dynamicQuery.add(PropertyFactoryUtil.forName(ConstantesUtil.SCREENNAME).eq(screenName));
 		userexists = UserLocalServiceUtil.dynamicQueryCount(dynamicQuery);
 		LOG.debug("Existe Screenname : " + userexists);
-		if (dniExists > ConstantesUtil.CERO) {
+		if (dniExists > ConstantesPortalUtil.CERO) {
 			LOG.error("Screenname Duplicado");
 			throw new DuplicateUserScreenNameException();
 		}

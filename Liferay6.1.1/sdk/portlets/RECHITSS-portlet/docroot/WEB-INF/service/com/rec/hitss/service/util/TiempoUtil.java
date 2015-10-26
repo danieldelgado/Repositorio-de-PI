@@ -9,7 +9,12 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
 public class TiempoUtil {
+	
+	private static Log LOG = LogFactoryUtil.getLog(TiempoUtil.class);
 	
 	public static boolean isFechaValida(Date fecha) {
 		return fecha != null;
@@ -178,8 +183,7 @@ public class TiempoUtil {
 			try {
 				return formato.parse(fecha);
 			} catch (ParseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				LOG.error("ParseException", e);
 			}
 		}
 		return null;
@@ -191,8 +195,7 @@ public class TiempoUtil {
 			try {
 				return formato.parse(fecha);
 			} catch (ParseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				LOG.error("ParseException", e);
 			}
 		}
 		return null;
@@ -204,7 +207,7 @@ public class TiempoUtil {
 			try {
 				return formato.parse(fecha);
 			} catch (ParseException e) {
-				e.printStackTrace();
+				LOG.error("ParseException", e);
 			}
 		}
 		return null;
@@ -221,7 +224,7 @@ public class TiempoUtil {
 			try {
 				return formato.parse(fecha);
 			} catch (ParseException e) {
-				e.printStackTrace();
+				LOG.error("ParseException", e);
 			}
 		}
 		return null;
@@ -233,7 +236,7 @@ public class TiempoUtil {
 			try {
 				return formato.parse(fecha);
 			} catch (ParseException e) {
-				e.printStackTrace();
+				LOG.error("ParseException", e);
 			}
 		}
 		return null;

@@ -4,13 +4,9 @@ registrar_usuario_portlet = {};
 
 registrar_usuario_portlet.inicializarComponentes = function() {
 
-	var fechadia = $(".fechadia");
-	var fechames = $(".fechames");
-	var fechaanno = $(".fechaanno");
-
-	selectItem(fechadia);
-	selectItem(fechames);
-	selectItem(fechaanno);
+	$("#" + registrar_usuario_portlet_namespace + "fechanacimiento").combodate();
+	$(".combodate").addClass(" btn-group btn-group-justified ");
+	$(".combodate select").addClass("btn btn-default");
 
 	var nombre = $("#" + registrar_usuario_portlet_namespace + "nombre");
 	$(nombre).keyup(function(e) {
@@ -53,28 +49,45 @@ function validarUsuario(str) {
 }
 
 function registrarPostulanteInscrito() {
-	var fromregistrarUsuario = $("#" + registrar_usuario_portlet_namespace+ "fromregistrarUsuario");
-	fromregistrarUsuario = fromregistrarUsuario.serializeAllArray();	
-	console.log(fromregistrarUsuario);
+
+	var fromregistrarUsuario = $("#" + registrar_usuario_portlet_namespace + "fromregistrarUsuario");	
+	fromregistrarUsuario = fromregistrarUsuario.serializeAllArray();
 	
+	validarFormulario();
+
 	var registrarUsuario = $("#" + registrar_usuario_portlet_namespace + "registrarUsuario").val();
-	console.log(registrarUsuario);
 
-//	$('input[disabled]').each( function() {
-//		fromregistrarUsuario = fromregistrarUsuario + '&' + $(this).attr('name') + '=' + $(this).val();
-//    });
-
-	
 	$.ajax({
 		type : "POST",
 		dataType : "json",
 		url : registrarUsuario,
-		data : fromregistrarUsuario ,
+		data : fromregistrarUsuario,
 		success : function(data) {
 			console.log(data);
 		}
 	});
 }
+
+function validarFormulario() {
+
+	var usuario = $("#"	+ registrar_usuario_portlet_namespace + "nombre_usuario").val();
+	if(isnullText(usuario)){
+		
+	}
+	var nombre = $("#"	+ registrar_usuario_portlet_namespace + "nombre").val();
+	var apellidos = $("#"	+ registrar_usuario_portlet_namespace + "apellidos").val();
+	var correo = $("#"	+ registrar_usuario_portlet_namespace + "correo").val();
+	var puestoactual = $("#"	+ registrar_usuario_portlet_namespace + "puestoactual").val();
+	var genero = $("#"	+ registrar_usuario_portlet_namespace + "genero").val();
+	var dni = $("#"	+ registrar_usuario_portlet_namespace + "dni").val();
+	var fechanacimiento = $("#"	+ registrar_usuario_portlet_namespace + "fechanacimiento").val();
+	var password = $("#"	+ registrar_usuario_portlet_namespace + "password").val();
+	var password2 = $("#"	+ registrar_usuario_portlet_namespace + "password2").val();
+	
+	
+	
+}
+
 
 function generarUsuario() {
 	var nombre_usuario = $("#" + registrar_usuario_portlet_namespace
@@ -98,18 +111,6 @@ function generarUsuario() {
 	validarUsuario(usuario);
 
 };
-
-function selectItem(selectitem) {
-	var label = $(selectitem).children("a");
-	var item = $(selectitem).find("li");
-	$(item).each(function(idx, val) {
-		var itema = $(this).children("a");
-		$(itema).click(function(e) {
-			var valueItem = $(itema).html();
-			$(label).html(valueItem + "<span class='caret'></span>");
-		});
-	});
-}
 
 registrar_usuario_portlet.init = function() {
 

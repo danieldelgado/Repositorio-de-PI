@@ -39,6 +39,7 @@ import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.rec.hitss.service.util.ConstantesPortalUtil;
 import com.rec.hitss.service.util.DuplicateUserDNIException;
+import com.rec.hitss.service.util.TiempoUtil;
 import com.rec.hitss.service.util.ValidateUtil;
 import com.rec.registrarusuario.service.RegistrarUsuarioService;
 import com.rec.registrarusuario.util.ConstantesUtil;
@@ -54,8 +55,7 @@ public class RegistrarUsuarioController {
 
 	@RenderMapping()
 	public String get(RenderRequest request, RenderResponse response, Model model) {
-		LOG.debug("Incio");
-
+		LOG.debug("get Incio");	
 		return "view";
 	}
 
@@ -69,14 +69,13 @@ public class RegistrarUsuarioController {
 		
 		JSONObject respuestaRegistro = JSONFactoryUtil.createJSONObject();
 		
+		Map<String, String> objValidacion = null;
+		
 		try {
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(request);
 
 			int prefixId = 0;
 			int suffixId = 0;
-			int birthdayMonth = (new Date()).getMonth();
-			int birthdayDay = (new Date()).getDay();
-			int birthdayYear = (new Date()).getYear();
 
 			long facebookId = 0;
 			String openId = StringPool.BLANK;
@@ -109,7 +108,9 @@ public class RegistrarUsuarioController {
 			boolean male = (strGenero.trim().equals(ConstantesUtil.GENERO_FEMENINO_LETRA) ? false : true);
 			boolean autoPassword = false;
 			String strPassword = ParamUtil.getString(request, "password");
-			String strPassword2 = ParamUtil.getString(request, "password2");
+			String strPassword2 = ParamUtil.getString(request, "password2");			
+			
+			
 			Map<String, String> camposExtras = new HashMap<String, String>();
 			camposExtras.put(ConstantesUtil.CAMPO_PERSONALIZADO_DNI, nroDocumento);
 
@@ -128,17 +129,24 @@ public class RegistrarUsuarioController {
 			LOG.debug("strPassword2:" + strPassword2);
 			LOG.debug("camposExtras:" + camposExtras);
 
-			Map<String, String> objValidacion = validarRegistroUsuario(strNombre, strApep, strUsuario, strEmail, puestoactual, strGenero, nroDocumento, strFechaNacimiento,
+			objValidacion = validarRegistroUsuario(strNombre, strApep, strUsuario, strEmail, puestoactual, strGenero, nroDocumento, strFechaNacimiento,
 					strPassword, strPassword2);
-
-			System.out.println(objValidacion);
-			
+						
 			if (objValidacion.get(ConstantesPortalUtil.MENSAJE_CORRECTO).equals(ConstantesPortalUtil.MENSAJE_OK)) {
 				LOG.debug("Campos validos:");
 				String[] nombres = strNombre.split(StringPool.SPACE);
 				strNombre = nombres[0];
 				String strSegundoNombre = (nombres.length > ConstantesPortalUtil.CERO) ? StringPool.BLANK : nombres[1];
 
+				Date fechanacimiento = TiempoUtil.getFechaStringDate(strFechaNacimiento);			
+				int birthdayMonth = fechanacimiento.getMonth();
+				int birthdayDay = fechanacimiento.getDay();
+				int birthdayYear = fechanacimiento.getYear();
+
+				LOG.debug("fechanacimiento:" + fechanacimiento);
+
+				System.out.println(objValidacion);
+				
 				User nuevoPostulante = registrarUsuarioService.registrarUsuarioPostulante(creatorUserId, companyId, autoPassword, strPassword, strPassword2, autoScreenName,
 						strUsuario, strEmail, facebookId, openId, locale, strNombre, strSegundoNombre, strApep, prefixId, suffixId, male, birthdayMonth, birthdayDay, birthdayYear,
 						puestoactual, groupIds, organizationIds, roleIds, userGroupIds, sendEmail, camposExtras, serviceContext);
@@ -150,14 +158,17 @@ public class RegistrarUsuarioController {
 			}
 
 		} catch (DuplicateUserEmailAddressException e) {
-			LOG.error("DuplicateUserEmailAddressException", e);
-
+			objValidacion.put(ConstantesPortalUtil.MENSAJE_CORRECTO, ConstantesPortalUtil.MENSAJE_NO_OK);
+			objValidacion.put(ConstantesUtil.CAMPO_CORREO_DUPLICADO_MESAJE_ERROR, ConstantesUtil.CORREO_DUPLICADO_MESAJE_ERROR);			
+			LOG.error("DuplicateUserEmailAddressException Error con Email", e);
 		} catch (DuplicateUserDNIException e) {
+			objValidacion.put(ConstantesPortalUtil.MENSAJE_CORRECTO, ConstantesPortalUtil.MENSAJE_NO_OK);
+			objValidacion.put(ConstantesUtil.CAMPO_DNI_DUPLICADO_MESAJE_ERROR, ConstantesUtil.DNI_DUPLICADO_MESAJE_ERROR);			
 			LOG.error("DuplicateUserDNIException", e);
-
 		} catch (DuplicateUserScreenNameException e) {
+			
+			
 			LOG.error("DuplicateUserScreenNameException", e);
-
 		} catch (PortalException e) {
 			LOG.error("PortalException", e);
 
@@ -173,72 +184,63 @@ public class RegistrarUsuarioController {
 	private Map<String, String> validarRegistroUsuario(String strNombre, String strApep, String strUsuario, String strEmail, String puestoactual, String strGenero,
 			String nroDocumento, String strFechaNacimiento, String strPassword, String strPassword2) {
 		Map<String, String> objValidacion = new LinkedHashMap<String, String>();
-		LOG.debug("validarRegistroUsuario :");
 		objValidacion.put(ConstantesPortalUtil.MENSAJE_CORRECTO, ConstantesPortalUtil.MENSAJE_OK);
+		LOG.debug("validarRegistroUsuario :");
 
-		if (ValidateUtil.esValCadena(strNombre)) {
-			objValidacion.put(ConstantesPortalUtil.MENSAJE_CORRECTO, ConstantesPortalUtil.MENSAJE_OK);
-		}else{
+		if(!ValidateUtil.esValCadena(strNombre)) {		
 			LOG.debug("Error con strNombre:"+strNombre);
 			objValidacion.put(ConstantesPortalUtil.MENSAJE_CORRECTO, ConstantesPortalUtil.MENSAJE_NO_OK);
-			objValidacion.put(ConstantesUtil.CAMPO_NOMBRES_MESAJE_ERROR, ConstantesUtil.NOMBRES_MESAJE_ERROR);	
-			
+			objValidacion.put(ConstantesUtil.CAMPO_NOMBRES_MESAJE_ERROR, ConstantesUtil.NOMBRES_MESAJE_ERROR);				
 		}
 		
-		if (ValidateUtil.esValCadena(strApep)) {
-			objValidacion.put(ConstantesPortalUtil.MENSAJE_CORRECTO, ConstantesPortalUtil.MENSAJE_OK);
-		}else{
+		if (!ValidateUtil.esValCadena(strApep)) {		
 			LOG.debug("Error con strApep:"+strApep);
 			objValidacion.put(ConstantesPortalUtil.MENSAJE_CORRECTO, ConstantesPortalUtil.MENSAJE_NO_OK);
 			objValidacion.put(ConstantesUtil.CAMPO_APELIIDOS_MESAJE_ERROR, ConstantesUtil.APELIIDOS_MESAJE_ERROR);	
 			
 		}
 		
-		if (ValidateUtil.esCorreo(strEmail)) {
-			objValidacion.put(ConstantesPortalUtil.MENSAJE_CORRECTO, ConstantesPortalUtil.MENSAJE_OK);
-		}else{
+		if (!ValidateUtil.esCorreo(strEmail)) {
 			LOG.debug("Error con strEmail:"+strEmail);
 			objValidacion.put(ConstantesPortalUtil.MENSAJE_CORRECTO, ConstantesPortalUtil.MENSAJE_NO_OK);
-			objValidacion.put(ConstantesUtil.CAMPO_CORRREO_MESAJE_ERROR, ConstantesUtil.CORRREO_MESAJE_ERROR);
-			
+			objValidacion.put(ConstantesUtil.CAMPO_CORREO_MESAJE_ERROR, ConstantesUtil.CORREO_MESAJE_ERROR);			
 		}
 		
-		if (ValidateUtil.esValCadena(puestoactual)) {
-			objValidacion.put(ConstantesPortalUtil.MENSAJE_CORRECTO, ConstantesPortalUtil.MENSAJE_OK);
-		}else{
+		if (!ValidateUtil.esValCadena(puestoactual)) {
 			LOG.debug("Error con puestoactual:"+puestoactual);
 			objValidacion.put(ConstantesPortalUtil.MENSAJE_CORRECTO, ConstantesPortalUtil.MENSAJE_NO_OK);
 			objValidacion.put(ConstantesUtil.CAMPO_PUESTO_MESAJE_ERROR, ConstantesUtil.PUESTO_MESAJE_ERROR);		
 			
 		}
 				
-		if (ValidateUtil.esDni(nroDocumento)) {
-			objValidacion.put(ConstantesPortalUtil.MENSAJE_CORRECTO, ConstantesPortalUtil.MENSAJE_OK);
-		}else{
+		if (!ValidateUtil.esDni(nroDocumento)) {
 			LOG.debug("Error con nroDocumento:"+nroDocumento);
 			objValidacion.put(ConstantesPortalUtil.MENSAJE_CORRECTO, ConstantesPortalUtil.MENSAJE_NO_OK);
 			objValidacion.put(ConstantesUtil.CAMPO_DNI_MESAJE_ERROR, ConstantesUtil.DNI_MESAJE_ERROR);		
 			
 		}
 		
-		if (ValidateUtil.isNotNull(strFechaNacimiento)) {
-			objValidacion.put(ConstantesPortalUtil.MENSAJE_CORRECTO, ConstantesPortalUtil.MENSAJE_OK);
-		}else{
+		if (!ValidateUtil.isNotNull(strFechaNacimiento)) {
 			LOG.debug("Error con strFechaNacimiento:"+strFechaNacimiento);
 			objValidacion.put(ConstantesPortalUtil.MENSAJE_CORRECTO, ConstantesPortalUtil.MENSAJE_NO_OK);
 			objValidacion.put(ConstantesUtil.CAMPO_FECHA_MESAJE_ERROR, ConstantesUtil.FECHA_MESAJE_ERROR);		
 			
+		}else{
+			try {
+				TiempoUtil.getFechaStringDate(strFechaNacimiento);
+			} catch (Exception e) {
+				LOG.debug("Error con strFechaNacimiento:"+strFechaNacimiento);
+				objValidacion.put(ConstantesPortalUtil.MENSAJE_CORRECTO, ConstantesPortalUtil.MENSAJE_NO_OK);
+				objValidacion.put(ConstantesUtil.CAMPO_FECHA_MESAJE_ERROR, ConstantesUtil.FECHA_MESAJE_ERROR);		
+			}
 		}
 		
 		if (ValidateUtil.esValCadena(strPassword)) {
 			if (ValidateUtil.esValCadena(strPassword2)) {
-				if(strPassword.trim().equals(strPassword2.trim())){
-					objValidacion.put(ConstantesPortalUtil.MENSAJE_CORRECTO, ConstantesPortalUtil.MENSAJE_OK);
-				}else{
+				if(!(strPassword.trim().equals(strPassword2.trim()))){
 					LOG.debug("No conincide los passwords con strPassword2:"+strPassword2);
 					objValidacion.put(ConstantesPortalUtil.MENSAJE_CORRECTO, ConstantesPortalUtil.MENSAJE_NO_OK);
-					objValidacion.put(ConstantesUtil.CAMPO_PASSWORD_COMPARAR_MESAJE_ERROR, ConstantesUtil.PASSWORD_COMPARAR_MESAJE_ERROR);		
-					
+					objValidacion.put(ConstantesUtil.CAMPO_PASSWORD_COMPARAR_MESAJE_ERROR, ConstantesUtil.PASSWORD_COMPARAR_MESAJE_ERROR);
 				}
 			}else{
 				LOG.debug("No se ingreso strPassword2:"+strPassword2);
@@ -250,7 +252,8 @@ public class RegistrarUsuarioController {
 			objValidacion.put(ConstantesPortalUtil.MENSAJE_CORRECTO, ConstantesPortalUtil.MENSAJE_NO_OK);
 			objValidacion.put(ConstantesUtil.CAMPO_PASSWORD_MESAJE_ERROR, ConstantesUtil.PASSWORD_MESAJE_ERROR);	
 		}
-
+		
+		
 		return objValidacion;
 	}
 
@@ -271,9 +274,7 @@ public class RegistrarUsuarioController {
 		JSONObject json = JSONFactoryUtil.createJSONObject();
 		json.put("existen", existen);
 		json.put("count", count);
-
 		LOG.debug("jsonrespuesta :" + json.toString());
-
 		response.getWriter().write(json.toString());
 	}
 

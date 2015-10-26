@@ -65,10 +65,23 @@ public class AsciiUtils {
      }
     
     
-//    public static void main(String[] args) {
-//		
-//    	System.out.println(convertNonAscii("J�se"));
-//    	
-//	}
+    public static void main(String[] args) {
+
+//    	System.out.println(convertNonAscii("ZñÑáéíóúÁÉÍÓÚüÜ"));
+    	System.out.println(_convertNonAscii("[a-zA-ZñÑáéíóúÁÉÍÓÚüÜ\\s-]{1,100}"));
+    	System.out.println(_convertNonAscii("[a-zA-Z0-9._-]{1,14}"));
+    	System.out.println(_convertNonAscii("[a-zA-ZñÑáéíóúÁÉÍÓÚüÜ0-9\\s-']{1,30}"));
+    	System.out.println(_convertNonAscii("[a-zA-ZñÑáéíóúÁÉÍÓÚüÜ0-9\\s-']{1,30},* [a-zA-ZñÑáéíóúÁÉÍÓÚüÜ0-9\\s-']{1,60}"));
+    	System.out.println(_convertNonAscii("[a-zA-ZñÑáéíóúÁÉÍÓÚüÜ0-9\\s-']{1,150}"));
+    	System.out.println(_convertNonAscii("[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}"));
+    	System.out.println(_convertNonAscii("[a-zA-ZñÑ0-9]{9,12}"));
+    	System.out.println(_convertNonAscii("a-zA-ZñÑ0-9]{9,12}"));
+    	System.out.println(_convertNonAscii("[a-zA-ZñÑ0-9-]{1,500}"));
+    	System.out.println(_convertNonAscii("[a-zA-ZñÑáéíóúÁÉÍÓÚüÜ-]{1,100}"));
+    	
+    	ValidateUtil.validar("[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}", "daniel1q234_14@hotmail.com");
+    	
+    	
+	}
     
 }

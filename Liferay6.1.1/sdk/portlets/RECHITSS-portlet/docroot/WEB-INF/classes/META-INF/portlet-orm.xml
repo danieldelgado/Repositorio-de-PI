@@ -34,7 +34,7 @@
 		</attributes>
 	</mapped-superclass>
 	<entity class="com.rec.hitss.service.model.impl.FooImpl" name="Foo">
-		<table name="SAMPLE_Foo" />
+		<table name="RECHITSS_Foo" />
 		<attributes />
 	</entity>
 </entity-mappings>

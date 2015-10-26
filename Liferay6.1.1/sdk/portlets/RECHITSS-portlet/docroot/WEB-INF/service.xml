@@ -2,9 +2,9 @@
 <!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 6.1.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_6_1_0.dtd">
 <service-builder package-path="com.rec.hitss.service">
 	<author>Danielle</author>
-	<namespace>SAMPLE</namespace>
+	<namespace>RECHITSS</namespace>
 
-	<entity name="Foo" local-service="false" remote-service="false" data-source="no_data_source" >
+	<entity name="Foo" local-service="false" remote-service="false"  >
 
 		<!-- PK fields -->
 

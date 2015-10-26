@@ -15,7 +15,7 @@
 package com.rec.hitss.service.model;
 
 /**
- * The extended model interface for the Foo service. Represents a row in the &quot;SAMPLE_Foo&quot; database table, with each column mapped to a property of this class.
+ * The extended model interface for the Foo service. Represents a row in the &quot;RECHITSS_Foo&quot; database table, with each column mapped to a property of this class.
  *
  * @author Danielle
  * @see FooModel

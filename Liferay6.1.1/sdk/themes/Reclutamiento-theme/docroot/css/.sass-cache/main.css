@@ -1523,7 +1523,7 @@ body.portlet {
 
 /* ---------- Actions button ---------- */
 .lfr-actions.lfr-extended, .lfr-actions.lfr-extended ul {
-  background: white url(../images/forms/button.png) repeat-x 0 100%;
+  /* 		background: #FFF url(../images/forms/button.png) repeat-x 0 100%; */
   border: 1px solid;
   border-color: #DEDEDE #BFBFBF #BFBFBF #DEDEDE; }
 .lfr-actions ul {
@@ -1607,7 +1607,7 @@ body.portlet {
   background-color: #FFF; }
 .taglib-calendar .calendar-current-day a {
   border: 1px solid #727C81;
-  color: #369;
+  /* 			color: #369; */
   text-decoration: underline; }
 
 .ie .portlet-borderless-bar {
@@ -1695,13 +1695,8 @@ input {
   background: #FFF; }
 
 /* input[type="text"], input[type="password"], input[type="file"], input[type="submit"], input[type="button"], input[type="reset"], select, textarea, .textarea, button, .aui-field-input-text { */
-/*   background-image: url(../images/forms/input_shadow.png); */
-/*   background-repeat: no-repeat; */
-/*   border: 1px solid; */
-/*   border-color: #BFBFBF #DEDEDE #DEDEDE #BFBFBF; */
-/*   font: 1em Arial, Helvetica, Verdana, sans-serif; */
-/*   padding: 5px 1px; } */
-
+/* 	@include input-field-default; */
+/* } */
 select {
   padding: 1px; }
 
@@ -1710,17 +1705,14 @@ input[type="image"] {
   border: none;
   padding: 0; }
 
-/* input[type="submit"], input[type="button"], input[type="reset"], button { */
-/*   background: #d4d4d4 url(../images/portlet/header_bg.png) repeat-x 0 0; */
-/*   border: 1px solid; */
-/*   border-color: #C8C9CA #9E9E9E #9E9E9E #C8C9CA; */
-/*   color: #34404F; */
-/*   cursor: pointer; */
-/*   font-weight: bold; */
-/*   overflow: visible; */
-/*   padding: 5px; */
-/*   text-shadow: 1px 1px #FFF; */
-/*   width: auto; } */
+input[type="submit"], input[type="button"], input[type="reset"], button {
+  /* 	@include button-default; */
+  /* 	&:hover { */
+  /* 		@include button-hover; */
+  /* 	} */
+  /* 	&:focus { */
+  /* 		@include button-focus; */
+  /* 	} */ }
 
 input.focus, textarea.focus {
   background: #FFC none;
@@ -1747,13 +1739,18 @@ input.focus, textarea.focus {
   color: #555;
   opacity: 0.5; }
 .lfr-actions.lfr-extended:hover, .lfr-actions.lfr-extended:hover ul {
-  background: #b9ced9 url(../images/application/state_hover_bg.png) repeat-x 0 0;
-  border-color: #627782;
-  color: #369; }
+  /* 	background: #B9CED9 url(../images/application/state_hover_bg.png) repeat-x 0 0; */
+  /* 	border-color: #627782; */
+  /* 	color: #369; */ }
 
 .lfr-actions.disabled .taglib-text {
   color: #A9A9A9; }
 
+.aui-button-disabled input[type], .aui-button-disabled input[type]:hover, .aui-button-disabled input[type]:focus, .aui-button-disabled button, .aui-button-disabled button:hover, .aui-button-disabled button:focus {
+  background: #d4d4d4 url(../images/portlet/header_bg.png) repeat-x 0 0;
+  border-color: #C8C9CA #9E9E9E #9E9E9E #C8C9CA;
+  color: #555;
+  opacity: 0.5; }
 
 .aui-buttonitem-disabled {
   background: #d4d4d4 url(../images/portlet/header_bg.png) repeat-x 0 0;
@@ -1872,13 +1869,8 @@ input.aui-form-validator-error, textarea.aui-form-validator-error, select.aui-fo
   border-radius: 1px 4px 4px 1px; }
 
 /* body > .lfr-menu-list, body > .lfr-menu-list ul, .lfr-actions, .aui-dialog-content, .aui-dialog .yui3-widget-hd, .modify-pages .delete-tab, input[type="submit"], input[type="button"], input[type="reset"], button, .tags-search-combobox .aui-field-input-text, .staging-icon-menu-container .staging-icon-menu.lfr-actions .lfr-trigger strong a, .active-area-proxy, .portlet-document-library .document-display-style .document-thumbnail img, .portlet-document-library-display .document-display-style .document-thumbnail img, .aui-paginator-link, .lfr-header-row .aui-toolbar-only, .lfr-translation-manager, .lfr-translation-manager-translation, .select-documents, .select-files, .taglib-ratings.stars:hover, .taglib-ratings.stars:hover .liferay-rating-vote, .rule-group-instance-container .rule-group-instance, .portlet-search .search-facet .facet-value, .lfr-api-results { */
-/*   -moz-border-radius: 4px; */
-/*   -webkit-border-radius: 4px; */
-/*   -o-border-radius: 4px; */
-/*   -ms-border-radius: 4px; */
-/*   -khtml-border-radius: 4px; */
-/*   border-radius: 4px; } */
-
+/* 	@include border-radius(4px); */
+/* } */
 .lfr-header-row .aui-toolbar-content, .lfr-search-combobox, .select-documents, .select-files, .portlet-document-library div.document-display-style, .lfr-upload-container .upload-target, .lfr-upload-container .upload-file, .portlet-document-library .common-file-metadata-container.selected, .portlet-document-library-display .common-file-metadata-container.selected {
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;

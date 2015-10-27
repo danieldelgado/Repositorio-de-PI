@@ -10,6 +10,7 @@
 	<link rel="stylesheet" href="$css_folder/style.css">
 	
 	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
@@ -89,6 +90,14 @@ $theme.include($body_top_include)
 </footer>
 </div>
 	<script src="${javascript_folder}/general.js"></script>
+	
+        
+	<script src="${javascript_folder}/validate.js"></script>
+	
+	<script>
+		inicializarPatrones({"val_limite_cadena":"$val_limite_cadena","val_id_compuesto":"$val_id_compuesto",	"val_nombre":"$val_nombre", "val_direccion":"$val_direccion","val_email":"$val_email","val_telefono":"$val_telefono",	"val_celular":"$val_celular","val_dni":"$val_dni","val_ruc":"$val_ruc","val_carnet_extranjeria":"$val_carnet_extranjeria","val_pasaporte":"$val_pasaporte","val_limite_comentario":"$val_limite_comentario","val_limite_texto":"$val_limite_texto", "val_extenxion_archivo_imagen":"$val_extenxion_archivo_imagen",	"numero0":"$numero0" });
+	</script>
+    
 </body>
 $theme.include($body_bottom_include)
 $theme.include($bottom_include)

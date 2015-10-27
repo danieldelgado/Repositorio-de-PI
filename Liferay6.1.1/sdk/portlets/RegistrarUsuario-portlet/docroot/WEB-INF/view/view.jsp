@@ -69,6 +69,7 @@
 							id="<portlet:namespace/>nombre" name="<portlet:namespace/>nombre"
 							placeholder="<%=PortletProps.get("form.nombre")%>" value="">
 					</div>
+					<label class="col-lg-2 control-label validatenombre hide">Errorrrr!!!</label>
 				</div>
 
 				<div class="form-group">

@@ -55,34 +55,40 @@ function registrarPostulanteInscrito() {
 	
 	validarFormulario();
 
-	var registrarUsuario = $("#" + registrar_usuario_portlet_namespace + "registrarUsuario").val();
-
-	$.ajax({
-		type : "POST",
-		dataType : "json",
-		url : registrarUsuario,
-		data : fromregistrarUsuario,
-		success : function(data) {
-			console.log(data);
-		}
-	});
+//	var registrarUsuario = $("#" + registrar_usuario_portlet_namespace + "registrarUsuario").val();
+//
+//	$.ajax({
+//		type : "POST",
+//		dataType : "json",
+//		url : registrarUsuario,
+//		data : fromregistrarUsuario,
+//		success : function(data) {
+//			console.log(data);
+//		}
+//	});
 }
 
 function validarFormulario() {
 
-	var usuario = $("#"	+ registrar_usuario_portlet_namespace + "nombre_usuario").val();
-	if(isnullText(usuario)){
-		
+	var usuario = $("#"	+ registrar_usuario_portlet_namespace + "nombre_usuario");
+	
+	
+	var nombre = $("#"	+ registrar_usuario_portlet_namespace + "nombre");
+	
+	if(!validate_theme_reclutamiento.isnullText($(nombre).val())){
+		if(!validate_theme_reclutamiento.validarPatron("val_limite_cadena",$(nombre).val())){
+			validate_theme_reclutamiento.componenteError("validatenombre",nombre);
+		}		
 	}
-	var nombre = $("#"	+ registrar_usuario_portlet_namespace + "nombre").val();
-	var apellidos = $("#"	+ registrar_usuario_portlet_namespace + "apellidos").val();
-	var correo = $("#"	+ registrar_usuario_portlet_namespace + "correo").val();
-	var puestoactual = $("#"	+ registrar_usuario_portlet_namespace + "puestoactual").val();
-	var genero = $("#"	+ registrar_usuario_portlet_namespace + "genero").val();
-	var dni = $("#"	+ registrar_usuario_portlet_namespace + "dni").val();
-	var fechanacimiento = $("#"	+ registrar_usuario_portlet_namespace + "fechanacimiento").val();
-	var password = $("#"	+ registrar_usuario_portlet_namespace + "password").val();
-	var password2 = $("#"	+ registrar_usuario_portlet_namespace + "password2").val();
+	
+	var apellidos = $("#"	+ registrar_usuario_portlet_namespace + "apellidos");
+	var correo = $("#"	+ registrar_usuario_portlet_namespace + "correo");
+	var puestoactual = $("#"	+ registrar_usuario_portlet_namespace + "puestoactual");
+	var genero = $("#"	+ registrar_usuario_portlet_namespace + "genero");
+	var dni = $("#"	+ registrar_usuario_portlet_namespace + "dni");
+	var fechanacimiento = $("#"	+ registrar_usuario_portlet_namespace + "fechanacimiento");
+	var password = $("#"	+ registrar_usuario_portlet_namespace + "password");
+	var password2 = $("#"	+ registrar_usuario_portlet_namespace + "password2");
 	
 	
 	

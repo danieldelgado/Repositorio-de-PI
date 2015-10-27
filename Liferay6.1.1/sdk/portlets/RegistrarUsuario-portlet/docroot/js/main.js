@@ -4,12 +4,12 @@ registrar_usuario_portlet = {};
 
 registrar_usuario_portlet.inicializarComponentes = function() {
 
-	$("#" + registrar_usuario_portlet_namespace + "fechanacimiento")
-			.combodate();
+	$("#" + registrar_usuario_portlet_namespace + "fechanacimiento").combodate();
 	$(".combodate").addClass(" btn-group btn-group-justified ");
 	$(".combodate select").addClass("btn btn-default");
 
 	var nombre = $("#" + registrar_usuario_portlet_namespace + "nombre");
+
 	$(nombre).keyup(function(e) {
 		generarUsuario();
 	});
@@ -19,100 +19,19 @@ registrar_usuario_portlet.inicializarComponentes = function() {
 		generarUsuario();
 	});
 
-	$("#" + registrar_usuario_portlet_namespace + "btnGuardar").click(
-			function(e) {
+	$("#" + registrar_usuario_portlet_namespace + "btnGuardar").click(function(e) {
 				registrarPostulanteInscrito();
 			});
 };
 
-function validarUsuario(str) {
-	var urlgetplanajax = $(
-			"#" + registrar_usuario_portlet_namespace
-					+ "validarUsuarioPostulante").val();
-
-	$.ajax({
-		type : "GET",
-		dataType : "json",
-		url : urlgetplanajax,
-		data : {
-			usuario_postulante : str
-		},
-		success : function(data) {
-			var existen = data['existen'];
-			if (existen == true) {
-				var nombre_usuario = $("#"
-						+ registrar_usuario_portlet_namespace
-						+ "nombre_usuario");
-				nombre_usuario.val(str + (existen + 1));
-			}
-		}
-	});
-}
-
-function registrarPostulanteInscrito() {
-
-	var fromregistrarUsuario = $("#" + registrar_usuario_portlet_namespace
-			+ "fromregistrarUsuario");
-	fromregistrarUsuario = fromregistrarUsuario.serializeAllArray();
-
-	validarFormulario();
-
-	// var registrarUsuario = $("#" + registrar_usuario_portlet_namespace +
-	// "registrarUsuario").val();
-	//
-	// $.ajax({
-	// type : "POST",
-	// dataType : "json",
-	// url : registrarUsuario,
-	// data : fromregistrarUsuario,
-	// success : function(data) {
-	// console.log(data);
-	// }
-	// });
-}
-
-function validarFormulario() {
-
-//	var usuario = $("#" + registrar_usuario_portlet_namespace	+ "nombre_usuario");
-
-	var nombre = $("#" + registrar_usuario_portlet_namespace + "nombre");
-	validate_theme_reclutamiento.validarCampo(nombre, "nombre",	"val_limite_cadena", "validatenombre");
-
-	var apellidos = $("#" + registrar_usuario_portlet_namespace + "apellidos");
-	validate_theme_reclutamiento.validarCampo(apellidos, "apellidos",	"val_limite_cadena", "validateapellidos");
-
-	var correo = $("#" + registrar_usuario_portlet_namespace + "correo");
-	validate_theme_reclutamiento.validarCampo(correo, "correo", "val_email","validatecorreo");
-
-	var puestoactual = $("#" + registrar_usuario_portlet_namespace	+ "puestoactual");
-	validate_theme_reclutamiento.validarCampo(puestoactual, "puestoactual", "val_limite_cadena",	"validatepuesto");
-	
-//	var genero = $("#" + registrar_usuario_portlet_namespace + "genero");
-	
-	var dni = $("#" + registrar_usuario_portlet_namespace + "dni");
-	validate_theme_reclutamiento.validarCampo(dni, "dni", "val_limite_cadena",	"validatedni");
-	
-	var fechanacimiento = $("#" + registrar_usuario_portlet_namespace	+ "fechanacimiento");
-	validate_theme_reclutamiento.validarCampo(fechanacimiento, "fechanacimiento", "val_limite_cadena",	"validatefechanacimiento");
-	
-	var password = $("#" + registrar_usuario_portlet_namespace + "password");
-	validate_theme_reclutamiento.validarCampo(password, "password", "val_limite_cadena",	"validatepassword");
-	
-	var password2 = $("#" + registrar_usuario_portlet_namespace + "password2");
-	validate_theme_reclutamiento.validarCampo(password2, "password2", "val_limite_cadena",	"validatepassword2");
-
-}
-
 function generarUsuario() {
-	var nombre_usuario = $("#" + registrar_usuario_portlet_namespace
-			+ "nombre_usuario");
+	var nombre_usuario = $("#" + registrar_usuario_portlet_namespace+ "nombre_usuario");
 	nombre_usuario.val("");
 
 	var nombre = $("#" + registrar_usuario_portlet_namespace + "nombre").val();
 	nombre = nombre.split(" ");
 
-	var apellidos = $("#" + registrar_usuario_portlet_namespace + "apellidos")
-			.val();
+	var apellidos = $("#" + registrar_usuario_portlet_namespace + "apellidos")	.val();
 	apellidos = apellidos.split(" ");
 
 	var usuario = apellidos[0].toLowerCase();
@@ -124,7 +43,97 @@ function generarUsuario() {
 	nombre_usuario.val(usuario);
 	validarUsuario(usuario);
 
-};
+}
+
+function validarUsuario(str) {
+	var urlgetplanajax = $("#" + registrar_usuario_portlet_namespace+ "validarUsuarioPostulante").val();
+
+	$.ajax({
+		type : "GET",
+		dataType : "json",
+		url : urlgetplanajax,
+		data : {
+			usuario_postulante : str
+		},
+		success : function(data) {
+			var existen = data['existen'];
+			if (existen == true) {
+				var nombre_usuario = $("#"		+ registrar_usuario_portlet_namespace		+ "nombre_usuario");
+				nombre_usuario.val(str + (data['count'] + 1));
+			}
+		}
+	});
+}
+
+function registrarPostulanteInscrito() {
+	var fromregistrarUsuario = $("#" + registrar_usuario_portlet_namespace	+ "fromregistrarUsuario");
+	fromregistrarUsuario = fromregistrarUsuario.serializeAllArray();
+	if(validarFormulario()==0){
+		var registrarUsuario = $("#" + registrar_usuario_portlet_namespace + "registrarUsuario").val();
+		$.ajax({
+			type : "POST",
+			dataType : "json",
+			url : registrarUsuario,
+			data : fromregistrarUsuario,
+			success : function(data) {
+				if (data != null) {
+					var grabousuario = (data["correcto"]== undefined);
+					if (grabousuario) {
+						var dat = data["respuestas"];
+						$(dat).each(function(item) {
+								validate_theme_reclutamiento.validarCampoServ(this["campoValidate"],"#" + registrar_usuario_portlet_namespace+ "_msg_e_"+ this["campoValidate"],this["mensajeSimple"]);
+						});
+					}else{
+						var nuevoPostulante = data["nuevoPostulante"];
+						reclutamiento_theme.mensajesgeneralSimple("Nuevo Postulante Registrado","Bienvenido "+nuevoPostulante,function(){
+							window.location.href="/";
+						});
+						
+					}
+				}
+			}
+		});
+	}	
+}
+
+function validarFormulario() {	
+	var count = 0;
+	var nombre = $("#" + registrar_usuario_portlet_namespace + "nombre");
+	if(!validate_theme_reclutamiento.validarCampo(nombre, "nombre",	"val_limite_cadena", "#" + registrar_usuario_portlet_namespace	+ "_msg_e_nombre")){
+		count ++;
+	}	
+	var apellidos = $("#" + registrar_usuario_portlet_namespace + "apellidos");	
+	if(!validate_theme_reclutamiento.validarCampo(apellidos, "apellidos","val_limite_cadena", "#" + registrar_usuario_portlet_namespace	+ "_msg_e_apellidos")){
+		count ++;
+	}
+	var correo = $("#" + registrar_usuario_portlet_namespace + "correo");
+	if(!validate_theme_reclutamiento.validarCampo(correo, "correo", "val_email","#" + registrar_usuario_portlet_namespace + "_msg_e_correo")){
+		count ++;
+	}
+	var puestoactual = $("#" + registrar_usuario_portlet_namespace + "puestoactual");
+	if(!validate_theme_reclutamiento.validarCampo(puestoactual, "puestoactual",	"val_limite_cadena", "#" + registrar_usuario_portlet_namespace+ "_msg_e_puestoactual")){
+		count ++;
+	}
+	var dni = $("#" + registrar_usuario_portlet_namespace + "dni");
+	if(!validate_theme_reclutamiento.validarCampo(dni, "dni", "val_limite_cadena",	"#" + registrar_usuario_portlet_namespace + "_msg_e_dni")){
+		count ++;
+	}
+	var fechanacimiento = $("#" + registrar_usuario_portlet_namespace+ "fechanacimiento");
+	if(!validate_theme_reclutamiento.validarCampo(fechanacimiento,	"fechanacimiento", "#" + registrar_usuario_portlet_namespace+ "_msg_e_fechanacimiento")){
+		count ++;
+	}
+	var password = $("#" + registrar_usuario_portlet_namespace + "password");
+	if(!validate_theme_reclutamiento.validarCampo(password, "password",	"val_limite_cadena", "#" + registrar_usuario_portlet_namespace+ "_msg_e_password")){
+		count ++;
+	}
+	var password2 = $("#" + registrar_usuario_portlet_namespace + "password2");
+	if(!validate_theme_reclutamiento.validarCampo(password2, "password2","val_limite_cadena", "#" + registrar_usuario_portlet_namespace+ "_msg_e_password2")){
+		count ++;
+	}
+	return count;
+}
+
+
 
 registrar_usuario_portlet.init = function() {
 

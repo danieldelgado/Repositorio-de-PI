@@ -53,11 +53,35 @@ function locationVar(vr) {
 
 $.fn.serializeAllArray = function() {
 	var obj = {};
-
 	$('input', this).each(function() {
 		obj[this.name] = $(this).val();
 	});
 	return $.param(obj);
+};
+
+reclutamiento_theme.mensajesgeneralSimple = function(titulo,mensajesHtml,eventoAlcerrar) {
+	reclutamiento_theme.mensajesgeneral(titulo,mensajesHtml,null,null,eventoAlcerrar);
+};
+
+reclutamiento_theme.mensajesgeneral = function(titulo,mensajesHtml,clases,role,eventoAlcerrar) {
+	var mensajesgeneral = $("#mensajesgeneral");
+	$('#mensajesgeneral').find(".titulo").html(titulo);
+	$('#mensajesgeneral').find(".contentido").html(mensajesHtml);	
+	if(clases != null){
+		$('#mensajesgeneral').find(".contentido").attr("role",role);	
+	}
+	if(role != null){	
+		$('#mensajesgeneral').find(".contentido").attr("class","contentido "+clases);
+	}	
+	console.log(eventoAlcerrar);
+	if(eventoAlcerrar != null){
+
+		$(mensajesgeneral).on('hidden.bs.modal', function () {
+			eventoAlcerrar();
+		});
+	}
+	
+	$(mensajesgeneral).modal('show');
 };
 
 reclutamiento_theme.init = function() {

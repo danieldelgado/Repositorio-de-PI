@@ -1,9 +1,10 @@
 package com.rec.registrarusuario.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -37,8 +38,10 @@ import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.rec.hitss.service.util.BeanRespuesta;
 import com.rec.hitss.service.util.ConstantesPortalUtil;
 import com.rec.hitss.service.util.DuplicateUserDNIException;
+import com.rec.hitss.service.util.JsonUtil;
 import com.rec.hitss.service.util.TiempoUtil;
 import com.rec.hitss.service.util.ValidateUtil;
 import com.rec.registrarusuario.service.RegistrarUsuarioService;
@@ -56,16 +59,16 @@ public class RegistrarUsuarioController {
 	@RenderMapping()
 	public String get(RenderRequest request, RenderResponse response, Model model) {
 		LOG.debug("get Incio");	
-
 		model.addAttribute(ConstantesUtil.CAMPO_MENSAJE_VALIDACION + ConstantesUtil.CAMPO_NOMBRES_MESAJE_ERROR, ConstantesUtil.NOMBRES_MESAJE_ERROR);
 		model.addAttribute(ConstantesUtil.CAMPO_MENSAJE_VALIDACION + ConstantesUtil.CAMPO_APELIIDOS_MESAJE_ERROR, ConstantesUtil.APELIIDOS_MESAJE_ERROR);
 		model.addAttribute(ConstantesUtil.CAMPO_MENSAJE_VALIDACION + ConstantesUtil.CAMPO_CORREO_MESAJE_ERROR, ConstantesUtil.CORREO_MESAJE_ERROR);
+		model.addAttribute(ConstantesUtil.CAMPO_MENSAJE_VALIDACION + ConstantesUtil.CAMPO_CORREO_DUPLICADO_MESAJE_ERROR, ConstantesUtil.CORREO_DUPLICADO_MESAJE_ERROR);
 		model.addAttribute(ConstantesUtil.CAMPO_MENSAJE_VALIDACION + ConstantesUtil.CAMPO_PUESTO_MESAJE_ERROR, ConstantesUtil.PUESTO_MESAJE_ERROR);
 		model.addAttribute(ConstantesUtil.CAMPO_MENSAJE_VALIDACION + ConstantesUtil.CAMPO_DNI_MESAJE_ERROR, ConstantesUtil.DNI_MESAJE_ERROR);
+		model.addAttribute(ConstantesUtil.CAMPO_MENSAJE_VALIDACION + ConstantesUtil.CAMPO_DNI_DUPLICADO_MESAJE_ERROR, ConstantesUtil.DNI_DUPLICADO_MESAJE_ERROR);
 		model.addAttribute(ConstantesUtil.CAMPO_MENSAJE_VALIDACION + ConstantesUtil.CAMPO_FECHA_MESAJE_ERROR, ConstantesUtil.FECHA_MESAJE_ERROR);
 		model.addAttribute(ConstantesUtil.CAMPO_MENSAJE_VALIDACION + ConstantesUtil.CAMPO_PASSWORD_COMPARAR_MESAJE_ERROR, ConstantesUtil.PASSWORD_COMPARAR_MESAJE_ERROR);
-		model.addAttribute(ConstantesUtil.CAMPO_MENSAJE_VALIDACION + ConstantesUtil.CAMPO_PASSWORD2_MESAJE_ERROR, ConstantesUtil.PASSWORD2_MESAJE_ERROR);
-				
+		model.addAttribute(ConstantesUtil.CAMPO_MENSAJE_VALIDACION + ConstantesUtil.CAMPO_PASSWORD2_MESAJE_ERROR, ConstantesUtil.PASSWORD2_MESAJE_ERROR);		
 		return "view";
 	}
 
@@ -77,10 +80,9 @@ public class RegistrarUsuarioController {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
 		
-		JSONObject respuestaRegistro = JSONFactoryUtil.createJSONObject();
-		
-		Map<String, String> objValidacion = null;
-		
+		List<BeanRespuesta> respuestas = null;
+		User nuevoPostulante = null;
+		Map<String, Object> mapRepuesta = new HashMap<String, Object>();	
 		try {
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(request);
 
@@ -139,10 +141,10 @@ public class RegistrarUsuarioController {
 			LOG.debug("strPassword2:" + strPassword2);
 			LOG.debug("camposExtras:" + camposExtras);
 
-			objValidacion = validarRegistroUsuario(strNombre, strApep, strUsuario, strEmail, puestoactual, strGenero, nroDocumento, strFechaNacimiento,
+			respuestas = validarRegistroUsuario(strNombre, strApep, strUsuario, strEmail, puestoactual, strGenero, nroDocumento, strFechaNacimiento,
 					strPassword, strPassword2);
 						
-			if (objValidacion.get(ConstantesPortalUtil.MENSAJE_CORRECTO).equals(ConstantesPortalUtil.MENSAJE_OK)) {
+			if (respuestas.isEmpty()) {
 				LOG.debug("Campos validos:");
 				String[] nombres = strNombre.split(StringPool.SPACE);
 				strNombre = nombres[0];
@@ -154,94 +156,87 @@ public class RegistrarUsuarioController {
 				int birthdayYear = fechanacimiento.getYear();
 
 				LOG.debug("fechanacimiento:" + fechanacimiento);
-
-				System.out.println(objValidacion);
 				
-				User nuevoPostulante = registrarUsuarioService.registrarUsuarioPostulante(creatorUserId, companyId, autoPassword, strPassword, strPassword2, autoScreenName,
+				nuevoPostulante = registrarUsuarioService.registrarUsuarioPostulante(creatorUserId, companyId, autoPassword, strPassword, strPassword2, autoScreenName,
 						strUsuario, strEmail, facebookId, openId, locale, strNombre, strSegundoNombre, strApep, prefixId, suffixId, male, birthdayMonth, birthdayDay, birthdayYear,
 						puestoactual, groupIds, organizationIds, roleIds, userGroupIds, sendEmail, camposExtras, serviceContext);
-
-			} else {
-				LOG.debug("Campos invalidos:");				
-				respuestaRegistro.put("errores", "test");
-				respuestaRegistro.put("count", 2);
-			}
-
+				mapRepuesta.put(ConstantesPortalUtil.MENSAJE_CORRECTO, ConstantesPortalUtil.MENSAJE_OK);	
+				mapRepuesta.put("nuevoPostulante", nuevoPostulante.getFullName());	
+			} 
 		} catch (DuplicateUserEmailAddressException e) {
-			objValidacion.put(ConstantesPortalUtil.MENSAJE_CORRECTO, ConstantesPortalUtil.MENSAJE_NO_OK);
-			objValidacion.put(ConstantesUtil.CAMPO_CORREO_DUPLICADO_MESAJE_ERROR, ConstantesUtil.CORREO_DUPLICADO_MESAJE_ERROR);			
-			LOG.error("DuplicateUserEmailAddressException Error con Email", e);
+			
+			BeanRespuesta rp = new BeanRespuesta(ConstantesUtil.CAMPO_CORREO_DUPLICADO_MESAJE_ERROR, ConstantesUtil.CORREO_DUPLICADO_MESAJE_ERROR);
+			respuestas.add(rp);
+			LOG.error("DuplicateUserEmailAddressException");
+			
 		} catch (DuplicateUserDNIException e) {
-			objValidacion.put(ConstantesPortalUtil.MENSAJE_CORRECTO, ConstantesPortalUtil.MENSAJE_NO_OK);
-			objValidacion.put(ConstantesUtil.CAMPO_DNI_DUPLICADO_MESAJE_ERROR, ConstantesUtil.DNI_DUPLICADO_MESAJE_ERROR);			
-			LOG.error("DuplicateUserDNIException", e);
+			
+			BeanRespuesta rp = new BeanRespuesta(ConstantesUtil.CAMPO_DNI_DUPLICADO_MESAJE_ERROR, ConstantesUtil.DNI_DUPLICADO_MESAJE_ERROR);
+			respuestas.add(rp);
+			LOG.error("DuplicateUserDNIException");
+			
 		} catch (DuplicateUserScreenNameException e) {
-			
-			
-			LOG.error("DuplicateUserScreenNameException", e);
+			LOG.error("DuplicateUserScreenNameException ");
 		} catch (PortalException e) {
 			LOG.error("PortalException", e);
-
 		} catch (SystemException e) {
 			LOG.error("SystemException", e);
-		}
-
-		
-		response.getWriter().write(respuestaRegistro.toString());
-
+		}			
+		mapRepuesta.put("respuestas", respuestas);
+		String rsp = JsonUtil.getJsonObject(mapRepuesta);
+		LOG.debug(rsp);
+		response.getWriter().write(rsp);
 	}
 
-	private Map<String, String> validarRegistroUsuario(String strNombre, String strApep, String strUsuario, String strEmail, String puestoactual, String strGenero,
-			String nroDocumento, String strFechaNacimiento, String strPassword, String strPassword2) {
-		Map<String, String> objValidacion = new LinkedHashMap<String, String>();
-		objValidacion.put(ConstantesPortalUtil.MENSAJE_CORRECTO, ConstantesPortalUtil.MENSAJE_OK);
+	private List<BeanRespuesta> validarRegistroUsuario(String strNombre, String strApep, String strUsuario, String strEmail, String puestoactual, String strGenero,
+			String nroDocumento, String strFechaNacimiento, String strPassword, String strPassword2) {		
+		List<BeanRespuesta> respuestas = new ArrayList<BeanRespuesta>();
+		
 		LOG.debug("validarRegistroUsuario :");
 
 		if(!ValidateUtil.esValCadena(strNombre)) {		
 			LOG.debug("Error con strNombre:"+strNombre);
-			objValidacion.put(ConstantesPortalUtil.MENSAJE_CORRECTO, ConstantesPortalUtil.MENSAJE_NO_OK);
-			objValidacion.put(ConstantesUtil.CAMPO_NOMBRES_MESAJE_ERROR, ConstantesUtil.NOMBRES_MESAJE_ERROR);				
+			BeanRespuesta rp = new BeanRespuesta(ConstantesUtil.CAMPO_NOMBRES_MESAJE_ERROR, ConstantesUtil.NOMBRES_MESAJE_ERROR);
+			respuestas.add(rp);
 		}
 		
 		if (!ValidateUtil.esValCadena(strApep)) {		
 			LOG.debug("Error con strApep:"+strApep);
-			objValidacion.put(ConstantesPortalUtil.MENSAJE_CORRECTO, ConstantesPortalUtil.MENSAJE_NO_OK);
-			objValidacion.put(ConstantesUtil.CAMPO_APELIIDOS_MESAJE_ERROR, ConstantesUtil.APELIIDOS_MESAJE_ERROR);	
-			
+			BeanRespuesta rp = new BeanRespuesta(ConstantesUtil.CAMPO_APELIIDOS_MESAJE_ERROR, ConstantesUtil.APELIIDOS_MESAJE_ERROR);
+			respuestas.add(rp);
 		}
 		
 		if (!ValidateUtil.esCorreo(strEmail)) {
 			LOG.debug("Error con strEmail:"+strEmail);
-			objValidacion.put(ConstantesPortalUtil.MENSAJE_CORRECTO, ConstantesPortalUtil.MENSAJE_NO_OK);
-			objValidacion.put(ConstantesUtil.CAMPO_CORREO_MESAJE_ERROR, ConstantesUtil.CORREO_MESAJE_ERROR);			
+			BeanRespuesta rp = new BeanRespuesta(ConstantesUtil.CAMPO_CORREO_MESAJE_ERROR, ConstantesUtil.CORREO_MESAJE_ERROR);
+			respuestas.add(rp);
 		}
 		
 		if (!ValidateUtil.esValCadena(puestoactual)) {
 			LOG.debug("Error con puestoactual:"+puestoactual);
-			objValidacion.put(ConstantesPortalUtil.MENSAJE_CORRECTO, ConstantesPortalUtil.MENSAJE_NO_OK);
-			objValidacion.put(ConstantesUtil.CAMPO_PUESTO_MESAJE_ERROR, ConstantesUtil.PUESTO_MESAJE_ERROR);		
+			BeanRespuesta rp = new BeanRespuesta(ConstantesUtil.CAMPO_PUESTO_MESAJE_ERROR, ConstantesUtil.PUESTO_MESAJE_ERROR);
+			respuestas.add(rp);	
 			
 		}
-				
+		
 		if (!ValidateUtil.esDni(nroDocumento)) {
 			LOG.debug("Error con nroDocumento:"+nroDocumento);
-			objValidacion.put(ConstantesPortalUtil.MENSAJE_CORRECTO, ConstantesPortalUtil.MENSAJE_NO_OK);
-			objValidacion.put(ConstantesUtil.CAMPO_DNI_MESAJE_ERROR, ConstantesUtil.DNI_MESAJE_ERROR);		
-			
+			BeanRespuesta rp = new BeanRespuesta(ConstantesUtil.CAMPO_DNI_MESAJE_ERROR, ConstantesUtil.DNI_MESAJE_ERROR);
+			respuestas.add(rp);				
 		}
 		
 		if (!ValidateUtil.isNotNull(strFechaNacimiento)) {
 			LOG.debug("Error con strFechaNacimiento:"+strFechaNacimiento);
-			objValidacion.put(ConstantesPortalUtil.MENSAJE_CORRECTO, ConstantesPortalUtil.MENSAJE_NO_OK);
-			objValidacion.put(ConstantesUtil.CAMPO_FECHA_MESAJE_ERROR, ConstantesUtil.FECHA_MESAJE_ERROR);		
+			BeanRespuesta rp = new BeanRespuesta(ConstantesUtil.CAMPO_FECHA_MESAJE_ERROR, ConstantesUtil.FECHA_MESAJE_ERROR);
+			respuestas.add(rp);				
 			
 		}else{
 			try {
 				TiempoUtil.getFechaStringDate(strFechaNacimiento);
 			} catch (Exception e) {
 				LOG.debug("Error con strFechaNacimiento:"+strFechaNacimiento);
-				objValidacion.put(ConstantesPortalUtil.MENSAJE_CORRECTO, ConstantesPortalUtil.MENSAJE_NO_OK);
-				objValidacion.put(ConstantesUtil.CAMPO_FECHA_MESAJE_ERROR, ConstantesUtil.FECHA_MESAJE_ERROR);		
+				BeanRespuesta rp = new BeanRespuesta(ConstantesUtil.CAMPO_FECHA_MESAJE_ERROR, ConstantesUtil.FECHA_MESAJE_ERROR);
+				respuestas.add(rp);				
 			}
 		}
 		
@@ -249,22 +244,20 @@ public class RegistrarUsuarioController {
 			if (ValidateUtil.esValCadena(strPassword2)) {
 				if(!(strPassword.trim().equals(strPassword2.trim()))){
 					LOG.debug("No conincide los passwords con strPassword2:"+strPassword2);
-					objValidacion.put(ConstantesPortalUtil.MENSAJE_CORRECTO, ConstantesPortalUtil.MENSAJE_NO_OK);
-					objValidacion.put(ConstantesUtil.CAMPO_PASSWORD_COMPARAR_MESAJE_ERROR, ConstantesUtil.PASSWORD_COMPARAR_MESAJE_ERROR);
+					BeanRespuesta rp = new BeanRespuesta(ConstantesUtil.CAMPO_PASSWORD_COMPARAR_MESAJE_ERROR, ConstantesUtil.PASSWORD_COMPARAR_MESAJE_ERROR);
+					respuestas.add(rp);				
 				}
 			}else{
 				LOG.debug("No se ingreso strPassword2:"+strPassword2);
-				objValidacion.put(ConstantesPortalUtil.MENSAJE_CORRECTO, ConstantesPortalUtil.MENSAJE_NO_OK);
-				objValidacion.put(ConstantesUtil.CAMPO_PASSWORD2_MESAJE_ERROR, ConstantesUtil.PASSWORD2_MESAJE_ERROR);		
+				BeanRespuesta rp = new BeanRespuesta(ConstantesUtil.CAMPO_PASSWORD2_MESAJE_ERROR, ConstantesUtil.PASSWORD2_MESAJE_ERROR);
+				respuestas.add(rp);					
 			}
 		}else{
-			LOG.debug("Error con strPassword:"+strPassword);
-			objValidacion.put(ConstantesPortalUtil.MENSAJE_CORRECTO, ConstantesPortalUtil.MENSAJE_NO_OK);
-			objValidacion.put(ConstantesUtil.CAMPO_PASSWORD_MESAJE_ERROR, ConstantesUtil.PASSWORD_MESAJE_ERROR);	
+			LOG.debug("Error con strPassword:"+strPassword);	
+			BeanRespuesta rp = new BeanRespuesta(ConstantesUtil.CAMPO_PASSWORD_MESAJE_ERROR, ConstantesUtil.PASSWORD_MESAJE_ERROR);
+			respuestas.add(rp);					
 		}
-		
-		
-		return objValidacion;
+		return respuestas;
 	}
 
 	@ResourceMapping(value = "validarUsuarioPostulante")

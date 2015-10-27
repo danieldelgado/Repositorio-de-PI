@@ -58,37 +58,42 @@ $theme.include($body_top_include)
 		$velocityPortletPreferences.reset()
 	</div>	
 	<footer>
-    <div class="container">
-        <hr>
-        <div class="row">
-            <div class="col-md-6 footer-left">
-				 <ul class="list">
-				#foreach ($nav_item in $nav_items)
-					#if ($nav_item.isSelected())
-						<li class="">
-					#else
-						<li>
+	    <div class="container">
+	        <hr>
+	        <div class="row">
+	            <div class="col-md-6 footer-left">
+					 <ul class="list">
+					#foreach ($nav_item in $nav_items)
+						#if ($nav_item.isSelected())
+							<li class="">
+						#else
+							<li>
+						#end
+							<a href="$nav_item.getURL()" $nav_item.getTarget()><span>$nav_item.icon() $nav_item.getName()</span></a>					
+						</li>
 					#end
-						<a href="$nav_item.getURL()" $nav_item.getTarget()><span>$nav_item.icon() $nav_item.getName()</span></a>					
-					</li>
-				#end
-                </ul>               
-            </div>
-            <div class="col-md-6 footer-right">
-                <p>Bootstrap CDN by <a href="http://tracking.maxcdn.com/c/99191/3982/378">MaxCDN Logo</a></p>
-                <p>Hosted on <a href="https://pages.github.com/">GitHub Pages Logo</a></p>
-            </div>
-        </div>
-        <hr>
-        <div class="row">
-            <div class="col-lg-12 footer-below">
-                <br>Based on <a href="http://getbootstrap.com/">Bootstrap</a>.</p>
-                <br>Desarrollador para Global Hitss para el proyecto de Tesis por <var>Danielle Delgado</var>.</p>
-            </div>
-        </div>
-    </div>
-</footer>
+	                </ul>               
+	            </div>
+	            <div class="col-md-6 footer-right">
+	                <p>Bootstrap CDN by <a href="http://tracking.maxcdn.com/c/99191/3982/378">MaxCDN Logo</a></p>
+	                <p>Hosted on <a href="https://pages.github.com/">GitHub Pages Logo</a></p>
+	            </div>
+	        </div>
+	        <hr>
+	        <div class="row">
+	            <div class="col-lg-12 footer-below">
+	                <br>Based on <a href="http://getbootstrap.com/">Bootstrap</a>.</p>
+	                <br>Desarrollador para Global Hitss para el proyecto de Tesis por <var>Danielle Delgado</var>.</p>
+	            </div>
+	        </div>
+	    </div>
+	</footer>
 </div>
+
+<div>
+	#parse ("$full_templates_path/mensajes_pop_pup.vm")
+</div>
+
 	<script src="${javascript_folder}/general.js"></script>
 	
         

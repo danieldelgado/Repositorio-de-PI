@@ -78,6 +78,7 @@ public class AsciiUtils {
     	System.out.println(_convertNonAscii("a-zA-ZñÑ0-9]{9,12}"));
     	System.out.println(_convertNonAscii("[a-zA-ZñÑ0-9-]{1,500}"));
     	System.out.println(_convertNonAscii("[a-zA-ZñÑáéíóúÁÉÍÓÚüÜ-]{1,100}"));
+    	System.out.println(_convertNonAscii("é - í - ó"));
     	
     	ValidateUtil.validar("[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}", "daniel1q234_14@hotmail.com");
     	

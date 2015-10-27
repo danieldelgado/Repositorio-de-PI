@@ -56,18 +56,18 @@
 					<label for="nombre" class="col-lg-2 control-label"><%=PortletProps.get("form.nombre")%></label>
 					<div class="col-lg-10">
 						<input type="text" class="form-control" id="<portlet:namespace/>nombre" name="<portlet:namespace/>nombre"
-							placeholder="<%=PortletProps.get("form.nombre")%>" value="">
+							placeholder="<%=PortletProps.get("form.nombre")%>" value="Danielle Christian Pio">
 					</div>
-					<label class="col-lg-2 control-label validatenombre hide">${campo_validacion_nombre}</label>
+					<label  id="<portlet:namespace/>_msg_e_nombre" class="control-label hide col-lg-4">${campo_validacion_nombre}</label>	
 				</div>
 
 				<div class="form-group">
 					<label for="apellidos" class="col-lg-2 control-label"><%=PortletProps.get("form.apellidos")%></label>
 					<div class="col-lg-10">
 						<input type="text" class="form-control" id="<portlet:namespace/>apellidos" name="<portlet:namespace/>apellidos"
-							placeholder="<%=PortletProps.get("form.apellidos")%>" value="">
+							placeholder="<%=PortletProps.get("form.apellidos")%>" value="Delgado Cabrera">
 					</div>
-					<label class="col-lg-2 control-label validateapellidos hide">${campo_validacion_apellidos}</label>
+					<label id="<portlet:namespace/>_msg_e_apellidos" class="control-label hide col-lg-4">${campo_validacion_apellidos}</label>
 				</div>
 
 				<div class="form-group">
@@ -76,7 +76,8 @@
 						<input type="text" class="form-control" id="<portlet:namespace/>correo" name="<portlet:namespace/>correo"
 							placeholder="<%=PortletProps.get("form.correo")%>" value="daniel1234_14@hotmail.com">
 					</div>
-					<label class="col-lg-2 control-label validatecorreo hide">${campo_validacion_correo}</label>
+					<label id="<portlet:namespace/>_msg_e_correo" class="control-label hide col-lg-4">${campo_validacion_correo}</label>
+					<label id="<portlet:namespace/>_msg_e_correo2" class="control-label hide col-lg-4">${campo_validacion_correo2}</label>
 				</div>
 
 				<div class="form-group">
@@ -85,7 +86,7 @@
 						<input type="text" class="form-control" id="<portlet:namespace/>puestoactual" name="<portlet:namespace/>puestoactual"
 							placeholder="<%=PortletProps.get("form.puesto.actual")%>" value="Desarrollador web">
 					</div>
-					<label class="col-lg-2 control-label validatepuesto hide">${campo_validacion_puesto}</label>
+					<label id="<portlet:namespace/>_msg_e_puestoactual" class="control-label hide col-lg-4">${campo_validacion_puesto}</label>
 				</div>
 
 				<div class="form-group">
@@ -109,7 +110,8 @@
 						<input type="text" class="form-control" id="<portlet:namespace/>dni" name="<portlet:namespace/>dni"
 							placeholder="<%=PortletProps.get("form.dni")%>" value="98765432">
 					</div>
-					<label class="col-lg-2 control-label validatedni hide">${campo_validacion_dni}</label>
+					<label id="<portlet:namespace/>_msg_e_dni" class="control-label hide col-lg-4">${campo_validacion_dni}</label>
+					<label id="<portlet:namespace/>_msg_e_dni2" class="control-label hide col-lg-4">${campo_validacion_dni2}</label>
 				</div>
 				<div class="form-group">
 					<label for="fechanacimiento" class="col-lg-2 control-label"><%=PortletProps.get("form.fecha.nacimiento")%></label>
@@ -119,7 +121,7 @@
 							name="<portlet:namespace/>fechanacimiento" value="09-01-1985">
 
 					</div>
-					<label class="col-lg-2 control-label validatefechanacimiento hide">${campo_validacion_fechanacimiento}</label>
+					<label id="<portlet:namespace/>_msg_e_fechanacimiento" class="control-label hide col-lg-4">${campo_validacion_fechanacimiento}</label>
 				</div>
 				<div class="form-group">
 					<label for="password" class="col-lg-2 control-label"><%=PortletProps.get("form.password")%></label>
@@ -127,7 +129,7 @@
 						<input type="password" class="form-control" id="<portlet:namespace/>password" name="<portlet:namespace/>password"
 							placeholder="<%=PortletProps.get("form.password")%>" value="1234">
 					</div>
-					<label class="col-lg-2 control-label validatepassword hide">${campo_validacion_password}</label>
+					<label id="<portlet:namespace/>_msg_e_password" class="control-label hide col-lg-4">${campo_validacion_password}</label>
 				</div>
 				<div class="form-group">
 					<label for="password2" class="col-lg-2 control-label"><%=PortletProps.get("form.password.res")%></label>
@@ -135,7 +137,7 @@
 						<input type="password" class="form-control" id="<portlet:namespace/>password2" name="<portlet:namespace/>password2"
 							placeholder="<%=PortletProps.get("form.password.res")%>" value="1234">
 					</div>
-					<label class="col-lg-2 control-label validatepassword2 hide">${campo_validacion_password2}</label>
+					<label id="<portlet:namespace/>_msg_e_password2" class="control-label hide col-lg-4">${campo_validacion_password2}</label>
 				</div>
 				<div class="form-group modal-footer">
 					<div class="col-xs-12 col-lg-10 col-lg-offset-2">

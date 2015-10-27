@@ -56,6 +56,16 @@ public class RegistrarUsuarioController {
 	@RenderMapping()
 	public String get(RenderRequest request, RenderResponse response, Model model) {
 		LOG.debug("get Incio");	
+
+		model.addAttribute(ConstantesUtil.CAMPO_MENSAJE_VALIDACION + ConstantesUtil.CAMPO_NOMBRES_MESAJE_ERROR, ConstantesUtil.NOMBRES_MESAJE_ERROR);
+		model.addAttribute(ConstantesUtil.CAMPO_MENSAJE_VALIDACION + ConstantesUtil.CAMPO_APELIIDOS_MESAJE_ERROR, ConstantesUtil.APELIIDOS_MESAJE_ERROR);
+		model.addAttribute(ConstantesUtil.CAMPO_MENSAJE_VALIDACION + ConstantesUtil.CAMPO_CORREO_MESAJE_ERROR, ConstantesUtil.CORREO_MESAJE_ERROR);
+		model.addAttribute(ConstantesUtil.CAMPO_MENSAJE_VALIDACION + ConstantesUtil.CAMPO_PUESTO_MESAJE_ERROR, ConstantesUtil.PUESTO_MESAJE_ERROR);
+		model.addAttribute(ConstantesUtil.CAMPO_MENSAJE_VALIDACION + ConstantesUtil.CAMPO_DNI_MESAJE_ERROR, ConstantesUtil.DNI_MESAJE_ERROR);
+		model.addAttribute(ConstantesUtil.CAMPO_MENSAJE_VALIDACION + ConstantesUtil.CAMPO_FECHA_MESAJE_ERROR, ConstantesUtil.FECHA_MESAJE_ERROR);
+		model.addAttribute(ConstantesUtil.CAMPO_MENSAJE_VALIDACION + ConstantesUtil.CAMPO_PASSWORD_COMPARAR_MESAJE_ERROR, ConstantesUtil.PASSWORD_COMPARAR_MESAJE_ERROR);
+		model.addAttribute(ConstantesUtil.CAMPO_MENSAJE_VALIDACION + ConstantesUtil.CAMPO_PASSWORD2_MESAJE_ERROR, ConstantesUtil.PASSWORD2_MESAJE_ERROR);
+				
 		return "view";
 	}
 

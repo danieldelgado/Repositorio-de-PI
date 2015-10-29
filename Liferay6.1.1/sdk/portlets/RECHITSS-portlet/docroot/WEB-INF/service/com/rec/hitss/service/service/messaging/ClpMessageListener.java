@@ -18,6 +18,8 @@ import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
 
 import com.rec.hitss.service.service.ClpSerializer;
+import com.rec.hitss.service.service.SolicitudReclutamientoLocalServiceUtil;
+import com.rec.hitss.service.service.SolicitudReclutamientoServiceUtil;
 
 /**
  * @author Brian Wing Shun Chan
@@ -34,6 +36,9 @@ public class ClpMessageListener extends BaseMessageListener {
 
 		if (command.equals("undeploy") &&
 				servletContextName.equals(getServletContextName())) {
+			SolicitudReclutamientoLocalServiceUtil.clearService();
+
+			SolicitudReclutamientoServiceUtil.clearService();
 		}
 	}
 }

@@ -25,7 +25,7 @@ import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.BaseModel;
 
-import com.rec.hitss.service.model.FooClp;
+import com.rec.hitss.service.model.SolicitudReclutamientoClp;
 
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -102,8 +102,8 @@ public class ClpSerializer {
 
 		String oldModelClassName = oldModelClass.getName();
 
-		if (oldModelClassName.equals(FooClp.class.getName())) {
-			return translateInputFoo(oldModel);
+		if (oldModelClassName.equals(SolicitudReclutamientoClp.class.getName())) {
+			return translateInputSolicitudReclutamiento(oldModel);
 		}
 
 		return oldModel;
@@ -121,10 +121,11 @@ public class ClpSerializer {
 		return newList;
 	}
 
-	public static Object translateInputFoo(BaseModel<?> oldModel) {
-		FooClp oldClpModel = (FooClp)oldModel;
+	public static Object translateInputSolicitudReclutamiento(
+		BaseModel<?> oldModel) {
+		SolicitudReclutamientoClp oldClpModel = (SolicitudReclutamientoClp)oldModel;
 
-		BaseModel<?> newModel = oldClpModel.getFooRemoteModel();
+		BaseModel<?> newModel = oldClpModel.getSolicitudReclutamientoRemoteModel();
 
 		newModel.setModelAttributes(oldClpModel.getModelAttributes());
 
@@ -148,8 +149,9 @@ public class ClpSerializer {
 
 		String oldModelClassName = oldModelClass.getName();
 
-		if (oldModelClassName.equals("com.rec.hitss.service.model.impl.FooImpl")) {
-			return translateOutputFoo(oldModel);
+		if (oldModelClassName.equals(
+					"com.rec.hitss.service.model.impl.SolicitudReclutamientoImpl")) {
+			return translateOutputSolicitudReclutamiento(oldModel);
 		}
 
 		return oldModel;
@@ -232,19 +234,21 @@ public class ClpSerializer {
 			return new SystemException();
 		}
 
-		if (className.equals("com.rec.hitss.service.NoSuchFooException")) {
-			return new com.rec.hitss.service.NoSuchFooException();
+		if (className.equals(
+					"com.rec.hitss.service.NoSuchSolicitudReclutamientoException")) {
+			return new com.rec.hitss.service.NoSuchSolicitudReclutamientoException();
 		}
 
 		return throwable;
 	}
 
-	public static Object translateOutputFoo(BaseModel<?> oldModel) {
-		FooClp newModel = new FooClp();
+	public static Object translateOutputSolicitudReclutamiento(
+		BaseModel<?> oldModel) {
+		SolicitudReclutamientoClp newModel = new SolicitudReclutamientoClp();
 
 		newModel.setModelAttributes(oldModel.getModelAttributes());
 
-		newModel.setFooRemoteModel(oldModel);
+		newModel.setSolicitudReclutamientoRemoteModel(oldModel);
 
 		return newModel;
 	}

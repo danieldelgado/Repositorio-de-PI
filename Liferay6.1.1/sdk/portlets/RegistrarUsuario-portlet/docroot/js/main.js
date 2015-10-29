@@ -66,6 +66,7 @@ function validarUsuario(str) {
 }
 
 function registrarPostulanteInscrito() {
+	reclutamiento_theme.cargandoDialog(10);
 	var fromregistrarUsuario = $("#" + registrar_usuario_portlet_namespace	+ "fromregistrarUsuario");
 	fromregistrarUsuario = fromregistrarUsuario.serializeAllArray();
 	if(validarFormulario()==0){
@@ -85,12 +86,16 @@ function registrarPostulanteInscrito() {
 						});
 					}else{
 						var nuevoPostulante = data["nuevoPostulante"];
+						
+						reclutamiento_theme.cargandoDialogcerrar(10);
+						
 						reclutamiento_theme.mensajesgeneralSimple("Nuevo Postulante Registrado","Bienvenido "+nuevoPostulante,function(){
 							window.location.href="/";
 						});
 						
 					}
 				}
+				
 			}
 		});
 	}	

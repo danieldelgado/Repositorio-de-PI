@@ -129,10 +129,11 @@
 					</div>
 				</div>
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary btn-lg btn-block" value="<liferay-ui:message key="sign-in" />" />
+					<input type="submit" class="btn btn-primary btn-lg btn-block" 
+					value="<liferay-ui:message key="sign-in" />" />
 				</div>			
 				<div class="form-group">
-					<a class="btn btn-success btn-lg btn-block" href="/registro"><liferay-ui:message
+					<a class="btn btn-success btn-lg btn-block" href="/inscripcion"><liferay-ui:message
 								key="login.registro.nuevo.usuario" /></a>
 				</div>					
 			</aui:fieldset>

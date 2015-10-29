@@ -55,10 +55,12 @@ public class RegistrarUsuarioController {
 
 	@Autowired
 	private RegistrarUsuarioService registrarUsuarioService;
-
+		
 	@RenderMapping()
 	public String get(RenderRequest request, RenderResponse response, Model model) {
 		LOG.debug("get Incio");	
+
+		
 		model.addAttribute(ConstantesUtil.CAMPO_MENSAJE_VALIDACION + ConstantesUtil.CAMPO_NOMBRES_MESAJE_ERROR, ConstantesUtil.NOMBRES_MESAJE_ERROR);
 		model.addAttribute(ConstantesUtil.CAMPO_MENSAJE_VALIDACION + ConstantesUtil.CAMPO_APELIIDOS_MESAJE_ERROR, ConstantesUtil.APELIIDOS_MESAJE_ERROR);
 		model.addAttribute(ConstantesUtil.CAMPO_MENSAJE_VALIDACION + ConstantesUtil.CAMPO_CORREO_MESAJE_ERROR, ConstantesUtil.CORREO_MESAJE_ERROR);

@@ -15,14 +15,10 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.MethodKey;
-import com.liferay.portal.kernel.util.PortalClassInvoker;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.model.PasswordPolicy;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ClassNameLocalServiceUtil;
-import com.liferay.portal.service.PasswordPolicyLocalServiceUtil;
 import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
@@ -111,7 +107,9 @@ public class RegistrarUsuarioServiceImpl implements RegistrarUsuarioService {
 				firstName, middleName, lastName, prefixId, suffixId, male,
 				birthdayMonth, birthdayDay, birthdayYear, jobTitle, groupIds,
 				organizationIds, null, userGroupIds, sendEmail, serviceContext);
-
+		
+		nuevoPostulante.setPasswordReset(false);
+		
 		ExpandoValueLocalServiceUtil.addValue(User.class.getName(),
 				ExpandoTableConstants.DEFAULT_TABLE_NAME, ConstantesUtil.DNI,
 				nuevoPostulante.getUserId(),

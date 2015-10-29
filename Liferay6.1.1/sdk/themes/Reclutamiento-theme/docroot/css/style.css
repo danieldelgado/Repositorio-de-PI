@@ -6,6 +6,9 @@ header {
 	padding: 10px;
 }
 
+boby {
+	padding-right: 0px !important;
+}
 
 titulo h2 {
 	margin-bottom: auto;

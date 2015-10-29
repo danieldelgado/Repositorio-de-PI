@@ -7,34 +7,25 @@
 			<access>PROPERTY</access>
 		</persistence-unit-defaults>
 	</persistence-unit-metadata>
-	<mapped-superclass class="com.rec.hitss.service.model.impl.FooModelImpl">
+	<mapped-superclass class="com.rec.hitss.service.model.impl.SolicitudReclutamientoModelImpl">
 		<attributes>
-			<id name="fooId" />
-			<basic name="groupId" />
-			<basic name="companyId" />
-			<basic name="userId" />
-			<basic name="userName" />
+			<id name="solicitudReclutamientoId" />
+			<basic name="puesto" />
+			<basic name="userNameCreate" />
 			<basic name="createDate">
 				<temporal>TIMESTAMP</temporal>
 			</basic>
+			<basic name="userNameUpdate" />
 			<basic name="modifiedDate">
 				<temporal>TIMESTAMP</temporal>
 			</basic>
-			<basic name="field1" />
-			<basic name="field2" />
-			<basic name="field3" />
-			<basic name="field4">
-				<temporal>TIMESTAMP</temporal>
-			</basic>
-			<basic name="field5" />
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
-			<transient name="userUuid" />
 		</attributes>
 	</mapped-superclass>
-	<entity class="com.rec.hitss.service.model.impl.FooImpl" name="Foo">
-		<table name="RECHITSS_Foo" />
+	<entity class="com.rec.hitss.service.model.impl.SolicitudReclutamientoImpl" name="SolicitudReclutamiento">
+		<table name="SolicitudReclutamiento" />
 		<attributes />
 	</entity>
 </entity-mappings>

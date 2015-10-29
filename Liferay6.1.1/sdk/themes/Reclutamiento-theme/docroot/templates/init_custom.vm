@@ -7,6 +7,8 @@ This file allows you to override and define new Velocity variables.
 #set ($state = $paramUtil.get($request, "p_p_state",""))
 #set ($struts_action = $paramUtil.get($request, "_58_struts_action",""))
 #set ($friendlyURL = $layout.getFriendlyURL())
+#set ($userId = $getterUtil.getLong($request.get("theme-display").get("user-id")))
+#set ($user = $userLocalServiceUtil.getUserById($userId))
 
 #set($val_limite_cadena = $propsUtil.get("validateutil.val_limite_cadena") )
 #set($val_id_compuesto = $propsUtil.get("validateutil.val_id_compuesto") )
@@ -25,3 +27,26 @@ This file allows you to override and define new Velocity variables.
 #set($val_extenxion_archivo_imagen = $propsUtil.get("validateutil.val_extenxion_archivo_imagen") )
 #set($numero0 = $propsUtil.get("validateutil.numero0") )
 
+
+   #set($es_administrador=false)
+   #set($es_postulante=false)
+   #set($es_empleado=false)
+   
+   #set($es_visitante_chat=false)
+   
+   #foreach($roles in $user.getRoles())
+	  #if($roles.getName()=="Administrator")
+		 #set($es_administrador=true)
+	  #end
+	  #if($roles.getName()=="POSTULANTE")
+		 #set($es_postulante=true)
+	  #end
+	  #if($roles.getName()=="EMPLEADO")
+		 #set($es_empleado=true)
+	  #end
+	  #if($roles.getName()=="VisitanteChat")
+		 #set($es_visitante_chat=true)
+	  #end
+   #end
+   
+   

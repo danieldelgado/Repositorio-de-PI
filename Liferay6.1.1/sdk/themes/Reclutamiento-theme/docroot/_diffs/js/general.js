@@ -4,19 +4,14 @@ reclutamiento_theme = {};
 reclutamiento_theme.inicializarComponentes = function() {
 
 	$("#loginUser,#loginUser2").click(function(e) {
-		$("#loginModal").show();
+		$("#loginModal").modal('show');
 	});
-
-	$(".close").click(function(e) {
-		$("#loginModal").hide();
-	});
-
 	var action, porletId;
 	porletId = locationVar("p_p_id");
 	action = locationVar("_" + porletId + "_" + "struts_action");
 
 	if (porletId == "58" && action == "%2Flogin%2Flogin") {
-		$("#loginUser,#loginUser2").trigger('click');
+		$("#loginModal").modal('show');
 	}
 
 };
@@ -84,8 +79,18 @@ reclutamiento_theme.mensajesgeneral = function(titulo,mensajesHtml,clases,role,e
 	$(mensajesgeneral).modal('show');
 };
 
+reclutamiento_theme.cargandoDialog = function(porcentaje){
+	var cargandoDialog = $("#pleaseWaitDialog");
+	$(cargandoDialog).modal('show');
+};
+
+reclutamiento_theme.cargandoDialogcerrar = function(porcentaje){
+	var cargandoDialog = $("#pleaseWaitDialog");
+	$(cargandoDialog).modal('hide');
+};
+
 reclutamiento_theme.init = function() {
-	$("#loginModal").hide();
+//	$("#loginModal").hide();
 	reclutamiento_theme.inicializarComponentes();
 	reclutamiento_theme.addlinksdockbar();
 };

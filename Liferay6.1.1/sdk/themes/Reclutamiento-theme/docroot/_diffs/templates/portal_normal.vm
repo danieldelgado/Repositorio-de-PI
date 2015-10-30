@@ -17,7 +17,7 @@
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 </head>
-<body class="" style="padding-right: 0px !important;" >
+<body class="" >
 $theme.include($body_top_include)
 #if($is_signed_in && ($es_administrador || $es_empleado ) && !$es_postulante)
 	<div class="visible-md-block visible-sm-block visible-lg-block">
@@ -25,11 +25,9 @@ $theme.include($body_top_include)
 	</div>
 #end
 
-#parse ("$full_templates_path/header.vm")
-
 #if ($has_navigation || $is_signed_in)
 		
-	<nav class="navbar navbar-default navbar-fixed-top visible-xs-block hidden-md hidden-sm hidden-lg 1" style=" #if ($is_signed_in)  margin-top: 0px; #end  "    >
+	<nav class="navbar navbar-default navbar-fixed-top visible-xs-block hidden-md hidden-sm hidden-lg 1" style="     margin-bottom: 0px !important; #if ($is_signed_in)  margin-top: 0px; #end  "    >
 		#parse ("$full_templates_path/mobile-navigation.vm")
 	</nav>
 			
@@ -42,6 +40,7 @@ $theme.include($body_top_include)
 <div class="container">	
 	
 	<div class="visible-xs-block hidden-md hidden-sm hidden-lg" style="height: 80px; ">
+		
     </div>
 	<div class="container" style="padding-top: 5px;" >
 		#if ($selectable)

@@ -1,0 +1,20 @@
+#set ($myGroup = $theme_display.getScopeGroup())
+#set ($layoutService = $serviceLocator.findService("com.liferay.portal.service.LayoutService"))
+
+#set ($globalLayouts = $layoutService.getLayouts($myGroup.groupId, true, 0))
+
+#foreach ($nav_item in $globalLayouts)
+
+     $nav_item
+         
+#end
+
+
+#set ($globalLayouts2 = $layoutService.getLayouts($myGroup.groupId, false, 0))
+
+#foreach ($nav_item in $globalLayouts2)
+
+     $nav_item
+         
+#end
+

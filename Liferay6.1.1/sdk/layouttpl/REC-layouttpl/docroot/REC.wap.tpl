@@ -1,4 +1,11 @@
-<div class="REC container-fluid" id="main-content" role="main">	
+<div class="REC " id="main-content" role="main">	
+	<div class="portlet-layout row">
+		<div
+			class="aui-w30  col-xs-12 col-sm-12 col-md-12 col-lg-12"
+			id="column-1">$processor.processColumn("column-1",
+			"portlet-column-content portlet-column-content-first")</div>
+
+	</div>
 	<div class="portlet-layout row">
 		<div
 			class="aui-w30 portlet-column portlet-column-first col-xs-12 col-sm-5 col-md-3 col-lg-2"

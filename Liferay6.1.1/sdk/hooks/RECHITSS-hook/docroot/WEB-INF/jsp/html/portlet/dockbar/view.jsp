@@ -410,25 +410,6 @@ boolean hasLayoutUpdatePermission = LayoutPermissionUtil.contains(permissionChec
 	</c:if>
 </div>
 
-<c:if test="<%= (layoutSet != null) && layoutSet.isLayoutSetPrototypeLinkActive() && SitesUtil.isLayoutModifiedSinceLastMerge(layout) && LayoutPermissionUtil.contains(themeDisplay.getPermissionChecker(), layout, ActionKeys.UPDATE) %>">
-	<div class="page-customization-bar">
-		<img alt="" class="customized-icon" src="<%= themeDisplay.getPathThemeImages() %>/common/edit.png" />
-
-		<liferay-ui:message key="this-page-has-been-changed-since-the-last-update-from-the-site-template" />
-
-		<liferay-portlet:actionURL portletName="<%= PortletKeys.LAYOUTS_ADMIN %>" var="resetPrototypeURL">
-			<portlet:param name="struts_action" value="/layouts_admin/edit_layouts" />
-			<portlet:param name="<%= Constants.CMD %>" value="reset_prototype" />
-			<portlet:param name="redirect" value="<%= PortalUtil.getLayoutURL(themeDisplay) %>" />
-			<portlet:param name="groupId" value="<%= String.valueOf(themeDisplay.getParentGroupId()) %>" />
-		</liferay-portlet:actionURL>
-
-		<aui:form action="<%= resetPrototypeURL %>" cssClass="reset-prototype" name="resetFm">
-			<aui:button name="submit" type="submit" value="reset" />
-		</aui:form>
-	</div>
-</c:if>
-
 <c:if test="<%= (!SitesUtil.isLayoutUpdateable(layout) || (layout.isLayoutPrototypeLinkActive() && !group.hasStagingGroup())) && LayoutPermissionUtil.containsWithoutViewableGroup(themeDisplay.getPermissionChecker(), layout, null, false, ActionKeys.UPDATE) %>">
 	<div class="page-customization-bar">
 		<img alt="" class="customized-icon" src="<%= themeDisplay.getPathThemeImages() %>/common/site_icon.png" />

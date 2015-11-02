@@ -16,7 +16,6 @@ package com.rec.hitss.service.model;
 
 import com.liferay.portal.model.ModelWrapper;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -49,10 +48,6 @@ public class SolicitudReclutamientoWrapper implements SolicitudReclutamiento,
 
 		attributes.put("solicitudReclutamientoId", getSolicitudReclutamientoId());
 		attributes.put("puesto", getPuesto());
-		attributes.put("userNameCreate", getUserNameCreate());
-		attributes.put("createDate", getCreateDate());
-		attributes.put("userNameUpdate", getUserNameUpdate());
-		attributes.put("modifiedDate", getModifiedDate());
 
 		return attributes;
 	}
@@ -69,30 +64,6 @@ public class SolicitudReclutamientoWrapper implements SolicitudReclutamiento,
 
 		if (puesto != null) {
 			setPuesto(puesto);
-		}
-
-		String userNameCreate = (String)attributes.get("userNameCreate");
-
-		if (userNameCreate != null) {
-			setUserNameCreate(userNameCreate);
-		}
-
-		Date createDate = (Date)attributes.get("createDate");
-
-		if (createDate != null) {
-			setCreateDate(createDate);
-		}
-
-		String userNameUpdate = (String)attributes.get("userNameUpdate");
-
-		if (userNameUpdate != null) {
-			setUserNameUpdate(userNameUpdate);
-		}
-
-		Date modifiedDate = (Date)attributes.get("modifiedDate");
-
-		if (modifiedDate != null) {
-			setModifiedDate(modifiedDate);
 		}
 	}
 
@@ -148,78 +119,6 @@ public class SolicitudReclutamientoWrapper implements SolicitudReclutamiento,
 	*/
 	public void setPuesto(java.lang.String puesto) {
 		_solicitudReclutamiento.setPuesto(puesto);
-	}
-
-	/**
-	* Returns the user name create of this solicitud reclutamiento.
-	*
-	* @return the user name create of this solicitud reclutamiento
-	*/
-	public java.lang.String getUserNameCreate() {
-		return _solicitudReclutamiento.getUserNameCreate();
-	}
-
-	/**
-	* Sets the user name create of this solicitud reclutamiento.
-	*
-	* @param userNameCreate the user name create of this solicitud reclutamiento
-	*/
-	public void setUserNameCreate(java.lang.String userNameCreate) {
-		_solicitudReclutamiento.setUserNameCreate(userNameCreate);
-	}
-
-	/**
-	* Returns the create date of this solicitud reclutamiento.
-	*
-	* @return the create date of this solicitud reclutamiento
-	*/
-	public java.util.Date getCreateDate() {
-		return _solicitudReclutamiento.getCreateDate();
-	}
-
-	/**
-	* Sets the create date of this solicitud reclutamiento.
-	*
-	* @param createDate the create date of this solicitud reclutamiento
-	*/
-	public void setCreateDate(java.util.Date createDate) {
-		_solicitudReclutamiento.setCreateDate(createDate);
-	}
-
-	/**
-	* Returns the user name update of this solicitud reclutamiento.
-	*
-	* @return the user name update of this solicitud reclutamiento
-	*/
-	public java.lang.String getUserNameUpdate() {
-		return _solicitudReclutamiento.getUserNameUpdate();
-	}
-
-	/**
-	* Sets the user name update of this solicitud reclutamiento.
-	*
-	* @param userNameUpdate the user name update of this solicitud reclutamiento
-	*/
-	public void setUserNameUpdate(java.lang.String userNameUpdate) {
-		_solicitudReclutamiento.setUserNameUpdate(userNameUpdate);
-	}
-
-	/**
-	* Returns the modified date of this solicitud reclutamiento.
-	*
-	* @return the modified date of this solicitud reclutamiento
-	*/
-	public java.util.Date getModifiedDate() {
-		return _solicitudReclutamiento.getModifiedDate();
-	}
-
-	/**
-	* Sets the modified date of this solicitud reclutamiento.
-	*
-	* @param modifiedDate the modified date of this solicitud reclutamiento
-	*/
-	public void setModifiedDate(java.util.Date modifiedDate) {
-		_solicitudReclutamiento.setModifiedDate(modifiedDate);
 	}
 
 	public boolean isNew() {

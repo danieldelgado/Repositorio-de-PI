@@ -23,8 +23,6 @@ import com.liferay.portlet.expando.model.ExpandoBridge;
 
 import java.io.Serializable;
 
-import java.util.Date;
-
 /**
  * The base model interface for the SolicitudReclutamiento service. Represents a row in the &quot;SolicitudReclutamiento&quot; database table, with each column mapped to a property of this class.
  *
@@ -87,64 +85,6 @@ public interface SolicitudReclutamientoModel extends BaseModel<SolicitudReclutam
 	 * @param puesto the puesto of this solicitud reclutamiento
 	 */
 	public void setPuesto(String puesto);
-
-	/**
-	 * Returns the user name create of this solicitud reclutamiento.
-	 *
-	 * @return the user name create of this solicitud reclutamiento
-	 */
-	@AutoEscape
-	public String getUserNameCreate();
-
-	/**
-	 * Sets the user name create of this solicitud reclutamiento.
-	 *
-	 * @param userNameCreate the user name create of this solicitud reclutamiento
-	 */
-	public void setUserNameCreate(String userNameCreate);
-
-	/**
-	 * Returns the create date of this solicitud reclutamiento.
-	 *
-	 * @return the create date of this solicitud reclutamiento
-	 */
-	public Date getCreateDate();
-
-	/**
-	 * Sets the create date of this solicitud reclutamiento.
-	 *
-	 * @param createDate the create date of this solicitud reclutamiento
-	 */
-	public void setCreateDate(Date createDate);
-
-	/**
-	 * Returns the user name update of this solicitud reclutamiento.
-	 *
-	 * @return the user name update of this solicitud reclutamiento
-	 */
-	@AutoEscape
-	public String getUserNameUpdate();
-
-	/**
-	 * Sets the user name update of this solicitud reclutamiento.
-	 *
-	 * @param userNameUpdate the user name update of this solicitud reclutamiento
-	 */
-	public void setUserNameUpdate(String userNameUpdate);
-
-	/**
-	 * Returns the modified date of this solicitud reclutamiento.
-	 *
-	 * @return the modified date of this solicitud reclutamiento
-	 */
-	public Date getModifiedDate();
-
-	/**
-	 * Sets the modified date of this solicitud reclutamiento.
-	 *
-	 * @param modifiedDate the modified date of this solicitud reclutamiento
-	 */
-	public void setModifiedDate(Date modifiedDate);
 
 	public boolean isNew();
 

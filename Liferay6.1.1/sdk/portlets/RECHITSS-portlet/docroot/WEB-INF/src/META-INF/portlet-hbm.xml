@@ -8,9 +8,5 @@
 			<generator class="assigned" />
 		</id>
 		<property name="puesto" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="userNameCreate" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="createDate" type="org.hibernate.type.TimestampType" />
-		<property name="userNameUpdate" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
 	</class>
 </hibernate-mapping>

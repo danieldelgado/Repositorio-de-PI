@@ -13,6 +13,11 @@ reclutamiento_theme.inicializarComponentes = function() {
 	if (porletId == "58" && action == "%2Flogin%2Flogin") {
 		$("#loginModal").modal('show');
 	}
+	
+	$('.js-loading-bar').modal({
+		  backdrop: 'static',
+		  show: false
+	});
 
 };
 
@@ -54,6 +59,8 @@ $.fn.serializeAllArray = function() {
 	return $.param(obj);
 };
 
+//Setup
+
 reclutamiento_theme.mensajesgeneralSimple = function(titulo,mensajesHtml,eventoAlcerrar) {
 	reclutamiento_theme.mensajesgeneral(titulo,mensajesHtml,null,null,eventoAlcerrar);
 };
@@ -68,7 +75,7 @@ reclutamiento_theme.mensajesgeneral = function(titulo,mensajesHtml,clases,role,e
 	if(role != null){	
 		$('#mensajesgeneral').find(".contentido").attr("class","contentido "+clases);
 	}	
-	console.log(eventoAlcerrar);
+	
 	if(eventoAlcerrar != null){
 
 		$(mensajesgeneral).on('hidden.bs.modal', function () {
@@ -79,14 +86,21 @@ reclutamiento_theme.mensajesgeneral = function(titulo,mensajesHtml,clases,role,e
 	$(mensajesgeneral).modal('show');
 };
 
-reclutamiento_theme.cargandoDialog = function(porcentaje){
-	var cargandoDialog = $("#pleaseWaitDialog");
-	$(cargandoDialog).modal('show');
+reclutamiento_theme.cargandoDialog = function(porcentaje){	
+	var cargandoProceso = $('#cargandoProceso');
+    $bar = cargandoProceso.find('.progress-bar');
+    cargandoProceso.modal('show');
+    $bar.attr("style","width: 50%;");
 };
 
 reclutamiento_theme.cargandoDialogcerrar = function(porcentaje){
-	var cargandoDialog = $("#pleaseWaitDialog");
-	$(cargandoDialog).modal('hide');
+	var cargandoProceso = $('#cargandoProceso');
+    $bar = cargandoProceso.find('.progress-bar');  
+	$bar.attr("style","width: 100%;");
+	window.setTimeout(function() {
+	  $bar.attr("style","width: 0%;");
+	  cargandoProceso.modal('hide');
+	}, 1500);
 };
 
 reclutamiento_theme.init = function() {

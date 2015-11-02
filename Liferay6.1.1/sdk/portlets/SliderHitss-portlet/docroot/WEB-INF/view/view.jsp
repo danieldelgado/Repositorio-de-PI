@@ -25,7 +25,9 @@
 		<c:forEach var="slide" items="${listaSliders}">
 			<c:if test="${counter2==0}">
 				<div class="item active">
-					<img src="${slide.urlImage}" alt="${slide.titulo}">
+					
+					<img src="${slide.urlImage}" alt="${slide.titulo}" class="tales"  >
+					
 					<div class="carousel-caption">
 						 <h3>${slide.titulo}</h3>
 	   					 <p>${slide.descripcion}</p>					
@@ -34,7 +36,7 @@
 			</c:if>
 			<c:if test="${counter2>0}">
 				<div class="item">
-					<img src="${slide.urlImage}" alt="${slide.titulo}">
+					<img src="${slide.urlImage}" alt="${slide.titulo}" class="tales" >
 					<div class="carousel-caption">
 						 <h3>${slide.titulo}</h3>
 	   					 <p>${slide.descripcion}</p>

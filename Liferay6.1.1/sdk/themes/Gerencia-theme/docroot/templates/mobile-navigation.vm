@@ -1,0 +1,95 @@
+
+#set ($myGroup = $theme_display.getScopeGroup())
+#set ($layoutService = $serviceLocator.findService("com.liferay.portal.service.LayoutService"))
+
+#set ($globalLayoutsPublic = $layoutService.getLayouts($myGroup.groupId, false, 0))
+#set ($globalLayoutsPrivate = $layoutService.getLayouts($myGroup.groupId, true, 0))
+
+
+<div class="container" >
+	<div class="navbar-header " style="height: 80px; ">
+          <a href="$site_default_url" class="navbar-brand hidden-xs">$site_name</a>
+		  <div class="row">
+    		  <span class="visible-xs-block col-xs-9  ">
+                <h6><a href="$site_default_url" class="navbar-brand">$site_name</a></h6>
+              </span>
+              <button class="navbar-toggle col-xs-offset-1 " type="button" data-toggle="collapse" data-target="#navbar-main2">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+          </div>
+    </div>
+     <div class="navbar-collapse collapse" id="navbar-main2">
+	          	<ul class="nav navbar-nav">
+					#foreach ($nav_item in $globalLayoutsPublic)
+					
+						#if (!$nav_item.isHidden())
+					
+							#if ($nav_item.isSelected())
+								#set($activado="active")
+							#else
+								#set($activado="")
+							#end
+							#if ($nav_item.hasChildren())
+								#set($dropdown="dropdown")
+								
+							#else
+								#set($dropdown="")
+							#end
+							<li class=" $activado dropdown ">
+								<a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"  ><span>$nav_item.getName()</span>   
+								#if ($nav_item.hasChildren())
+									<span class="caret"></span>
+								#end
+								</a>	
+								#if ($nav_item.hasChildren())
+									<ul class="dropdown-menu">
+										#foreach ($nav_child in $nav_item.getChildren())
+											
+											#if ($nav_child.isSelected())
+												#set($activadohijo="active")
+											#else
+												#set($activadohijo="")
+											#end
+										
+											<li class="dropdown-toggle">
+							                	<a href="$nav_child.getFriendlyURL()" class=" $activadohijo "><span>$nav_child.getName()</span></a>
+							           		</li>	
+										#end	
+									</ul>
+								#end									
+							</li>
+						#end	
+					#end				
+				</ul>		
+			<ul class="nav navbar-nav navbar-right">    
+				#if (!$is_signed_in)
+					<li>
+						<a  id="loginUser" href="javascript:;" class="">Iniciar Sesi&oacute;n</a>
+					</li>	            
+				#else    
+					<li class="dropdown">
+					  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">$user.getFullName()<span class="caret"></span></a>
+					  <ul class="dropdown-menu">
+					  
+					  	#foreach ($lay_item in $globalLayoutsPrivate)						  					       
+					            <li class="dropdown-toggle">
+					                <a href="/group/guest$lay_item.getFriendlyURL()" class=""><span>$lay_item.getName()</span></a>
+					            </li>				       
+					   	 #end			
+					  
+					  
+					    <li><a href="$sign_out_url">Cerrar Sesi&oacute;n</a></li>
+					  </ul>
+					</li>
+				#end  
+		     </ul>			
+			<form class="navbar-form navbar-right" role="search">
+		        <div class="form-group">
+		          <input type="text" class="form-control" placeholder="Buscar Ofertas">
+		        </div>
+		        <button type="submit" class="btn btn-default">Buscar</button>
+		      </form>
+    </div>
+</div>

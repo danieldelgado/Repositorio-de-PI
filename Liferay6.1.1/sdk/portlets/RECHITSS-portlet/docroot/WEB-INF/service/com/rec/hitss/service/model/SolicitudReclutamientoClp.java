@@ -26,7 +26,6 @@ import java.io.Serializable;
 
 import java.lang.reflect.Proxy;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -68,10 +67,6 @@ public class SolicitudReclutamientoClp extends BaseModelImpl<SolicitudReclutamie
 
 		attributes.put("solicitudReclutamientoId", getSolicitudReclutamientoId());
 		attributes.put("puesto", getPuesto());
-		attributes.put("userNameCreate", getUserNameCreate());
-		attributes.put("createDate", getCreateDate());
-		attributes.put("userNameUpdate", getUserNameUpdate());
-		attributes.put("modifiedDate", getModifiedDate());
 
 		return attributes;
 	}
@@ -90,30 +85,6 @@ public class SolicitudReclutamientoClp extends BaseModelImpl<SolicitudReclutamie
 		if (puesto != null) {
 			setPuesto(puesto);
 		}
-
-		String userNameCreate = (String)attributes.get("userNameCreate");
-
-		if (userNameCreate != null) {
-			setUserNameCreate(userNameCreate);
-		}
-
-		Date createDate = (Date)attributes.get("createDate");
-
-		if (createDate != null) {
-			setCreateDate(createDate);
-		}
-
-		String userNameUpdate = (String)attributes.get("userNameUpdate");
-
-		if (userNameUpdate != null) {
-			setUserNameUpdate(userNameUpdate);
-		}
-
-		Date modifiedDate = (Date)attributes.get("modifiedDate");
-
-		if (modifiedDate != null) {
-			setModifiedDate(modifiedDate);
-		}
 	}
 
 	public long getSolicitudReclutamientoId() {
@@ -130,38 +101,6 @@ public class SolicitudReclutamientoClp extends BaseModelImpl<SolicitudReclutamie
 
 	public void setPuesto(String puesto) {
 		_puesto = puesto;
-	}
-
-	public String getUserNameCreate() {
-		return _userNameCreate;
-	}
-
-	public void setUserNameCreate(String userNameCreate) {
-		_userNameCreate = userNameCreate;
-	}
-
-	public Date getCreateDate() {
-		return _createDate;
-	}
-
-	public void setCreateDate(Date createDate) {
-		_createDate = createDate;
-	}
-
-	public String getUserNameUpdate() {
-		return _userNameUpdate;
-	}
-
-	public void setUserNameUpdate(String userNameUpdate) {
-		_userNameUpdate = userNameUpdate;
-	}
-
-	public Date getModifiedDate() {
-		return _modifiedDate;
-	}
-
-	public void setModifiedDate(Date modifiedDate) {
-		_modifiedDate = modifiedDate;
 	}
 
 	public BaseModel<?> getSolicitudReclutamientoRemoteModel() {
@@ -195,10 +134,6 @@ public class SolicitudReclutamientoClp extends BaseModelImpl<SolicitudReclutamie
 
 		clone.setSolicitudReclutamientoId(getSolicitudReclutamientoId());
 		clone.setPuesto(getPuesto());
-		clone.setUserNameCreate(getUserNameCreate());
-		clone.setCreateDate(getCreateDate());
-		clone.setUserNameUpdate(getUserNameUpdate());
-		clone.setModifiedDate(getModifiedDate());
 
 		return clone;
 	}
@@ -247,27 +182,19 @@ public class SolicitudReclutamientoClp extends BaseModelImpl<SolicitudReclutamie
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(13);
+		StringBundler sb = new StringBundler(5);
 
 		sb.append("{solicitudReclutamientoId=");
 		sb.append(getSolicitudReclutamientoId());
 		sb.append(", puesto=");
 		sb.append(getPuesto());
-		sb.append(", userNameCreate=");
-		sb.append(getUserNameCreate());
-		sb.append(", createDate=");
-		sb.append(getCreateDate());
-		sb.append(", userNameUpdate=");
-		sb.append(getUserNameUpdate());
-		sb.append(", modifiedDate=");
-		sb.append(getModifiedDate());
 		sb.append("}");
 
 		return sb.toString();
 	}
 
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(22);
+		StringBundler sb = new StringBundler(10);
 
 		sb.append("<model><model-name>");
 		sb.append("com.rec.hitss.service.model.SolicitudReclutamiento");
@@ -281,22 +208,6 @@ public class SolicitudReclutamientoClp extends BaseModelImpl<SolicitudReclutamie
 			"<column><column-name>puesto</column-name><column-value><![CDATA[");
 		sb.append(getPuesto());
 		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userNameCreate</column-name><column-value><![CDATA[");
-		sb.append(getUserNameCreate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>createDate</column-name><column-value><![CDATA[");
-		sb.append(getCreateDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userNameUpdate</column-name><column-value><![CDATA[");
-		sb.append(getUserNameUpdate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
-		sb.append(getModifiedDate());
-		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -305,9 +216,5 @@ public class SolicitudReclutamientoClp extends BaseModelImpl<SolicitudReclutamie
 
 	private long _solicitudReclutamientoId;
 	private String _puesto;
-	private String _userNameCreate;
-	private Date _createDate;
-	private String _userNameUpdate;
-	private Date _modifiedDate;
 	private BaseModel<?> _solicitudReclutamientoRemoteModel;
 }

@@ -70,34 +70,43 @@ function registrarPostulanteInscrito() {
 	var fromregistrarUsuario = $("#" + registrar_usuario_portlet_namespace	+ "fromregistrarUsuario");
 	fromregistrarUsuario = fromregistrarUsuario.serializeAllArray();
 	if(validarFormulario()==0){
-		var registrarUsuario = $("#" + registrar_usuario_portlet_namespace + "registrarUsuario").val();
-		$.ajax({
-			type : "POST",
-			dataType : "json",
-			url : registrarUsuario,
-			data : fromregistrarUsuario,
-			success : function(data) {
-				if (data != null) {
-					var grabousuario = (data["correcto"]== undefined);
-					if (grabousuario) {
-						var dat = data["respuestas"];
-						$(dat).each(function(item) {
-								validate_theme_reclutamiento.validarCampoServ(this["campoValidate"],"#" + registrar_usuario_portlet_namespace+ "_msg_e_"+ this["campoValidate"],this["mensajeSimple"]);
-						});
-					}else{
-						var nuevoPostulante = data["nuevoPostulante"];
-						
-						reclutamiento_theme.cargandoDialogcerrar(10);
-						
-						reclutamiento_theme.mensajesgeneralSimple("Nuevo Postulante Registrado","Bienvenido "+nuevoPostulante,function(){
-							window.location.href="/";
-						});
-						
-					}
-				}
-				
-			}
-		});
+		
+		
+		
+		
+		
+		
+//		var registrarUsuario = $("#" + registrar_usuario_portlet_namespace + "registrarUsuario").val();
+//		$.ajax({
+//			type : "POST",
+//			dataType : "json",
+//			url : registrarUsuario,
+//			data : fromregistrarUsuario,
+//			success : function(data) {
+//				if (data != null) {
+//					var grabousuario = (data["correcto"]== undefined);
+//					if (grabousuario) {
+//						var dat = data["respuestas"];
+//						$(dat).each(function(item) {
+//								validate_theme_reclutamiento.validarCampoServ(this["campoValidate"],"#" + registrar_usuario_portlet_namespace+ "_msg_e_"+ this["campoValidate"],this["mensajeSimple"]);
+//						});
+//
+//						reclutamiento_theme.cargandoDialogcerrar(10);
+//						
+//					}else{
+//						var nuevoPostulante = data["nuevoPostulante"];
+//						
+//						reclutamiento_theme.cargandoDialogcerrar(10);
+//						
+//						reclutamiento_theme.mensajesgeneralSimple("Nuevo Postulante Registrado","Bienvenido "+nuevoPostulante,function(){
+//							window.location.href="/";
+//						});
+//						
+//					}
+//				}
+//				
+//			}
+//		});
 	}	
 }
 

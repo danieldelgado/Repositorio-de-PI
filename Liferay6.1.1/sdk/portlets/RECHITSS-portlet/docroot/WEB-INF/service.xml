@@ -19,10 +19,10 @@
 
 		<column name="puesto" type="String" />
 		
-		<column name="userNameCreate" type="String" />
-		<column name="createDate" type="Date" />
-		<column name="userNameUpdate" type="String" />
-		<column name="modifiedDate" type="Date" />
+<!-- 		<column name="userNameCreate" type="String" /> -->
+<!-- 		<column name="createDate" type="Date" /> -->
+<!-- 		<column name="userNameUpdate" type="String" /> -->
+<!-- 		<column name="modifiedDate" type="Date" /> -->
 
 		<!-- Order -->
 

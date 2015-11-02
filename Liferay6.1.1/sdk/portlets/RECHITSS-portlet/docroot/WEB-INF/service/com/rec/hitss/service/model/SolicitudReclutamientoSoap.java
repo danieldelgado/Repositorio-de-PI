@@ -17,7 +17,6 @@ package com.rec.hitss.service.model;
 import java.io.Serializable;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -34,10 +33,6 @@ public class SolicitudReclutamientoSoap implements Serializable {
 
 		soapModel.setSolicitudReclutamientoId(model.getSolicitudReclutamientoId());
 		soapModel.setPuesto(model.getPuesto());
-		soapModel.setUserNameCreate(model.getUserNameCreate());
-		soapModel.setCreateDate(model.getCreateDate());
-		soapModel.setUserNameUpdate(model.getUserNameUpdate());
-		soapModel.setModifiedDate(model.getModifiedDate());
 
 		return soapModel;
 	}
@@ -109,42 +104,6 @@ public class SolicitudReclutamientoSoap implements Serializable {
 		_puesto = puesto;
 	}
 
-	public String getUserNameCreate() {
-		return _userNameCreate;
-	}
-
-	public void setUserNameCreate(String userNameCreate) {
-		_userNameCreate = userNameCreate;
-	}
-
-	public Date getCreateDate() {
-		return _createDate;
-	}
-
-	public void setCreateDate(Date createDate) {
-		_createDate = createDate;
-	}
-
-	public String getUserNameUpdate() {
-		return _userNameUpdate;
-	}
-
-	public void setUserNameUpdate(String userNameUpdate) {
-		_userNameUpdate = userNameUpdate;
-	}
-
-	public Date getModifiedDate() {
-		return _modifiedDate;
-	}
-
-	public void setModifiedDate(Date modifiedDate) {
-		_modifiedDate = modifiedDate;
-	}
-
 	private long _solicitudReclutamientoId;
 	private String _puesto;
-	private String _userNameCreate;
-	private Date _createDate;
-	private String _userNameUpdate;
-	private Date _modifiedDate;
 }

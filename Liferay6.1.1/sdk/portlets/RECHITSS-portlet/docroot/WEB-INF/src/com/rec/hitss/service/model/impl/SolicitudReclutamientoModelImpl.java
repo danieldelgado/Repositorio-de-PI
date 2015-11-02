@@ -36,7 +36,6 @@ import java.io.Serializable;
 import java.sql.Types;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -65,13 +64,9 @@ public class SolicitudReclutamientoModelImpl extends BaseModelImpl<SolicitudRecl
 	public static final String TABLE_NAME = "SolicitudReclutamiento";
 	public static final Object[][] TABLE_COLUMNS = {
 			{ "solicitudReclutamientoId", Types.BIGINT },
-			{ "puesto", Types.VARCHAR },
-			{ "userNameCreate", Types.VARCHAR },
-			{ "createDate", Types.TIMESTAMP },
-			{ "userNameUpdate", Types.VARCHAR },
-			{ "modifiedDate", Types.TIMESTAMP }
+			{ "puesto", Types.VARCHAR }
 		};
-	public static final String TABLE_SQL_CREATE = "create table SolicitudReclutamiento (solicitudReclutamientoId LONG not null primary key,puesto VARCHAR(75) null,userNameCreate VARCHAR(75) null,createDate DATE null,userNameUpdate VARCHAR(75) null,modifiedDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table SolicitudReclutamiento (solicitudReclutamientoId LONG not null primary key,puesto VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table SolicitudReclutamiento";
 	public static final String ORDER_BY_JPQL = " ORDER BY solicitudReclutamiento.puesto ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY SolicitudReclutamiento.puesto ASC";
@@ -105,10 +100,6 @@ public class SolicitudReclutamientoModelImpl extends BaseModelImpl<SolicitudRecl
 
 		model.setSolicitudReclutamientoId(soapModel.getSolicitudReclutamientoId());
 		model.setPuesto(soapModel.getPuesto());
-		model.setUserNameCreate(soapModel.getUserNameCreate());
-		model.setCreateDate(soapModel.getCreateDate());
-		model.setUserNameUpdate(soapModel.getUserNameUpdate());
-		model.setModifiedDate(soapModel.getModifiedDate());
 
 		return model;
 	}
@@ -170,10 +161,6 @@ public class SolicitudReclutamientoModelImpl extends BaseModelImpl<SolicitudRecl
 
 		attributes.put("solicitudReclutamientoId", getSolicitudReclutamientoId());
 		attributes.put("puesto", getPuesto());
-		attributes.put("userNameCreate", getUserNameCreate());
-		attributes.put("createDate", getCreateDate());
-		attributes.put("userNameUpdate", getUserNameUpdate());
-		attributes.put("modifiedDate", getModifiedDate());
 
 		return attributes;
 	}
@@ -191,30 +178,6 @@ public class SolicitudReclutamientoModelImpl extends BaseModelImpl<SolicitudRecl
 
 		if (puesto != null) {
 			setPuesto(puesto);
-		}
-
-		String userNameCreate = (String)attributes.get("userNameCreate");
-
-		if (userNameCreate != null) {
-			setUserNameCreate(userNameCreate);
-		}
-
-		Date createDate = (Date)attributes.get("createDate");
-
-		if (createDate != null) {
-			setCreateDate(createDate);
-		}
-
-		String userNameUpdate = (String)attributes.get("userNameUpdate");
-
-		if (userNameUpdate != null) {
-			setUserNameUpdate(userNameUpdate);
-		}
-
-		Date modifiedDate = (Date)attributes.get("modifiedDate");
-
-		if (modifiedDate != null) {
-			setModifiedDate(modifiedDate);
 		}
 	}
 
@@ -251,52 +214,6 @@ public class SolicitudReclutamientoModelImpl extends BaseModelImpl<SolicitudRecl
 		return GetterUtil.getString(_originalPuesto);
 	}
 
-	@JSON
-	public String getUserNameCreate() {
-		if (_userNameCreate == null) {
-			return StringPool.BLANK;
-		}
-		else {
-			return _userNameCreate;
-		}
-	}
-
-	public void setUserNameCreate(String userNameCreate) {
-		_userNameCreate = userNameCreate;
-	}
-
-	@JSON
-	public Date getCreateDate() {
-		return _createDate;
-	}
-
-	public void setCreateDate(Date createDate) {
-		_createDate = createDate;
-	}
-
-	@JSON
-	public String getUserNameUpdate() {
-		if (_userNameUpdate == null) {
-			return StringPool.BLANK;
-		}
-		else {
-			return _userNameUpdate;
-		}
-	}
-
-	public void setUserNameUpdate(String userNameUpdate) {
-		_userNameUpdate = userNameUpdate;
-	}
-
-	@JSON
-	public Date getModifiedDate() {
-		return _modifiedDate;
-	}
-
-	public void setModifiedDate(Date modifiedDate) {
-		_modifiedDate = modifiedDate;
-	}
-
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -331,10 +248,6 @@ public class SolicitudReclutamientoModelImpl extends BaseModelImpl<SolicitudRecl
 
 		solicitudReclutamientoImpl.setSolicitudReclutamientoId(getSolicitudReclutamientoId());
 		solicitudReclutamientoImpl.setPuesto(getPuesto());
-		solicitudReclutamientoImpl.setUserNameCreate(getUserNameCreate());
-		solicitudReclutamientoImpl.setCreateDate(getCreateDate());
-		solicitudReclutamientoImpl.setUserNameUpdate(getUserNameUpdate());
-		solicitudReclutamientoImpl.setModifiedDate(getModifiedDate());
 
 		solicitudReclutamientoImpl.resetOriginalValues();
 
@@ -406,66 +319,24 @@ public class SolicitudReclutamientoModelImpl extends BaseModelImpl<SolicitudRecl
 			solicitudReclutamientoCacheModel.puesto = null;
 		}
 
-		solicitudReclutamientoCacheModel.userNameCreate = getUserNameCreate();
-
-		String userNameCreate = solicitudReclutamientoCacheModel.userNameCreate;
-
-		if ((userNameCreate != null) && (userNameCreate.length() == 0)) {
-			solicitudReclutamientoCacheModel.userNameCreate = null;
-		}
-
-		Date createDate = getCreateDate();
-
-		if (createDate != null) {
-			solicitudReclutamientoCacheModel.createDate = createDate.getTime();
-		}
-		else {
-			solicitudReclutamientoCacheModel.createDate = Long.MIN_VALUE;
-		}
-
-		solicitudReclutamientoCacheModel.userNameUpdate = getUserNameUpdate();
-
-		String userNameUpdate = solicitudReclutamientoCacheModel.userNameUpdate;
-
-		if ((userNameUpdate != null) && (userNameUpdate.length() == 0)) {
-			solicitudReclutamientoCacheModel.userNameUpdate = null;
-		}
-
-		Date modifiedDate = getModifiedDate();
-
-		if (modifiedDate != null) {
-			solicitudReclutamientoCacheModel.modifiedDate = modifiedDate.getTime();
-		}
-		else {
-			solicitudReclutamientoCacheModel.modifiedDate = Long.MIN_VALUE;
-		}
-
 		return solicitudReclutamientoCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(13);
+		StringBundler sb = new StringBundler(5);
 
 		sb.append("{solicitudReclutamientoId=");
 		sb.append(getSolicitudReclutamientoId());
 		sb.append(", puesto=");
 		sb.append(getPuesto());
-		sb.append(", userNameCreate=");
-		sb.append(getUserNameCreate());
-		sb.append(", createDate=");
-		sb.append(getCreateDate());
-		sb.append(", userNameUpdate=");
-		sb.append(getUserNameUpdate());
-		sb.append(", modifiedDate=");
-		sb.append(getModifiedDate());
 		sb.append("}");
 
 		return sb.toString();
 	}
 
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(22);
+		StringBundler sb = new StringBundler(10);
 
 		sb.append("<model><model-name>");
 		sb.append("com.rec.hitss.service.model.SolicitudReclutamiento");
@@ -478,22 +349,6 @@ public class SolicitudReclutamientoModelImpl extends BaseModelImpl<SolicitudRecl
 		sb.append(
 			"<column><column-name>puesto</column-name><column-value><![CDATA[");
 		sb.append(getPuesto());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userNameCreate</column-name><column-value><![CDATA[");
-		sb.append(getUserNameCreate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>createDate</column-name><column-value><![CDATA[");
-		sb.append(getCreateDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userNameUpdate</column-name><column-value><![CDATA[");
-		sb.append(getUserNameUpdate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
-		sb.append(getModifiedDate());
 		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
@@ -508,10 +363,6 @@ public class SolicitudReclutamientoModelImpl extends BaseModelImpl<SolicitudRecl
 	private long _solicitudReclutamientoId;
 	private String _puesto;
 	private String _originalPuesto;
-	private String _userNameCreate;
-	private Date _createDate;
-	private String _userNameUpdate;
-	private Date _modifiedDate;
 	private long _columnBitmask;
 	private SolicitudReclutamiento _escapedModelProxy;
 }

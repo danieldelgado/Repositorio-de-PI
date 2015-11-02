@@ -4,9 +4,5 @@
 	<model name="com.rec.hitss.service.model.SolicitudReclutamiento">
 		<field name="solicitudReclutamientoId" type="long" />
 		<field name="puesto" type="String" />
-		<field name="userNameCreate" type="String" />
-		<field name="createDate" type="Date" />
-		<field name="userNameUpdate" type="String" />
-		<field name="modifiedDate" type="Date" />
 	</model>
 </model-hints>

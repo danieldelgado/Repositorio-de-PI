@@ -133,7 +133,7 @@
 					value="<liferay-ui:message key="sign-in" />" />
 				</div>			
 				<div class="form-group">
-					<a class="btn btn-success btn-lg btn-block" href="/inscripcion"><liferay-ui:message
+					<a class="btn btn-success btn-lg btn-block" href="/registro-perfil"><liferay-ui:message
 								key="login.registro.nuevo.usuario" /></a>
 				</div>					
 			</aui:fieldset>

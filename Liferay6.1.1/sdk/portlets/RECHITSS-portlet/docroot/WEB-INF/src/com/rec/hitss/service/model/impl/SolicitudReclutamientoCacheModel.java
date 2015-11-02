@@ -22,8 +22,6 @@ import com.rec.hitss.service.model.SolicitudReclutamiento;
 
 import java.io.Serializable;
 
-import java.util.Date;
-
 /**
  * The cache model class for representing SolicitudReclutamiento in entity cache.
  *
@@ -35,20 +33,12 @@ public class SolicitudReclutamientoCacheModel implements CacheModel<SolicitudRec
 	Serializable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(13);
+		StringBundler sb = new StringBundler(5);
 
 		sb.append("{solicitudReclutamientoId=");
 		sb.append(solicitudReclutamientoId);
 		sb.append(", puesto=");
 		sb.append(puesto);
-		sb.append(", userNameCreate=");
-		sb.append(userNameCreate);
-		sb.append(", createDate=");
-		sb.append(createDate);
-		sb.append(", userNameUpdate=");
-		sb.append(userNameUpdate);
-		sb.append(", modifiedDate=");
-		sb.append(modifiedDate);
 		sb.append("}");
 
 		return sb.toString();
@@ -66,34 +56,6 @@ public class SolicitudReclutamientoCacheModel implements CacheModel<SolicitudRec
 			solicitudReclutamientoImpl.setPuesto(puesto);
 		}
 
-		if (userNameCreate == null) {
-			solicitudReclutamientoImpl.setUserNameCreate(StringPool.BLANK);
-		}
-		else {
-			solicitudReclutamientoImpl.setUserNameCreate(userNameCreate);
-		}
-
-		if (createDate == Long.MIN_VALUE) {
-			solicitudReclutamientoImpl.setCreateDate(null);
-		}
-		else {
-			solicitudReclutamientoImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (userNameUpdate == null) {
-			solicitudReclutamientoImpl.setUserNameUpdate(StringPool.BLANK);
-		}
-		else {
-			solicitudReclutamientoImpl.setUserNameUpdate(userNameUpdate);
-		}
-
-		if (modifiedDate == Long.MIN_VALUE) {
-			solicitudReclutamientoImpl.setModifiedDate(null);
-		}
-		else {
-			solicitudReclutamientoImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
 		solicitudReclutamientoImpl.resetOriginalValues();
 
 		return solicitudReclutamientoImpl;
@@ -101,8 +63,4 @@ public class SolicitudReclutamientoCacheModel implements CacheModel<SolicitudRec
 
 	public long solicitudReclutamientoId;
 	public String puesto;
-	public String userNameCreate;
-	public long createDate;
-	public String userNameUpdate;
-	public long modifiedDate;
 }

@@ -358,10 +358,6 @@ public class SolicitudReclutamientoPersistenceImpl extends BasePersistenceImpl<S
 
 		solicitudReclutamientoImpl.setSolicitudReclutamientoId(solicitudReclutamiento.getSolicitudReclutamientoId());
 		solicitudReclutamientoImpl.setPuesto(solicitudReclutamiento.getPuesto());
-		solicitudReclutamientoImpl.setUserNameCreate(solicitudReclutamiento.getUserNameCreate());
-		solicitudReclutamientoImpl.setCreateDate(solicitudReclutamiento.getCreateDate());
-		solicitudReclutamientoImpl.setUserNameUpdate(solicitudReclutamiento.getUserNameUpdate());
-		solicitudReclutamientoImpl.setModifiedDate(solicitudReclutamiento.getModifiedDate());
 
 		return solicitudReclutamientoImpl;
 	}

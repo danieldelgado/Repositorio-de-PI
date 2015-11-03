@@ -1,5 +1,5 @@
-var reclutamiento_theme;
-reclutamiento_theme = {};
+var reclutamiento_theme = {};
+var paramGeneral={};
 
 reclutamiento_theme.inicializarComponentes = function() {
 
@@ -23,13 +23,17 @@ reclutamiento_theme.inicializarComponentes = function() {
 
 reclutamiento_theme.addlinksdockbar = function() {
 	var p_p_id_ListaSitios_WAR_ListaSitiosportlet_ = $("#p_p_id_ListaSitios_WAR_ListaSitiosportlet_");
-	var portlet_body = $(p_p_id_ListaSitios_WAR_ListaSitiosportlet_).children(
-			".portlet-body");
+	var portlet_body = $(p_p_id_ListaSitios_WAR_ListaSitiosportlet_).children(".portlet-body");
 	portlet_body = $(portlet_body).children();
 	portlet_body = $(portlet_body).children();
 	var listaopciones = portlet_body.children("ul");
 	$("#navbar-main2 ul ").append($(listaopciones).html());
 };
+
+function parametrosGeneral(list){
+	paramGeneral = list;
+	console.log(paramGeneral);
+}
 
 function locationVar(vr) {
 	var src, vrs, paramVal;

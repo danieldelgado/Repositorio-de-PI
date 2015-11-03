@@ -91,7 +91,7 @@ public class RegistrarUsuarioServiceImpl implements RegistrarUsuarioService {
 				.eq(screenName));
 		userexists = UserLocalServiceUtil.dynamicQueryCount(dynamicQuery);
 		LOG.debug("Existe Screenname : " + userexists);
-		if (dniExists > ConstantesPortalUtil.CERO) {
+		if (userexists > ConstantesPortalUtil.CERO) {
 			LOG.error("Screenname Duplicado");
 			throw new DuplicateUserScreenNameException();
 		}

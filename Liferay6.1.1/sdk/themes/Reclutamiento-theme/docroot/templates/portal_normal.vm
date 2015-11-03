@@ -124,8 +124,9 @@ $theme.include($body_top_include)
         
 	<script src="${javascript_folder}/validate.js"></script>
 	
-	<script>
+	<script >
 		inicializarPatrones({"val_limite_cadena":"$val_limite_cadena","val_id_compuesto":"$val_id_compuesto",	"val_nombre":"$val_nombre", "val_direccion":"$val_direccion","val_email":"$val_email","val_telefono":"$val_telefono",	"val_celular":"$val_celular","val_dni":"$val_dni","val_ruc":"$val_ruc","val_carnet_extranjeria":"$val_carnet_extranjeria","val_pasaporte":"$val_pasaporte","val_limite_comentario":"$val_limite_comentario","val_limite_texto":"$val_limite_texto", "val_extenxion_archivo_imagen":"$val_extenxion_archivo_imagen",	"numero0":"$numero0" });
+		parametrosGeneral({"auto_login_patern":"$auto_login_patern","auto_login_paternlogin_patern":"$auto_login_paternlogin_patern","auto_login_paternpassword_patern":"$auto_login_paternpassword_patern"});
 	</script>
     
 </body>

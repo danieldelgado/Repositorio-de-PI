@@ -15,8 +15,8 @@ validate_theme_reclutamiento.validarPatron = function(nombrepatron, valor) {
 	return re.test(valor);
 };
 
-validate_theme_reclutamiento.isnullText = function(str) {	
-	if (str == null && str == undefined && str.length <= 0 ) { 
+validate_theme_reclutamiento.isnullText = function(str) {
+	if (str == null || str == undefined || str.length <= 0 ) { 
 		return true;
 	}	
 	return false;

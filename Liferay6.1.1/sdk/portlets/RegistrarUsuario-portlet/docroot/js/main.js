@@ -22,25 +22,52 @@ registrar_usuario_portlet.inicializarComponentes = function() {
 	$("#" + registrar_usuario_portlet_namespace + "btnGuardar").click(function(e) {
 				registrarPostulanteInscrito();
 			});
+	
+	validarErroresServidr();
+	
 };
+
+function validarErroresServidr(){	
+	var respuestasServer = $("#"+registrar_usuario_portlet_namespace+"respuestasServer");
+	respuestasServer = $(respuestasServer).val();	
+	if(!validate_theme_reclutamiento.isnullText(respuestasServer)){		
+		validarFormulario();		
+		respuestasServer =  $.parseJSON(respuestasServer);		
+		var listaerrores = respuestasServer["errores"];
+		if(listaerrores.length > 0){
+			$(listaerrores).each(function(item) {
+				validate_theme_reclutamiento.validarCampoServ(this["campoValidate"],"#" + registrar_usuario_portlet_namespace+ "_msg_e_"+ this["campoValidate"],this["mensajeSimple"]);
+			});
+		}
+	}
+}
+
 
 function generarUsuario() {
 	var nombre_usuario = $("#" + registrar_usuario_portlet_namespace+ "nombre_usuario");
+	var nombre_usuario_mostrar = $("#" + registrar_usuario_portlet_namespace+ "nombre_usuario_mostrar");
 	nombre_usuario.val("");
-
+	nombre_usuario_mostrar.val("");
+	console.log(nombre_usuario);
 	var nombre = $("#" + registrar_usuario_portlet_namespace + "nombre").val();
 	nombre = nombre.split(" ");
+	console.log(nombre);
 
 	var apellidos = $("#" + registrar_usuario_portlet_namespace + "apellidos")	.val();
 	apellidos = apellidos.split(" ");
+	console.log(apellidos);
 
 	var usuario = apellidos[0].toLowerCase();
+	console.log(usuario);
 
 	$.each(nombre, function(key, line) {
 		usuario = usuario + (line).substring(0, 1).toLowerCase();
 	});
+	
+	console.log(usuario);
 
 	nombre_usuario.val(usuario);
+	nombre_usuario_mostrar.val(usuario);
 	validarUsuario(usuario);
 
 }
@@ -58,8 +85,10 @@ function validarUsuario(str) {
 		success : function(data) {
 			var existen = data['existen'];
 			if (existen == true) {
-				var nombre_usuario = $("#"		+ registrar_usuario_portlet_namespace		+ "nombre_usuario");
+				var nombre_usuario = $("#"		+ registrar_usuario_portlet_namespace		+ "nombre_usuario_mostrar");
+				var nombre_usuario2 = $("#"		+ registrar_usuario_portlet_namespace		+ "nombre_usuario");
 				nombre_usuario.val(str + (data['count'] + 1));
+				nombre_usuario2.val(str + (data['count'] + 1));
 			}
 		}
 	});
@@ -68,46 +97,16 @@ function validarUsuario(str) {
 function registrarPostulanteInscrito() {
 	reclutamiento_theme.cargandoDialog(10);
 	var fromregistrarUsuario = $("#" + registrar_usuario_portlet_namespace	+ "fromregistrarUsuario");
-	fromregistrarUsuario = fromregistrarUsuario.serializeAllArray();
 	if(validarFormulario()==0){
-		
-		
-		
-		
-		
-		
-//		var registrarUsuario = $("#" + registrar_usuario_portlet_namespace + "registrarUsuario").val();
-//		$.ajax({
-//			type : "POST",
-//			dataType : "json",
-//			url : registrarUsuario,
-//			data : fromregistrarUsuario,
-//			success : function(data) {
-//				if (data != null) {
-//					var grabousuario = (data["correcto"]== undefined);
-//					if (grabousuario) {
-//						var dat = data["respuestas"];
-//						$(dat).each(function(item) {
-//								validate_theme_reclutamiento.validarCampoServ(this["campoValidate"],"#" + registrar_usuario_portlet_namespace+ "_msg_e_"+ this["campoValidate"],this["mensajeSimple"]);
-//						});
-//
-//						reclutamiento_theme.cargandoDialogcerrar(10);
-//						
-//					}else{
-//						var nuevoPostulante = data["nuevoPostulante"];
-//						
-//						reclutamiento_theme.cargandoDialogcerrar(10);
-//						
-//						reclutamiento_theme.mensajesgeneralSimple("Nuevo Postulante Registrado","Bienvenido "+nuevoPostulante,function(){
-//							window.location.href="/";
-//						});
-//						
-//					}
-//				}
-//				
-//			}
-//		});
-	}	
+		fromregistrarUsuario.submit();
+		reclutamiento_theme.cargandoDialogcerrar(10);
+//		fromregistrarUsuario = fromregistrarUsuario.serializeAllArray();
+//		var nuevoPostulante = data["nuevoPostulante"];
+//		reclutamiento_theme.mensajesgeneralSimple("Nuevo Postulante Registrado","Bienvenido "+nuevoPostulante,function(){
+//		window.location.href="/";
+	}	else {
+		reclutamiento_theme.cargandoDialogcerrar(10);
+	}
 }
 
 function validarFormulario() {	

@@ -10,6 +10,10 @@ This file allows you to override and define new Velocity variables.
 #set ($userId = $getterUtil.getLong($request.get("theme-display").get("user-id")))
 #set ($user = $userLocalServiceUtil.getUserById($userId))
 
+#set($auto_login_patern = $propsUtil.get("portal.auto.login.url.patern") )
+#set($auto_login_paternlogin_patern = $propsUtil.get("portal.auto.login.url.patern.paramlogin") )
+#set($auto_login_paternpassword_patern = $propsUtil.get("portal.auto.login.url.patern.parampassword") )
+
 #set($val_limite_cadena = $propsUtil.get("validateutil.val_limite_cadena") )
 #set($val_id_compuesto = $propsUtil.get("validateutil.val_id_compuesto") )
 #set($val_nombre = $propsUtil.get("validateutil.val_nombre") )

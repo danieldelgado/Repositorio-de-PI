@@ -10,11 +10,12 @@ import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import javax.portlet.PortletContext;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -33,16 +34,20 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalClassInvoker;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.model.CompanyConstants;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.PortalUtil;
 import com.rec.hitss.service.util.BeanRespuesta;
 import com.rec.hitss.service.util.ConstantesPortalUtil;
 import com.rec.hitss.service.util.DuplicateUserDNIException;
@@ -64,17 +69,22 @@ public class RegistrarUsuarioController {
 	@RenderMapping()
 	public String get(RenderRequest request, RenderResponse response, Model model) {
 		LOG.debug("get Incio");
-		model.addAttribute(ConstantesUtil.CAMPO_MENSAJE_VALIDACION + ConstantesUtil.CAMPO_NOMBRES_MESAJE_ERROR, ConstantesUtil.NOMBRES_MESAJE_ERROR);
-		model.addAttribute(ConstantesUtil.CAMPO_MENSAJE_VALIDACION + ConstantesUtil.CAMPO_APELIIDOS_MESAJE_ERROR, ConstantesUtil.APELIIDOS_MESAJE_ERROR);
-		model.addAttribute(ConstantesUtil.CAMPO_MENSAJE_VALIDACION + ConstantesUtil.CAMPO_CORREO_MESAJE_ERROR, ConstantesUtil.CORREO_MESAJE_ERROR);
-		model.addAttribute(ConstantesUtil.CAMPO_MENSAJE_VALIDACION + ConstantesUtil.CAMPO_CORREO_DUPLICADO_MESAJE_ERROR, ConstantesUtil.CORREO_DUPLICADO_MESAJE_ERROR);
-		model.addAttribute(ConstantesUtil.CAMPO_MENSAJE_VALIDACION + ConstantesUtil.CAMPO_PUESTO_MESAJE_ERROR, ConstantesUtil.PUESTO_MESAJE_ERROR);
-		model.addAttribute(ConstantesUtil.CAMPO_MENSAJE_VALIDACION + ConstantesUtil.CAMPO_DNI_MESAJE_ERROR, ConstantesUtil.DNI_MESAJE_ERROR);
-		model.addAttribute(ConstantesUtil.CAMPO_MENSAJE_VALIDACION + ConstantesUtil.CAMPO_DNI_DUPLICADO_MESAJE_ERROR, ConstantesUtil.DNI_DUPLICADO_MESAJE_ERROR);
-		model.addAttribute(ConstantesUtil.CAMPO_MENSAJE_VALIDACION + ConstantesUtil.CAMPO_FECHA_MESAJE_ERROR, ConstantesUtil.FECHA_MESAJE_ERROR);
-		model.addAttribute(ConstantesUtil.CAMPO_MENSAJE_VALIDACION + ConstantesUtil.CAMPO_PASSWORD_COMPARAR_MESAJE_ERROR, ConstantesUtil.PASSWORD_COMPARAR_MESAJE_ERROR);
-		model.addAttribute(ConstantesUtil.CAMPO_MENSAJE_VALIDACION + ConstantesUtil.CAMPO_PASSWORD2_MESAJE_ERROR, ConstantesUtil.PASSWORD2_MESAJE_ERROR);
-		return "view";
+		User user = (User) request.getAttribute(WebKeys.USER);
+		if(user==null){
+			model.addAttribute(ConstantesUtil.CAMPO_MENSAJE_VALIDACION + ConstantesUtil.CAMPO_NOMBRES_MESAJE_ERROR, ConstantesUtil.NOMBRES_MESAJE_ERROR);
+			model.addAttribute(ConstantesUtil.CAMPO_MENSAJE_VALIDACION + ConstantesUtil.CAMPO_APELIIDOS_MESAJE_ERROR, ConstantesUtil.APELIIDOS_MESAJE_ERROR);
+			model.addAttribute(ConstantesUtil.CAMPO_MENSAJE_VALIDACION + ConstantesUtil.CAMPO_CORREO_MESAJE_ERROR, ConstantesUtil.CORREO_MESAJE_ERROR);
+			model.addAttribute(ConstantesUtil.CAMPO_MENSAJE_VALIDACION + ConstantesUtil.CAMPO_CORREO_DUPLICADO_MESAJE_ERROR, ConstantesUtil.CORREO_DUPLICADO_MESAJE_ERROR);
+			model.addAttribute(ConstantesUtil.CAMPO_MENSAJE_VALIDACION + ConstantesUtil.CAMPO_PUESTO_MESAJE_ERROR, ConstantesUtil.PUESTO_MESAJE_ERROR);
+			model.addAttribute(ConstantesUtil.CAMPO_MENSAJE_VALIDACION + ConstantesUtil.CAMPO_DNI_MESAJE_ERROR, ConstantesUtil.DNI_MESAJE_ERROR);
+			model.addAttribute(ConstantesUtil.CAMPO_MENSAJE_VALIDACION + ConstantesUtil.CAMPO_DNI_DUPLICADO_MESAJE_ERROR, ConstantesUtil.DNI_DUPLICADO_MESAJE_ERROR);
+			model.addAttribute(ConstantesUtil.CAMPO_MENSAJE_VALIDACION + ConstantesUtil.CAMPO_FECHA_MESAJE_ERROR, ConstantesUtil.FECHA_MESAJE_ERROR);
+			model.addAttribute(ConstantesUtil.CAMPO_MENSAJE_VALIDACION + ConstantesUtil.CAMPO_PASSWORD_COMPARAR_MESAJE_ERROR, ConstantesUtil.PASSWORD_COMPARAR_MESAJE_ERROR);
+			model.addAttribute(ConstantesUtil.CAMPO_MENSAJE_VALIDACION + ConstantesUtil.CAMPO_PASSWORD2_MESAJE_ERROR, ConstantesUtil.PASSWORD2_MESAJE_ERROR);
+			return "view";			
+		}else{
+			return registrarCV(request,response,model);	
+		}
 	}
 
 	@ActionMapping(params = "action=registrarUsuario")
@@ -188,22 +198,14 @@ public class RegistrarUsuarioController {
 				mapRepuesta.put(ConstantesPortalUtil.MENSAJE_CORRECTO, ConstantesPortalUtil.MENSAJE_OK);
 				mapRepuesta.put("nuevoPostulante", nuevoPostulante.getFullName());
 
-				String reString = StringPool.QUESTION + PropsUtil.get("portal.auto.login.url.patern.paramlogin") + StringPool.EQUAL + nuevoPostulante.getEmailAddress() + StringPool.AMPERSAND;
-				reString += PropsUtil.get("portal.auto.login.url.patern.paramlogin") + StringPool.EQUAL + nuevoPostulante.getPassword();
-				System.out.println(reString);
-//				response.setRenderParameter("action", "registrarPerfil");
-
-				// HttpServletResponse res =
-				// PortalUtil.getHttpServletResponse(response);
-				// System.out.println(request.getContextPath());
-				PortletContext context = request.getPortletSession().getPortletContext();
-				String path = context.getRealPath("");
-				System.out.println(path);
-				// http://localhost:8080/web/guest/registro-perfil?p_auth=cr25aM6X&p_p_id=RegistrarUsuario_WAR_RegistrarUsuarioportlet&p_p_lifecycle=1&p_p_state=normal&p_p_mode=view&p_p_col_id=column-2&p_p_col_count=1&_RegistrarUsuario_WAR_RegistrarUsuarioportlet_action=registrarUsuario
-				//https://localhost:8080/c/portal/login?parameterAutoLoginLogin=test@liferay.com&parameterAutoLoginPassword=test
-				
-				response.sendRedirect(reString);
-
+				String reString = themeDisplay.getURLCurrent();	
+				reString += StringPool.AMPERSAND + PropsUtil.get("portal.auto.login.url.patern.paramlogin") + StringPool.EQUAL + nuevoPostulante.getEmailAddress();
+				reString += StringPool.AMPERSAND + PropsUtil.get("portal.auto.login.url.patern.parampassword") + StringPool.EQUAL + nuevoPostulante.getPasswordUnencrypted();
+				System.out.println(reString);		
+//				response.setRenderParameter("action", "registrarPerfil");								
+				MethodKey key = new MethodKey("com.liferay.portlet.login.util.LoginUtil", "login", HttpServletRequest.class, HttpServletResponse.class, String.class, String.class, boolean.class, String.class);
+				PortalClassInvoker.invoke(false, key, new Object[] { PortalUtil.getHttpServletRequest(request), PortalUtil.getHttpServletResponse(response),nuevoPostulante.getEmailAddress(),nuevoPostulante.getPassword(), false, CompanyConstants.AUTH_TYPE_EA});
+				response.sendRedirect(reString);				
 			}
 		} catch (DuplicateUserEmailAddressException e) {
 
@@ -223,6 +225,8 @@ public class RegistrarUsuarioController {
 			LOG.error("PortalException", e);
 		} catch (SystemException e) {
 			LOG.error("SystemException", e);
+		} catch (Exception e) {
+			LOG.error("Exception", e);
 		}
 		mapRepuesta.put("errores", respuestas);
 		String rsp = JsonUtil.getJsonObject(mapRepuesta);
@@ -232,7 +236,7 @@ public class RegistrarUsuarioController {
 
 	@RequestMapping("VIEW")
 	@RenderMapping(params = "action=registrarPerfil")
-	public String registrarCV(Model model) {
+	public String registrarCV(RenderRequest request, RenderResponse response, Model model) {
 
 		model.addAttribute("something", "blah blah blah11111");
 

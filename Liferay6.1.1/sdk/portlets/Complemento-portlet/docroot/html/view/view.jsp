@@ -8,6 +8,7 @@
 <!-- SLIDER REVOLUTION 4.x CSS SETTINGS -->
 <%-- <link rel="stylesheet" type="text/css" href="<c:url value='/css/bootstrap.css'/>" media="screen" /> --%>
 <link rel="stylesheet" type="text/css" href="<c:url value='/css/bootstrap.cerulean.min.css'/>" media="screen" />
+<link rel="stylesheet" type="text/css" href="<c:url value='/css/boostrap.vertical-tabs.css'/>" media="screen" />
 <%-- <link rel="stylesheet" type="text/css" href="<c:url value='/css/datepicker.css'/>" media="screen" /> --%>
 
 

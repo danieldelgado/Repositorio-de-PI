@@ -25,6 +25,11 @@ public interface RegistrarUsuarioService {
 
 	int validarUsuarioNuevoPostulante(String usuario_postulante) throws SystemException ;
 
+	User actualizarPerfil(User user, long companyId, boolean autoPassword, String strPassword, String strPassword2, boolean autoScreenName, String strUsuario, String strEmail, long facebookId, String openId, Locale locale, String strNombre, String strSegundoNombre,
+			String strApep, int prefixId, int suffixId, boolean male, int birthdayMonth, int birthdayDay, int birthdayYear, String puestoactual, long[] groupIds, long[] organizationIds, long[] roleIds, long[] userGroupIds, boolean sendEmail, Map<String, String> camposExtras,
+			ServiceContext serviceContext) throws DuplicateUserEmailAddressException,
+			DuplicateUserDNIException, SystemException, PortalException;
+
 	
 
 

@@ -6,8 +6,10 @@ import com.liferay.portal.kernel.util.PropsUtil;
 
 public class ConstantesPortalUtil {
 
-	
+
 	public static final long CERO = 0;
+	
+	public static final long UNO = 1;
 		
 	public static final String DATA = "data";
 	

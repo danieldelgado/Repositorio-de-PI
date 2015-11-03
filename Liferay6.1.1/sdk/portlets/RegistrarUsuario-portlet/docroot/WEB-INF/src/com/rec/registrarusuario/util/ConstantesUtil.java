@@ -10,8 +10,10 @@ public class ConstantesUtil {
 	public static final String CLASSNAMEID = "classNameId";
 	
 	public static final String DNI = "DNI";
-	
+
 	public static final String EMAILADDRESS = "emailAddress";
+	
+	public static final String USER_ID = "userId";
 	
 	public static final String SCREENNAME = "screenName";
 		

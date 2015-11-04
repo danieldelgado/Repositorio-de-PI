@@ -261,6 +261,10 @@ public class RegistrarUsuarioController {
 
 			model.addAttribute("val_fechaNacimiento", TiempoUtil.getFechaActualConPatronyDate("dd-MM-yyyy", user.getBirthday()));
 
+			
+			
+			
+			
 		} catch (PortalException e) {
 			LOG.error("PortalException", e);
 		} catch (SystemException e) {

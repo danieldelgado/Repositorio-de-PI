@@ -1,0 +1,12 @@
+eclipse.preferences.version=1
+encoding//docroot/WEB-INF/src/pe/com/bvl/ssc/ws/ws/AreaWsBean.java=UTF-8
+encoding//docroot/WEB-INF/src/pe/com/bvl/ssc/ws/ws/EscalamientoWSBean.java=UTF-8
+encoding//docroot/WEB-INF/src/pe/com/bvl/ssc/ws/ws/ExceptionCore.java=UTF-8
+encoding//docroot/WEB-INF/src/pe/com/bvl/ssc/ws/ws/PersonaEmpWsBean.java=UTF-8
+encoding//docroot/WEB-INF/src/pe/com/bvl/ssc/ws/ws/PersonaWsBean.java=UTF-8
+encoding//docroot/WEB-INF/src/pe/com/bvl/ssc/ws/ws/PuestoWsBean.java=UTF-8
+encoding//docroot/WEB-INF/src/pe/com/bvl/ssc/ws/ws/SeccionWsBean.java=UTF-8
+encoding//docroot/WEB-INF/src/pe/com/bvl/ssc/ws/ws/SeguridadService.java=UTF-8
+encoding//docroot/WEB-INF/src/pe/com/bvl/ssc/ws/ws/SeguridadServiceLocator.java=UTF-8
+encoding//docroot/WEB-INF/src/pe/com/bvl/ssc/ws/ws/SeguridadServiceSoapBindingStub.java=UTF-8
+encoding//docroot/WEB-INF/src/pe/com/bvl/ssc/ws/ws/SeguridadType.java=UTF-8

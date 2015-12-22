@@ -37,6 +37,8 @@ public class SlideController {
 		LOG.debug("limite:"+limite+" categorias:"+categorias);
 		ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);		
 		List<Slider> listaSliders = slideService.getContentSlider(themeDisplay,PortalUtil.getHttpServletRequest(request),PortalUtil.getHttpServletResponse(response),limite,categorias);
+		System.out.println("listaSliders");
+		System.out.println(listaSliders);
 		model.addAttribute("listaSliders", listaSliders);
 		return "view";
 	}

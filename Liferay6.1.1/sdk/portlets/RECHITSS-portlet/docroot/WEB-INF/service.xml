@@ -4,36 +4,224 @@
 	<author>Danielle</author>
 	<namespace>RECHITSS</namespace>
 
-	<entity name="SolicitudReclutamiento"  local-service="true"
+	<entity name="solicitudReclutamiento"  local-service="true"
 		data-source="recportalDataSource" session-factory="recportalSessionFactory"
 		tx-manager="recportalTransactionManager" cache-enabled="false"
-		table="SolicitudReclutamiento">
+		table="SOLICITUD_RECLUTAMIENTO">
 
-
-		<!-- PK fields -->
-
-		<column name="solicitudReclutamientoId" type="long" primary="true" />
-
-
-		<!-- Other fields -->
-
-		<column name="puesto" type="String" />
+		<column name="SR_ID" type="long" primary="true" />		
+		<column name="SR_PL_ID" type="String" />		
+		<column name="SR_ESTADO" type="long" entity="puestosLaborales" mapping-key="PL_ID"  />
 		
-<!-- 		<column name="userNameCreate" type="String" /> -->
-<!-- 		<column name="createDate" type="Date" /> -->
-<!-- 		<column name="userNameUpdate" type="String" /> -->
-<!-- 		<column name="modifiedDate" type="Date" /> -->
+		<column name="SR_ACTIVO" type="String" />
+		<column name="SR_USUARIO_CREA" type="long" />		
+		<column name="SR_FECHA_CREA" type="Date" />		
+		<column name="SR_USUARIO_MODIFICA" type="long" />		
+		<column name="SR_FECHA_MODIFICA" type="Date" />
 
 		<!-- Order -->
-
 		<order by="asc">
-			<order-column name="puesto" />
+			<order-column name="SR_PUESTO" />
 		</order>
-
 		<!-- Finder methods -->
-
 		<finder name="Puesto" return-type="Collection">
 			<finder-column name="puesto" />
 		</finder>
 	</entity>
+	
+	<entity name="avanceEstadoSolicitudReclutamiento"  local-service="true"
+		data-source="recportalDataSource" session-factory="recportalSessionFactory"
+		tx-manager="recportalTransactionManager" cache-enabled="false" 
+		table="AVANCE_ESTADO_SOLICITUD_RECLUTAMIENTO">
+
+		<column name="AESR_ID" type="long" primary="true" />			
+		<column name="AESR_ESTADO" type="String" />		
+		<column name="AESR_SR_ID" type="long" entity="solicitudReclutamiento" mapping-key="SR_ID"  />
+		
+		<column name="AESR_ACTIVO" type="String" />
+		<column name="AESR_USUARIO_CREA" type="long" />		
+		<column name="AESR_FECHA_CREA" type="Date" />		
+		<column name="AESR_USUARIO_MODIFICA" type="long" />		
+		<column name="AESR_FECHA_MODIFICA" type="Date" />
+
+		<!-- Order -->
+		<order by="asc">
+			<order-column name="FI_ID" />
+		</order>
+		
+	</entity>
+	
+	<entity name="puestosLaborales"  local-service="true"
+		data-source="recportalDataSource" session-factory="recportalSessionFactory"
+		tx-manager="recportalTransactionManager" cache-enabled="false"
+		table="PUESTOS_LABORALES">
+
+		<column name="PL_ID" type="long" primary="true" />		
+		<column name="PL_PUESTO" type="String" />	
+		
+		<column name="PL_ESTADO" type="String" />
+		
+		<column name="PL_ACTIVO" type="String" />		
+		<column name="PL_USUARIO_CREA" type="long" />		
+		<column name="PL_FECHA_CREA" type="Date" />		
+		<column name="PL_USUARIO_MODIFICA" type="long" />		
+		<column name="PL_FECHA_MODIFICA" type="Date" />
+
+		<!-- Order -->
+		<order by="asc">
+			<order-column name="PS_ID" />
+		</order>
+		
+	</entity>
+	
+
+	
+	
+	<entity name="requerimientoPersonal"  local-service="true"
+		data-source="recportalDataSource" session-factory="recportalSessionFactory"
+		tx-manager="recportalTransactionManager" cache-enabled="false"
+		table="REQUERIMIENTO_PERSONAL">
+
+		<column name="REQ_ID"  type="long" primary="true" />		
+		<column name="REQ_ESTADO" type="String" />
+		
+		<column name="REQ_ACTIVO" type="String" />		
+		<column name="REQ_USUARIO_CREA" type="long" />		
+		<column name="REQ_FECHA_CREA" type="Date" />		
+		<column name="REQ_USUARIO_MODIFICA" type="long" />		
+		<column name="REQ_FECHA_MODIFICA" type="Date" />
+
+		<!-- Order -->
+		<order by="asc">
+			<order-column name="REQ_ID" />
+		</order>
+		
+	</entity>
+	
+	<entity name="nueveCuadrantes"  local-service="true"
+		data-source="recportalDataSource" session-factory="recportalSessionFactory"
+		tx-manager="recportalTransactionManager" cache-enabled="false"
+		table="NUEVE_CUADRANTES">
+
+		<column name="NC_ID" type="long" primary="true" />		
+		<column name="REQ_ESTADO" type="String" />
+		
+		<column name="REQ_ACTIVO" type="String" />		
+		<column name="SR_USUARIO_CREA" type="long" />		
+		<column name="SR_FECHA_CREA" type="Date" />		
+		<column name="SR_USUARIO_MODIFICA" type="long" />		
+		<column name="SR_FECHA_MODIFICA" type="Date" />
+
+		<!-- Order -->
+		<order by="asc">
+			<order-column name="NC_ID" />
+		</order>
+		
+	</entity>
+	
+	<entity name="Contrato"  local-service="true"
+		data-source="recportalDataSource" session-factory="recportalSessionFactory"
+		tx-manager="recportalTransactionManager" cache-enabled="false"
+		table="CONTRATO">
+
+		<column name="CT_ID" type="long" primary="true" />		
+		<column name="CT_ESTADO" type="String" />
+		
+		<column name="CT_ACTIVO" type="String" />				
+		<column name="CT_USUARIO_CREA" type="long" />		
+		<column name="CT_FECHA_CREA" type="Date" />		
+		<column name="CT_USUARIO_MODIFICA" type="long" />		
+		<column name="CT_FECHA_MODIFICA" type="Date" />
+
+		<!-- Order -->
+		<order by="asc">
+			<order-column name="CT_ID" />
+		</order>
+		
+	</entity>
+	
+	<entity name="EvaluacionReclutamiento"  local-service="true"
+		data-source="recportalDataSource" session-factory="recportalSessionFactory"
+		tx-manager="recportalTransactionManager" cache-enabled="false"
+		table="EVALUACION_RECLUTAMIENTO">
+
+		<column name="ER_ID" type="long" primary="true" />		
+		<column name="ER_ESTADO" type="String" />
+		
+		<column name="ER_ACTIVO" type="String" />	
+		<column name="ER_USUARIO_CREA" type="long" />		
+		<column name="ER_FECHA_CREA" type="Date" />		
+		<column name="ER_USUARIO_MODIFICA" type="long" />		
+		<column name="ER_FECHA_MODIFICA" type="Date" />
+
+		<!-- Order -->
+		<order by="asc">
+			<order-column name="ER_ID" />
+		</order>
+		
+	</entity>
+	
+	<entity name="curriculumVitae"  local-service="true"
+		data-source="recportalDataSource" session-factory="recportalSessionFactory"
+		tx-manager="recportalTransactionManager" cache-enabled="false"
+		table="CURRICULUM_VITAE">
+
+		<column name="CV_ID" type="long" primary="true" />
+		<column name="CV_ESTADO" type="String" />
+		
+		<column name="CV_ACTIVO" type="String" />	
+		<column name="CV_USUARIO_CREA" type="long" />		
+		<column name="CV_FECHA_CREA" type="Date" />		
+		<column name="CV_USUARIO_MODIFICA" type="long" />		
+		<column name="CV_FECHA_MODIFICA" type="Date" />
+
+		<!-- Order -->
+		<order by="asc">
+			<order-column name="CV_ID" />
+		</order>
+		
+	</entity>
+	
+	<entity name="cartillaReclutamiento"  local-service="true"
+		data-source="recportalDataSource" session-factory="recportalSessionFactory"
+		tx-manager="recportalTransactionManager" cache-enabled="false"
+		table="cartilla_reclutamiento">
+
+		<column name="CR_ID" type="long" primary="true" />
+		<column name="CR_ESTADO" type="String" />
+		
+		<column name="CR_ACTIVO" type="String" />	
+		<column name="CR_USUARIO_CREA" type="long" />		
+		<column name="CR_FECHA_CREA" type="Date" />		
+		<column name="CR_USUARIO_MODIFICA" type="long" />		
+		<column name="CR_FECHA_MODIFICA" type="Date" />
+
+		<!-- Order -->
+		<order by="asc">
+			<order-column name="CR_ID" />
+		</order>
+		
+	</entity>
+	
+	<entity name="fichaIngreso"  local-service="true"
+		data-source="recportalDataSource" session-factory="recportalSessionFactory"
+		tx-manager="recportalTransactionManager" cache-enabled="false"
+		table="FICHA_INGRESO">
+
+		<column name="FI_ID" type="long" primary="true" />
+		<column name="FI_ESTADO" type="String" />
+		
+		<column name="FI_ACTIVO" type="String" />	
+		<column name="FI_USUARIO_CREA" type="long" />		
+		<column name="FI_FECHA_CREA" type="Date" />		
+		<column name="FI_USUARIO_MODIFICA" type="long" />		
+		<column name="FI_FECHA_MODIFICA" type="Date" />
+
+		<!-- Order -->
+		<order by="asc">
+			<order-column name="FI_ID" />
+		</order>
+		
+	</entity>
+	
 </service-builder>
